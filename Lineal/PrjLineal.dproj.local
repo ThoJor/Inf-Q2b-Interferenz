@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2016-10-30 08:01:58.199,=C:\Users\phili\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2016-10-30 08:04:45.302,C:\Users\phili\Documents\Embarcadero\Studio\Projects\Lineal\ULineal.dfm=C:\Users\phili\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2016-10-30 08:04:45.302,C:\Users\phili\Documents\Embarcadero\Studio\Projects\Lineal\ULineal.pas=C:\Users\phili\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2016-10-30 08:04:50.527,C:\Users\phili\Documents\Embarcadero\Studio\Projects\Lineal\PrjLineal.dproj=C:\Users\phili\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>
