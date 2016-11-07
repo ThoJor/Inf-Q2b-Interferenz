@@ -1,12 +1,12 @@
 unit UFarbtabelle;
 
 interface
+var Farben: Array[1..63,0..1] of string;                     //2D Statisches Array mit 63 Zeilen und 2 Spalten
 
 implementation
 
 procedure Farbtabelle;
-var Farben: Array[1..63,0..1] of string;       //2D Statisches Array mit 63 Zeilen und 2 Spalten
-begin
+begin                                                        //Farben mit Wellenlängen 678.37nm bis 435.01 nm
   Farben[1,0]:='ff0055';  Farben[1,1]:='678.37';
   Farben[2,0]:='ff0041';  Farben[2,1]:='626.39';
   Farben[3,0]:='ff002e';  Farben[3,1]:='617.40';
@@ -70,7 +70,6 @@ begin
   Farben[61,0]:='5d00ff'; Farben[61,1]:='456.05';
   Farben[62,0]:='7100ff'; Farben[62,1]:='449.60';
   Farben[63,0]:='8500ff'; Farben[63,1]:='435.01';
-
 end;
 
 
