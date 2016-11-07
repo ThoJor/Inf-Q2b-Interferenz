@@ -47,6 +47,9 @@ begin
   //Größe CheckBox
   CBLineal.Height:= CheckBoxHoehe;
   CBLineal.Width:= CheckBoxWidth;
+
+  //Lineal per default an
+  CBLineal.Checked:= true;
 end;
 
 end.
