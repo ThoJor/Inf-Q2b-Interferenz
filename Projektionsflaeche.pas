@@ -30,6 +30,8 @@ type
     PnlGelb: TPanel;
     PnlOrange: TPanel;
     PnlRot: TPanel;
+    ImgLineal: TImage;
+    SBZoom: TScrollBar;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -50,6 +52,10 @@ type
     procedure Farbe_Gelb;
     procedure Farbe_Orange;
     procedure Farbe_Rot;
+    procedure Linealskala;
+    procedure Linealbasis;
+    procedure Zoomleiste;
+    procedure SBZoomChange(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -58,6 +64,7 @@ type
 
 var
   FrmProjektionsflaeche: TFrmProjektionsflaeche;
+  Zentimeter : Integer;
 
 const
   LabelHoehe= 20;
@@ -252,6 +259,7 @@ begin
   EdtWellenlaenge.Text:= '';
 end;
 
+
 procedure TFrmProjektionsflaeche.Optionspanel;
 begin
   //Panel Optionen
@@ -289,6 +297,7 @@ begin
   //Canvasposition
   Schirm.Left:= FrmProjektionsflaeche.Width - Schirm.Width;
   Schirm.Top:= 0;
+
 end;
 
 procedure TFrmProjektionsflaeche.Fenstereinstellungen;
@@ -314,6 +323,92 @@ begin
   Fenstereinstellungen;
   Canvaseinstellungen;
   Optionen;
+  Linealbasis;
+  Linealskala;
+  Zoomleiste;
+end;
+
+
+procedure TFrmProjektionsflaeche.Zoomleiste;
+begin
+  SBZoom.Height:=10;
+  SBZoom.Width:=80;
+  SBZoom.Top:=ImgLineal.Top-SBZoom.Height;
+  SBZoom.Left:=FrmProjektionsflaeche.Width-SBZoom.Width;
+  SBzoom.Max:=100;
+  SBZoom.Min:=0;
+  SBZoom.Position:=50;
+end;
+
+procedure TFrmProjektionsflaeche.Linealbasis;
+begin
+  //Größe und Position des Image
+  ImgLineal.Height:=Round((1/5) * FrmProjektionsflaeche.Height);
+  ImgLineal.Width:= Schirm.Width;
+  ImgLineal.Left:=FrmProjektionsflaeche.Width-ImgLineal.Width;
+  ImgLineal.Top:=Round(FrmProjektionsflaeche.Height*4/5);
+  with ImgLineal.canvas do
+    begin
+    //Umriss des Lineals
+      Moveto(ImgLineal.Width-1,1);
+      Lineto(1,1);
+      Lineto(1,ImgLineal.Height-1);
+      Lineto(ImgLineal.Width-1,ImgLineal.Height-1);
+      Lineto(ImgLineal.Width-1,1);
+    end;
+end;
+
+procedure TFrmProjektionsflaeche.SBZoomChange(Sender: TObject);
+begin
+  //qwe
+end;
+
+procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
+var
+  I,J,K,dpi : Integer;
+begin
+  //Graphische Optionen - CBLineal
+  // if graphische_Optionen.CBLineal.checked:=true then
+  //dpi:=Screen.PixelsPerInch;  //Funktioniert nicht wie es soll
+  dpi:=92; //dpi bei 24" 1080p
+  Zentimeter:=Round(1*dpi/2.54); //Platzhalter
+  J:=0;
+  K:=0;
+  with ImgLineal.Canvas do
+    begin
+      //Striche von Mitte->Links mit Beschriftung
+      for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
+        begin
+          J:=J+1;
+          //if J = Round(1*dpi/2.54) then begin  //cm = pixel*2,54/dpi   - cm*dpi/2,54=pixel  | DPI-basierte Version
+          if J = Zentimeter then begin
+
+                                          moveto(I,1);
+                                          lineto(I,Round(ImgLineal.Height/3));
+                                          J:=0;
+                                          K:=K+1;
+                                          textout(penpos.X-2,penpos.Y,IntToStr(K));
+                                        end;
+        end;
+      //Striche von Mitte->Rechts mit Beschriftung
+      //J:=Round(1*dpi/2.54);                                                                | DPI-Basierte Version
+      J:=Zentimeter;
+      K:=1;
+      //for I := Round(ImgLineal.Width/2)+Round(1*dpi/2.54) downto 11 do                     | DPI-Basierte Version
+      for I := Round(ImgLineal.Width/2)+Zentimeter downto 1 do
+
+        begin
+          J:=J-1;
+          if J = 0 then begin
+                                          moveto(I,1);
+                                          lineto(I,Round(ImgLineal.Height/3));
+                                          J:=36;
+                                          K:=K-1;
+                                          textout(penpos.X-7,penpos.Y,IntToStr(K));
+                                        end;
+
+        end;
+    end;
 end;
 
 end.
