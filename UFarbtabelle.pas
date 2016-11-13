@@ -72,5 +72,26 @@ begin                                                        //Farben mit Wellen
   Farben[63,0]:='8500ff'; Farben[63,1]:='435.01';
 end;
 
+function Farbe(Wellenlaenge: string): string;
+var
+  Farbe_gefunden: Boolean;
+  Zaehler: Integer;
+begin
+  //Variablen zurücksetzen
+  Farbe_gefunden:= false;
+  Zaehler:= 0;
+
+  //Hexcode zur Wellenlaenge ermitteln
+  repeat
+  Inc(Zaehler);
+  if Wellenlaenge= Farben[Zaehler,1] then Farbe_gefunden:= true;
+  until (Zaehler= 63) or (Farbe_gefunden= true);
+
+  //Wert an aufrufende Prozedur geben
+  if Farbe_gefunden= true
+    then Result:= Farben[Zaehler,0]
+    else Result:= 'Nein';
+
+end;
 
 end.
