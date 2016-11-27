@@ -91,7 +91,7 @@ begin
   //Wert an aufrufende Prozedur geben
   if Farbe_gefunden= true
     then Result:= Farben[Zaehler,0]
-    else Result:= '8500ff';
+    else Result:= '000000';
 
 end;
 

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
-  graphische_Optionen, UFarbtabelle, UToolbox, Math, Vcl.ComCtrls;
+  graphische_Optionen, UFarbtabelle, UToolbox, Math, Vcl.ComCtrls, Konstantenbox;
 
 type
   TFrmProjektionsflaeche = class(TForm)
@@ -32,6 +32,7 @@ type
     PnlRot: TPanel;
     ImgLineal: TImage;
     TBZoom: TTrackBar;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -59,6 +60,8 @@ type
     procedure EdtWellenlaengeKeyPress(Sender: TObject; var Key: Char);
     procedure EdtFrequenzKeyPress(Sender: TObject; var Key: Char);
     procedure Zeichnen(a: real);
+    procedure PnlViolettClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -69,6 +72,7 @@ var
   FrmProjektionsflaeche: TFrmProjektionsflaeche;
   Zentimeter : Integer;
   Abstand : real;
+  Zoomfaktor : Integer;
 
 const
   LabelHoehe= 20;
@@ -287,6 +291,7 @@ begin
   Option_Farbe;
 end;
 
+
 procedure TFrmProjektionsflaeche.Canvaseinstellungen;
 begin
   //Image zu Canvas
@@ -370,7 +375,7 @@ var
 begin
   //Graphische Optionen - CBLineal
   // if graphische_Optionen.CBLineal.checked:=true then
-  Zentimeter:=TBZoom.Position*2;
+  Zentimeter:=TBZoom.Position;
   J:=0;
   K:=0;
   ImgLineal.Picture:=nil;
@@ -408,33 +413,50 @@ end;
 
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
+  Zoomfaktor:=100000*TBZoom.Position;
 //LINEAL
   //Lineal neu Zeichnen
   Linealbasis;
   Linealskala;
 //SCHIRM
-
+  Zeichnen(Abstand*Zoomfaktor);
 end;
 
 //////////////////////////////////////////////////////////////////////////////////
+
+procedure TFrmProjektionsflaeche.Button1Click(Sender: TObject);
+  var Wellenlaenge: real;
+begin
+    Zoomfaktor:=100000*TBZoom.Position;
+    //Fehlerabfrage - fehlt (s. oben)
+    Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
+    if ((435.01*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (678.37*(Power(10,(-9))))) then
+      begin
+        Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
+        EdtWellenlaenge.Text := '436';
+      end;
+    Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
+    FrmProjektionsflaeche.caption:=floattostr(abstand);
+    Zeichnen(Abstand*Zoomfaktor);
+end;
+
 procedure TFrmProjektionsflaeche.EdtFrequenzKeyPress(Sender: TObject;
   var Key: Char);
 var Frequenz, Wellenlaenge: real;
 begin
 if key = #13 then
   begin
-    //if tryStrToFloat(EdtFrequenz.Text) then                                       //Fehlerabfrage - ist fehlerhaft.
-    Frequenz := StrToFloat(EdtFrequenz.Text)*(Power(10, 13));
-    //else
-    //Showmessage('Bitte gib einen gültigen Zahlenwert ein');
-    Wellenlaenge := UToolbox.FrequenzInWellenlaenge(Frequenz);
+    Zoomfaktor:=100000*TBZoom.Position;
+    //Fehlerabfrage - fehlt (s. oben)
+    Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
     if ((435.01*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (678.37*(Power(10,(-9))))) then
       begin
-        Showmessage('Bitte gib eine Frequenz aus dem Bereich des sichtbaren Lichts an.');
-        EdtFrequenz.Text := '47';                                      //Frequenz in 10^13 Hz
+        Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
+        EdtWellenlaenge.Text := '436';
       end;
-   Abstand := AbstandMaxima(1000,Wellenlaenge);                        //Abstand Blende-Schirm: 1000m
-    Zeichnen(Abstand);
+    Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
+    FrmProjektionsflaeche.caption:=floattostr(abstand);
+    Zeichnen(Abstand*Zoomfaktor);
   end;
 end;
 
@@ -497,11 +519,11 @@ until posx < 0;
 end;
 
 
-{procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
+procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
 begin
   Abstand := AbstandMaxima(10,Konstantenbox.KViolett);                          //selber Fehler wie oben, restliche Panels fehlen daher
   Zeichnen(Abstand);
-end            }
+end;
 
 
 end.
