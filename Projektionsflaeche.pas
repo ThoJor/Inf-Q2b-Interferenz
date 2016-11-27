@@ -452,7 +452,7 @@ if key = #13 then
         Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
         EdtWellenlaenge.Text := '436';
       end;
-    Abstand := AbstandMaxima(1000,Wellenlaenge);
+    Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
     FrmProjektionsflaeche.caption:=floattostr(abstand);
     Zeichnen(Abstand*10000);
   end;
