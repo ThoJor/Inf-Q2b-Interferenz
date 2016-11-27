@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, UInfo, UVersuchsuebersicht, UToolbox;
 
 type
-  TForm1 = class(TForm)
+  TFrmHaupt = class(TForm)
     LProgrammname: TLabel;
     BtnStart: TButton;
     BtnVersuchsaufbau: TButton;
@@ -27,13 +27,13 @@ type
   end;
 
 var
-  FormHaupt: TForm1;
+  FormHaupt: TFrmHaupt;
 
 implementation
 
 {$R *.dfm}
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TFrmHaupt.FormCreate(Sender: TObject);
 begin
   HomeSettings;
   HeadingSettings;
@@ -43,7 +43,7 @@ begin
 end;
 
 //Eigenschaften des Hauptmenüs
-procedure TForm1.HomeSettings();
+procedure TFrmHaupt.HomeSettings();
 begin
   FormHaupt.Width := 400;
   FormHaupt.Height := 300;
@@ -52,7 +52,7 @@ begin
 end;
 
 //Eigenschaften der Überschrift
-procedure TForm1.HeadingSettings;
+procedure TFrmHaupt.HeadingSettings;
 begin
   LProgrammname.AutoSize := false;
   LProgrammname.Left := 0;
@@ -68,7 +68,7 @@ begin
 end;
 
 //Eigenschaften des Start-Button
-procedure TForm1.BtnStartSettings;
+procedure TFrmHaupt.BtnStartSettings;
 begin
   BtnStart.Top := LProgrammname.Top + (FormHaupt.Height div 5);
   BtnStart.Left := FormHaupt.Width div 10;
@@ -77,7 +77,7 @@ begin
 end;
 
 //Eigenschaften des Versuchsaufbau-Button
-procedure TForm1.BtnVersuchsaufbauSettings;
+procedure TFrmHaupt.BtnVersuchsaufbauSettings;
 begin
   BtnVersuchsaufbau.Top := BtnStart.Top + (FormHaupt.Height div 10);
   BtnVersuchsaufbau.Left := BtnStart.Left;
@@ -86,7 +86,7 @@ begin
 end;
 
 //Eigenschaften des Info-Labels (Inhalt: Nutzungsbedingungen und Impressum)
-procedure TForm1.LInfoSettings;
+procedure TFrmHaupt.LInfoSettings;
 begin
   LInfo.Autosize := false;
   LInfo.Left := 0;
@@ -100,12 +100,12 @@ begin
   LInfo.Font.Color := clgray;
 end;
 
-procedure TForm1.BtnVersuchsaufbauClick(Sender: TObject);
+procedure TFrmHaupt.BtnVersuchsaufbauClick(Sender: TObject);
 begin
   FormVersuchsuebersicht.ShowModal;
 end;
 
-procedure TForm1.LInfoClick(Sender: TObject);
+procedure TFrmHaupt.LInfoClick(Sender: TObject);
 begin
   FormInfo.ShowModal;
 end;
