@@ -2,19 +2,20 @@ unit UToolbox;
 
 interface
 
+function FrequenzInWellenlaenge (f:real):real;
+function AbstandMaxima (a,lambda:real) :real;
+
 implementation
 
-uses Math;
+uses Math, Konstantenbox;
 
-const KLichtgeschwindigkeit= 299792458;                                         //Lichtgeschwindigkeit in Meter pro Sekunde
-
-//Umrechnung einer übergebenen Frequenz f in die zugehörige Wellenlänge
+//Umrechnung einer Ã¼bergebenen Frequenz f in die zugehÃ¶rige WellenlÃ¤nge
 function FrequenzInWellenlaenge (f:real):real;
 begin
-  result:=KLichtgeschwindigkeit/f;
+  result:=Konstantenbox.KLichtgeschwindigkeit/f;
 end;
 
-//Berechnung des Abstands der Maxima 0. und 1. Ordnung auf dem Schirm mit übergebenem Abstand a zwischen Schirm und Blende sowie übergebener Wellenlänge lambda
+//Berechnung des Abstands der Maxima 0. und 1. Ordnung auf dem Schirm mit Ã¼bergebenem Abstand a zwischen Schirm und Blende sowie Ã¼bergebener WellenlÃ¤nge lambda
 function AbstandMaxima (a,lambda:real) :real;
 begin
   result:= a*tan(arcsin(lambda));
