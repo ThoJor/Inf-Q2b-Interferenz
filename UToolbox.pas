@@ -2,6 +2,9 @@ unit UToolbox;
 
 interface
 
+function FrequenzInWellenlaenge (f:real):real;
+function AbstandMaxima (a,lambda:real) :real;
+
 implementation
 
 uses Math;

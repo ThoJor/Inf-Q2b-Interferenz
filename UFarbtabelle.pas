@@ -2,6 +2,7 @@ unit UFarbtabelle;
 
 interface
 var Farben: Array[1..63,0..1] of string;                     //2D Statisches Array mit 63 Zeilen und 2 Spalten
+function Farbe(Wellenlaenge: string): string;
 
 implementation
 
