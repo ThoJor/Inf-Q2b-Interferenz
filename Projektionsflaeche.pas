@@ -67,7 +67,8 @@ type
 
 var
   FrmProjektionsflaeche: TFrmProjektionsflaeche;
-  Zentimeter, Abstand : Integer;
+  Zentimeter : Integer;
+  Abstand : real;
 
 const
   LabelHoehe= 20;
@@ -412,6 +413,7 @@ begin
   Linealbasis;
   Linealskala;
 //SCHIRM
+
 end;
 
 //////////////////////////////////////////////////////////////////////////////////
