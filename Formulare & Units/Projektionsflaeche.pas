@@ -3,9 +3,9 @@
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, graphische_Optionen,
-  Vcl.ComCtrls;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
+  graphische_Optionen, UFarbtabelle, UToolbox, Math, Vcl.ComCtrls, Konstantenbox;
 
 type
   TFrmProjektionsflaeche = class(TForm)
@@ -31,7 +31,8 @@ type
     PnlOrange: TPanel;
     PnlRot: TPanel;
     ImgLineal: TImage;
-    SBZoom: TScrollBar;
+    TBZoom: TTrackBar;
+    BtnStart: TButton;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -55,7 +56,13 @@ type
     procedure Linealskala;
     procedure Linealbasis;
     procedure Zoomleiste;
-    procedure SBZoomChange(Sender: TObject);
+    procedure TBZoomChange(Sender: TObject);
+    procedure EdtWellenlaengeKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtFrequenzKeyPress(Sender: TObject; var Key: Char);
+    procedure Zeichnen(a: real);
+    procedure PnlViolettClick(Sender: TObject);
+    procedure BtnStartClick(Sender: TObject);
+    procedure Startbutton;
   private
     { Private-Deklarationen }
   public
@@ -65,6 +72,8 @@ type
 var
   FrmProjektionsflaeche: TFrmProjektionsflaeche;
   Zentimeter : Integer;
+  Abstand : real;
+  Zoomfaktor : Integer;
 
 const
   LabelHoehe= 20;
@@ -260,6 +269,7 @@ begin
 end;
 
 
+
 procedure TFrmProjektionsflaeche.Optionspanel;
 begin
   //Panel Optionen
@@ -281,6 +291,7 @@ begin
   graphische_Optionen;
   Option_Farbe;
 end;
+
 
 procedure TFrmProjektionsflaeche.Canvaseinstellungen;
 begin
@@ -325,19 +336,28 @@ begin
   Optionen;
   Linealbasis;
   Linealskala;
+  Startbutton;
   Zoomleiste;
 end;
 
+procedure TFrmProjektionsflaeche.Startbutton;
+begin
+  BtnStart.Top:=BtnOptionen.Top+(BtnOptionen.Height*2)+5;
+  BtnStart.Left:=Schirm.Left;
+  BtnStart.Width:=50;
+  BtnStart.Height:=20;
+  BtnStart.Caption:='Start';
+end;
 
 procedure TFrmProjektionsflaeche.Zoomleiste;
 begin
-  SBZoom.Height:=10;
-  SBZoom.Width:=80;
-  SBZoom.Top:=ImgLineal.Top-SBZoom.Height;
-  SBZoom.Left:=FrmProjektionsflaeche.Width-SBZoom.Width;
-  SBzoom.Max:=100;
-  SBZoom.Min:=0;
-  SBZoom.Position:=50;
+  TBZoom.Height:=20;
+  TBZoom.Width:=120;
+  TBZoom.Top:=ImgLineal.Top-TBZoom.Height;
+  TBZoom.Left:=FrmProjektionsflaeche.Width-TBZoom.Width;
+  TBzoom.Max:=50;
+  TBZoom.Min:=1;
+  TBZoom.Position:=25;
 end;
 
 procedure TFrmProjektionsflaeche.Linealbasis;
@@ -349,6 +369,7 @@ begin
   ImgLineal.Top:=Round(FrmProjektionsflaeche.Height*4/5);
   with ImgLineal.canvas do
     begin
+      pen.Color:=ClBlack;
     //Umriss des Lineals
       Moveto(ImgLineal.Width-1,1);
       Lineto(1,1);
@@ -358,57 +379,160 @@ begin
     end;
 end;
 
-procedure TFrmProjektionsflaeche.SBZoomChange(Sender: TObject);
-begin
-  //qwe
-end;
-
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
-  I,J,K,dpi : Integer;
+  I,J,K : Integer;
 begin
   //Graphische Optionen - CBLineal
   // if graphische_Optionen.CBLineal.checked:=true then
-  //dpi:=Screen.PixelsPerInch;  //Funktioniert nicht wie es soll
-  dpi:=92; //dpi bei 24" 1080p
-  Zentimeter:=Round(1*dpi/2.54); //Platzhalter
+  Zentimeter:=TBZoom.Position;
   J:=0;
   K:=0;
+  ImgLineal.Picture:=nil;
   with ImgLineal.Canvas do
     begin
       //Striche von Mitte->Links mit Beschriftung
       for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
         begin
           J:=J+1;
-          //if J = Round(1*dpi/2.54) then begin  //cm = pixel*2,54/dpi   - cm*dpi/2,54=pixel  | DPI-basierte Version
           if J = Zentimeter then begin
-
-                                          moveto(I,1);
-                                          lineto(I,Round(ImgLineal.Height/3));
-                                          J:=0;
-                                          K:=K+1;
-                                          textout(penpos.X-2,penpos.Y,IntToStr(K));
-                                        end;
+                                   moveto(I,1);
+                                   lineto(I,Round(ImgLineal.Height/3));
+                                   J:=0;
+                                   K:=K+1;
+                                   textout(penpos.X-2,penpos.Y,IntToStr(K));
+                                 end;
         end;
       //Striche von Mitte->Rechts mit Beschriftung
-      //J:=Round(1*dpi/2.54);                                                                | DPI-Basierte Version
       J:=Zentimeter;
       K:=1;
-      //for I := Round(ImgLineal.Width/2)+Round(1*dpi/2.54) downto 11 do                     | DPI-Basierte Version
       for I := Round(ImgLineal.Width/2)+Zentimeter downto 1 do
-
         begin
           J:=J-1;
           if J = 0 then begin
-                                          moveto(I,1);
-                                          lineto(I,Round(ImgLineal.Height/3));
-                                          J:=36;
-                                          K:=K-1;
-                                          textout(penpos.X-7,penpos.Y,IntToStr(K));
-                                        end;
+                          moveto(I,1);
+                          lineto(I,Round(ImgLineal.Height/3));
+                          J:=Zentimeter;
+                          K:=K-1;
+                          textout(penpos.X-7,penpos.Y,IntToStr(K));
+                        end;
 
         end;
     end;
 end;
+
+procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
+begin
+  Zoomfaktor:=100000*TBZoom.Position;
+//LINEAL
+  //Lineal neu Zeichnen
+  Linealskala;
+//SCHIRM
+  Zeichnen(Abstand*Zoomfaktor);
+end;
+
+//////////////////////////////////////////////////////////////////////////////////
+
+procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
+  var Wellenlaenge: real;
+begin
+    Zoomfaktor:=100000*TBZoom.Position;
+    //Fehlerabfrage - fehlt (s. oben)
+    Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
+    if ((435.01*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (678.37*(Power(10,(-9))))) then
+      begin
+        Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
+        EdtWellenlaenge.Text := '436';
+      end;
+    Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
+    FrmProjektionsflaeche.caption:=floattostr(abstand);
+    Zeichnen(Abstand*Zoomfaktor);
+end;
+
+procedure TFrmProjektionsflaeche.EdtFrequenzKeyPress(Sender: TObject;
+  var Key: Char);
+var Frequenz, Wellenlaenge: real;
+begin
+if key = #13 then
+  begin
+    Zoomfaktor:=100000*TBZoom.Position;
+    //Fehlerabfrage - fehlt (s. oben)
+    Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
+    if ((435.01*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (678.37*(Power(10,(-9))))) then
+      begin
+        Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
+        EdtWellenlaenge.Text := '436';
+      end;
+    Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
+    FrmProjektionsflaeche.caption:=floattostr(abstand);
+    Zeichnen(Abstand*Zoomfaktor);
+  end;
+end;
+
+
+procedure TFrmProjektionsflaeche.EdtWellenlaengeKeyPress(Sender: TObject;
+  var Key: Char);
+var Wellenlaenge: real;
+begin
+if key = #13 then
+  begin
+    //Fehlerabfrage - fehlt (s. oben)
+    Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
+    if ((435.01*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (678.37*(Power(10,(-9))))) then
+      begin
+        Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
+        EdtWellenlaenge.Text := '436';
+      end;
+    Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
+    FrmProjektionsflaeche.caption:=floattostr(abstand);
+    Zeichnen(Abstand*10000);
+  end;
+end;
+
+
+procedure TFrmProjektionsflaeche.Zeichnen(a: real);
+var posx: integer;                                                              //x-Position des Stiftes
+    color: string;
+begin
+
+
+Schirm.Picture := nil;
+
+
+color := '$' + Ufarbtabelle.Farbe((EdtWellenlaenge.Text));
+Schirm.Canvas.Pen.Color := Stringtocolor(color);
+
+
+posx := Schirm.Width div 2;
+//Maximum 0. Ordnung
+Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
+Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
+
+
+//Maxima >0. Ordnung
+posx := Schirm.Width div 2;
+repeat
+  posx := round(posx + a);
+  Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
+  Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
+until posx > Schirm.Width;
+
+
+//Maxima <0. Ordnung
+posx := Schirm.Width div 2;
+repeat
+  posx := round(posx - a);
+  Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
+  Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
+until posx < 0;
+end;
+
+
+procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
+begin
+  Abstand := AbstandMaxima(10,Konstantenbox.KViolett);                          //selber Fehler wie oben, restliche Panels fehlen daher
+  Zeichnen(Abstand);
+end;
+
 
 end.
