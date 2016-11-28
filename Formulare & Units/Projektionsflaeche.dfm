@@ -107,7 +107,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Right = 2
     Margins.Bottom = 2
     TabOrder = 1
-    Text = 'EdtWellenlaenge'
+    Text = '500'
   end
   object EdtFrequenz: TEdit
     Left = 246
@@ -268,13 +268,25 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
       TabOrder = 6
     end
   end
-  object SBZoom: TScrollBar
-    Left = 600
-    Top = 352
-    Width = 121
-    Height = 17
-    PageSize = 0
+  object TBZoom: TTrackBar
+    Left = 584
+    Top = 314
+    Width = 150
+    Height = 45
+    Max = 25
+    Min = 1
+    Position = 1
+    PositionToolTip = ptTop
     TabOrder = 8
-    OnChange = SBZoomChange
+    OnChange = TBZoomChange
+  end
+  object BtnStart: TButton
+    Left = 216
+    Top = 96
+    Width = 75
+    Height = 25
+    Caption = 'BtnStart'
+    TabOrder = 9
+    OnClick = BtnStartClick
   end
 end
