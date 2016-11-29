@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, UInfo, UVersuchsuebersicht, UToolbox;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, UInfo, UVersuchsuebersicht, UToolbox, Projektionsflaeche;
 
 type
   TFrmHaupt = class(TForm)
@@ -20,7 +20,7 @@ type
     procedure BtnStartSettings();
     procedure BtnVersuchsaufbauSettings();
     procedure LInfoSettings();
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BtnStartClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -34,6 +34,7 @@ implementation
 
 {$R *.dfm}
 
+//Programm beim Schlieﬂen terminieren
 procedure TFrmHaupt.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Application.Terminate;
@@ -55,6 +56,7 @@ begin
   FormHaupt.Height := 300;
   FormHaupt.BorderStyle := bsDialog;
   FormHaupt.Caption := 'Interferenzo - Home';
+  FormHaupt.Position := poDesktopCenter;
 end;
 
 //Eigenschaften der ‹berschrift
@@ -104,6 +106,12 @@ begin
   LInfo.Layout := tlcenter;
   LInfo.Caption := 'Nutzungsbedingungen und Impressum';
   LInfo.Font.Color := clgray;
+end;
+
+procedure TFrmHaupt.BtnStartClick(Sender: TObject);
+begin
+  FrmProjektionsflaeche.Show;
+  FormHaupt.Hide;
 end;
 
 procedure TFrmHaupt.BtnVersuchsaufbauClick(Sender: TObject);
