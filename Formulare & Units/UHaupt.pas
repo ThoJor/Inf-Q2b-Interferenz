@@ -20,6 +20,7 @@ type
     procedure BtnStartSettings();
     procedure BtnVersuchsaufbauSettings();
     procedure LInfoSettings();
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private-Deklarationen }
   public
@@ -32,6 +33,11 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TFrmHaupt.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Application.Terminate;
+end;
 
 procedure TFrmHaupt.FormCreate(Sender: TObject);
 begin
