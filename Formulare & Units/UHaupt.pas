@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, UInfo, UVersuchsuebersicht, UToolbox, Projektionsflaeche;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, UInfo, UVersuchsuebersicht, UToolbox, Projektionsflaeche,
+  Vcl.ExtCtrls;
 
 type
   TFrmHaupt = class(TForm)
@@ -12,6 +13,7 @@ type
     BtnStart: TButton;
     BtnVersuchsaufbau: TButton;
     LInfo: TLabel;
+    TimerProjektionsflaeche: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure LInfoClick(Sender: TObject);
     procedure BtnVersuchsaufbauClick(Sender: TObject);
@@ -21,6 +23,7 @@ type
     procedure BtnVersuchsaufbauSettings();
     procedure LInfoSettings();
     procedure BtnStartClick(Sender: TObject);
+    procedure TimerProjektionsflaecheTimer(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -47,6 +50,8 @@ begin
   BtnStartSettings;
   BtnVersuchsaufbauSettings;
   LInfoSettings;
+
+  TimerProjektionsflaeche.Enabled:= false;
 end;
 
 //Eigenschaften des Hauptmenüs
@@ -108,10 +113,22 @@ begin
   LInfo.Font.Color := clgray;
 end;
 
+//Öffnen des Hauptmenüs beim Schließen der Projektionsfläche
+procedure TFrmHaupt.TimerProjektionsflaecheTimer(Sender: TObject);
+begin
+  if FrmProjektionsflaeche.Visible= false then
+  begin
+    FrmHaupt.Visible:= true;
+    TimerProjektionsflaeche.Enabled:= false;
+  end;
+end;
+
+//Zeigen der Projektionsfläche und Verstecken des Hauptmenüs
 procedure TFrmHaupt.BtnStartClick(Sender: TObject);
 begin
   FrmProjektionsflaeche.Show;
   FormHaupt.Hide;
+  TimerProjektionsflaeche.Enabled:= true;
 end;
 
 procedure TFrmHaupt.BtnVersuchsaufbauClick(Sender: TObject);
