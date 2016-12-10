@@ -63,6 +63,8 @@ type
     procedure PnlViolettClick(Sender: TObject);
     procedure BtnStartClick(Sender: TObject);
     procedure Startbutton;
+    procedure DrawGradientH(Canvas: TCanvas; Color1, Color2: TColor; Rect: TRect);
+    procedure Background;
   private
     { Private-Deklarationen }
   public
@@ -534,5 +536,52 @@ begin
   Zeichnen(Abstand);
 end;
 
+procedure TFrmProjektionsflaeche.DrawGradientH(Canvas: TCanvas; Color1, Color2: TColor; Rect: TRect);
+var
+  X, R, G, B: Integer;
+begin
+  for X := Rect.Top to Rect.Bottom do begin
+    R := Round(GetRValue(Color1) + ((GetRValue(Color2) - GetRValue(Color1)) *
+      X / (Rect.Bottom - Rect.Top)));
+    G := Round(GetGValue(Color1) + ((GetGValue(Color2) - GetGValue(Color1)) *
+      X / (Rect.Bottom - Rect.Top)));
+    B := Round(GetBValue(Color1) + ((GetBValue(Color2) - GetBValue(Color1)) *
+      X / (Rect.Bottom - Rect.Top)));
+
+    Canvas.Pen.Color := RGB(R, G, B);
+    Canvas.Pen.Width := 1;
+    Canvas.Pen.Style := psInsideFrame;
+
+    Canvas.MoveTo(Rect.Left, X);
+    Canvas.LineTo(Rect.Right, X);
+  end;
+end;
+
+procedure TFrmProjektionsflaeche.Background;
+begin
+   {
+      if TFrmGraphischeOptionen.white =true then
+      begin
+          FrmProjektionsflaeche.Schirm.Picture := nil;
+          FrmProjektionsflaeche.Schirm.Canvas.Brush.Color:=clWhite;
+          FrmProjektionsflaeche.Schirm.Canvas.Pen.Color:=clWhite;
+          FrmProjektionsflaeche.Schirm.Canvas.Rectangle(0,0,FrmProjektionsflaeche.Schirm.Width,FrmProjektionsflaeche.Schirm.Height);
+      end;
+
+      if TFrmGraphischeOptionen.black =true then
+      begin
+          FrmProjektionsflaeche.Schirm.Picture := nil;
+          FrmProjektionsflaeche.Schirm.Canvas.Brush.Color:=clblack;
+          FrmProjektionsflaeche.Schirm.Canvas.Pen.Color:=clblack;
+          FrmProjektionsflaeche.Schirm.Canvas.Rectangle(0,0,FrmProjektionsflaeche.Schirm.Width,FrmProjektionsflaeche.Schirm.Height);
+      end;
+
+      if TFrmGraphischeOptionen.verlauf =true then
+      begin
+        DrawGradientH(FrmProjektionsflaeche.Schirm.Canvas, $00A2AA77, $00FFFFE3, Rect(0, 0, Width, Height));
+      end;
+            }      //Fehrlerhaft,muss überarbeitet werden
+
+end;
 
 end.
