@@ -443,6 +443,7 @@ begin
       begin
         Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
         EdtWellenlaenge.Text := '436';
+        Wellenlaenge := 436 *(Power(10,(-9)));
       end;
     Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
     FrmProjektionsflaeche.caption:=floattostr(abstand);
@@ -457,11 +458,12 @@ if key = #13 then
   begin
     Zoomfaktor:=100000*TBZoom.Position;
     //Fehlerabfrage - fehlt (s. oben)
-    Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
+    Wellenlaenge := UToolbox.FrequenzInWellenlaenge(StrToFloat(EdtFrequenz.Text)*Power(10,(-9)));
     if ((435.01*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (678.37*(Power(10,(-9))))) then
       begin
         Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
-        EdtWellenlaenge.Text := '436';
+        EdtFrequenz.Text := '47';
+        Wellenlaenge := UToolbox.FrequenzInWellenlaenge(StrToFloat(EdtFrequenz.Text)*Power(10,(-9)));
       end;
     Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
     FrmProjektionsflaeche.caption:=floattostr(abstand);
