@@ -34,8 +34,6 @@
   ■ Öffnen der Versuchsübersicht
   ■ Öffnen des Impressums / der Nutzungsbedingungen
 □ Versuchsübersicht
-  ■ Anzeigen eines Bildes von Thomas Young
-  ■ Vergrößern des Bildes von Thomas Young und Anzeigen von dessen Quellenangabe bei Klick
   ■ Anzeigen eines Textes mit historischen Informationen und einer Erklärung des Versuchsaufbaus
   ■ Anzeigen eines Bildes zum Versuchsaufbau
 □ Impressum / Nutzungsbedingungen
