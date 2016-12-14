@@ -224,7 +224,7 @@ procedure TFrmProjektionsflaeche.Option_Abstand_Blende_Schirm;
 begin
   //Option Abstand Blende-Schirm
   EdtAbstand.Height:= EditHoehe;
-  EdtAbstand.Top:= FrmProjektionsflaeche.ClientHeight - (15 + EdtAbstand.Height);
+  EdtAbstand.Top:= FrmProjektionsflaeche.ClientHeight - (10 + EdtAbstand.Height);
   EdtAbstand.Left:= EditLeft;
   EdtAbstand.Width:= Schirm.Left - EdtAbstand.Left;
   EdtAbstand.Text:= '';
@@ -275,7 +275,7 @@ begin
   //Panel Optionen
   PnlOptionen.Caption:= 'Optionen';
   PnlOptionen.Left:= 0;
-  PnlOptionen.Top:= 0;
+  PnlOptionen.Top:= 10;
   PnlOptionen.Width:= Schirm.Left;
   PnlOptionen.Height:= PanelHoehe;
 end;
@@ -316,9 +316,9 @@ begin
   //Namensgebung
   FrmProjektionsflaeche.Caption:= 'Interferenzo - Projektionsfläche';
 
-  //Fenstergröße
-  FrmProjektionsflaeche.Width:= Round(Screen.Width * (2/3));
-  FrmProjektionsflaeche.Height:= Round(FrmProjektionsflaeche.Width * (9/16));
+  //Fenstergröße (Vollbild)
+  FrmProjektionsflaeche.ClientWidth:= Screen.Width;
+  FrmProjektionsflaeche.ClientHeight:= Screen.Height;
 
   //Fensterposition
   Position:= poScreenCenter;
