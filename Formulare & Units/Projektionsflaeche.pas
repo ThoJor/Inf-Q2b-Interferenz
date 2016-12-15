@@ -63,6 +63,13 @@ type
     procedure PnlViolettClick(Sender: TObject);
     procedure BtnStartClick(Sender: TObject);
     procedure Startbutton;
+    procedure DrawGradientH(Canvas: TCanvas; Color1, Color2: TColor; Rect: TRect);
+    procedure Background();
+    procedure PnlBlauClick(Sender: TObject);
+    procedure PnlGruenClick(Sender: TObject);
+    procedure PnlGelbClick(Sender: TObject);
+    procedure PnlOrangeClick(Sender: TObject);
+    procedure PnlRotClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -105,7 +112,7 @@ begin
   PnlOrange.Height:= Round(PnlFarbe.Height * (1/4));
   PnlOrange.Caption:= '';
   PnlOrange.ParentBackground:= false;
-  PnlOrange.Color:= clFuchsia;                                                  //nur Platzhalter
+  PnlOrange.Color:= StringToColor('$00A5FF');
 end;
 
 procedure TFrmProjektionsflaeche.Farbe_Gelb;
@@ -267,7 +274,6 @@ begin
   EdtWellenlaenge.Height:= EditHoehe;
   EdtWellenlaenge.Text:= '';
 end;
-
 
 
 procedure TFrmProjektionsflaeche.Optionspanel;
@@ -433,23 +439,61 @@ end;
 
 //////////////////////////////////////////////////////////////////////////////////
 
+//Berechnung und Zeichnen über Startbutton
 procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
   var Wellenlaenge: real;
 begin
+//Berechnung und Zeichnen über Wellenlängen-Eingabe
+if EdtFrequenz.Text = '' then
+begin
     Zoomfaktor:=100000*TBZoom.Position;
-    //Fehlerabfrage - fehlt (s. oben)
+
+    //Fehlerabfrage für doppelte Eingabe
+  if not (EdtWellenlaenge.Text = '') and not (EdtFrequenz.Text = '') then
+    Showmessage('Bitte gib eine Wellenlänge ODER eine Frequenz an')
+    else
+    begin
+    //Fehlerabfrage für ungültige Wellenlänge
     Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
-    if ((435.01*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (678.37*(Power(10,(-9))))) then
+    if ((380.00*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (780.00*(Power(10,(-9))))) then
       begin
         Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
-        EdtWellenlaenge.Text := '436';
-        Wellenlaenge := 436 *(Power(10,(-9)));
+        EdtWellenlaenge.Text := '380';
+        Wellenlaenge := 380 *(Power(10,(-9)));
       end;
+
+    //Aufruf zur Berechnung und zum Zeichnen
     Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
-    FrmProjektionsflaeche.caption:=floattostr(abstand);
+    Zeichnen(Abstand*Zoomfaktor);
+    end;
+end;
+
+//Berechnung und Zeichnen über Frequenz-Eingabe
+if EdtWellenlaenge.Text = '' then
+begin
+    Zoomfaktor:=100000*TBZoom.Position;
+
+    //Fehlerabfrage für ungültige Frequenz
+    Wellenlaenge := UToolbox.FrequenzInWellenlaenge(StrToFloat(EdtFrequenz.Text)*Power(10,(13)));
+    if ((380*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (780*(Power(10,(-9))))) then
+      begin
+        Showmessage('Bitte gib eine Frequenz aus dem Bereich des sichtbaren Lichts an.');
+        EdtFrequenz.Text := '47';
+        Wellenlaenge := UToolbox.FrequenzInWellenlaenge(StrToFloat(EdtFrequenz.Text)*Power(10,(13)));
+      end;
+
+    //Aufruf zur Berechnung und zum Zeichnen
+    Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
     Zeichnen(Abstand*Zoomfaktor);
 end;
 
+//Fehlerabfrage für fehlende Eingabe
+if (EdtWellenlaenge.Text = '') and (EdtFrequenz.Text = '') then
+  Showmessage('Bitte gib eine Wellenlänge oder eine Frequenz an.');
+
+end;
+
+//Berechnung und Zeichnen bei Enter im Frequenz-Editfeld
 procedure TFrmProjektionsflaeche.EdtFrequenzKeyPress(Sender: TObject;
   var Key: Char);
 var Frequenz, Wellenlaenge: real;
@@ -457,36 +501,55 @@ begin
 if key = #13 then
   begin
     Zoomfaktor:=100000*TBZoom.Position;
-    //Fehlerabfrage - fehlt (s. oben)
-    Wellenlaenge := UToolbox.FrequenzInWellenlaenge(StrToFloat(EdtFrequenz.Text)*Power(10,(-9)));
-    if ((435.01*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (678.37*(Power(10,(-9))))) then
+    //Fehlerabfrage für leeres Edit-Feld
+    if EdtFrequenz.Text = '' then
+    begin
+      Showmessage('Bitte gib einen gültigen Zahlenwert ein');
+      EdtFrequenz.Text := '47';
+    end;
+
+    //Fehlerabfrage für ungültige Frequenz
+    Wellenlaenge := UToolbox.FrequenzInWellenlaenge(StrToFloat(EdtFrequenz.Text)*Power(10,(13)));
+    if ((380*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (780*(Power(10,(-9))))) then
       begin
-        Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
+        Showmessage('Bitte gib eine Frequenz aus dem Bereich des sichtbaren Lichts an.');
         EdtFrequenz.Text := '47';
-        Wellenlaenge := UToolbox.FrequenzInWellenlaenge(StrToFloat(EdtFrequenz.Text)*Power(10,(-9)));
+        Wellenlaenge := UToolbox.FrequenzInWellenlaenge(StrToFloat(EdtFrequenz.Text)*Power(10,(13)));
       end;
+
+    //Aufruf zur Berechnung und zum Zeichnen
     Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
-    FrmProjektionsflaeche.caption:=floattostr(abstand);
     Zeichnen(Abstand*Zoomfaktor);
   end;
 end;
 
 
+//Berechnung und Zeichnen bei Enter im Wellenlängen-Editfeld
 procedure TFrmProjektionsflaeche.EdtWellenlaengeKeyPress(Sender: TObject;
   var Key: Char);
 var Wellenlaenge: real;
 begin
 if key = #13 then
   begin
-    //Fehlerabfrage - fehlt (s. oben)
+     Zoomfaktor := 100000*TBZoom.Position;
+    //Fehlerabfrage für leeres Edit-Feld
+    if EdtWellenlaenge.Text = '' then
+    begin
+      Showmessage('Bitte gib einen gültigen Zahlenwert ein.');
+      EdtWellenlaenge.Text := '380';
+    end;
+
+    //Fehlerabfrage für ungültige Wellenlängen
     Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
-    if ((435.01*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (678.37*(Power(10,(-9))))) then
+    if ((380*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (780*(Power(10,(-9))))) then
       begin
         Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
-        EdtWellenlaenge.Text := '436';
+        EdtWellenlaenge.Text := '380';
+        Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
       end;
+
+    //Aufruf zur Berechnung und zum Zeichnen
     Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
-    FrmProjektionsflaeche.caption:=floattostr(abstand);
     Zeichnen(Abstand*10000);
   end;
 end;
@@ -496,22 +559,21 @@ procedure TFrmProjektionsflaeche.Zeichnen(a: real);
 var posx: integer;                                                              //x-Position des Stiftes
     color: string;
 begin
-
-
+//Leeren des Schirms
 Schirm.Picture := nil;
 
-
+//Zuweisung der Stiftfarbe
 color := '$' + Ufarbtabelle.Farbe((EdtWellenlaenge.Text));
 Schirm.Canvas.Pen.Color := Stringtocolor(color);
 
-
+//Stift in Schirmmitte positionieren
 posx := Schirm.Width div 2;
-//Maximum 0. Ordnung
+
+//Maximum 0. Ordnung zeichnen
 Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
 Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
 
-
-//Maxima >0. Ordnung
+//Maxima >0. Ordnung zeichnen (Maxima rechts der Mitte)
 posx := Schirm.Width div 2;
 repeat
   posx := round(posx + a);
@@ -520,7 +582,7 @@ repeat
 until posx > Schirm.Width;
 
 
-//Maxima <0. Ordnung
+//Maxima <0. Ordnung zeichnen (Maxima links der Mitte)
 posx := Schirm.Width div 2;
 repeat
   posx := round(posx - a);
@@ -529,11 +591,107 @@ repeat
 until posx < 0;
 end;
 
+////////////////////////////////////////////////////////////////////////////////
 
+//Berechnung und Zeichnen über die Panels
+
+//Panel Blau
+procedure TFrmProjektionsflaeche.PnlBlauClick(Sender: TObject);
+begin
+  Abstand := AbstandMaxima(1000,Konstantenbox.KBlau)*(1/TBZoom.Position);
+  Zeichnen(Abstand);
+end;
+
+//Panel Gelb
+procedure TFrmProjektionsflaeche.PnlGelbClick(Sender: TObject);
+begin
+  Abstand := AbstandMaxima(1000,Konstantenbox.KGelb)*(1/TBZoom.Position);
+  Zeichnen(Abstand);
+end;
+
+//Panel Grün
+procedure TFrmProjektionsflaeche.PnlGruenClick(Sender: TObject);
+begin
+  Abstand := AbstandMaxima(1000,Konstantenbox.KGruen)*(1/TBZoom.Position);
+  Zeichnen(Abstand);
+end;
+
+//Panel Orange
+procedure TFrmProjektionsflaeche.PnlOrangeClick(Sender: TObject);
+begin
+  Abstand := AbstandMaxima(1000,Konstantenbox.KOrange)*(1/TBZoom.Position);
+  Zeichnen(Abstand);
+end;
+
+//Panel Rot
+procedure TFrmProjektionsflaeche.PnlRotClick(Sender: TObject);
+begin
+  Abstand := AbstandMaxima(1000,Konstantenbox.KRot)*(1/TBZoom.Position);
+  Zeichnen(Abstand);
+end;
+
+//Panel Violett
 procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
 begin
-  Abstand := AbstandMaxima(10,Konstantenbox.KViolett);                          //selber Fehler wie oben, restliche Panels fehlen daher
+  Abstand := AbstandMaxima(1000,Konstantenbox.KViolett)*(1/TBZoom.Position);
   Zeichnen(Abstand);
+end;
+
+////////////////////////////////////////////////////////////////////////////////
+
+//HINTERGRUND
+
+//Farbverlauf von einer beliebigen Farbe Color1 zu einer beliebigen Farbe Color2 (horizontal)
+procedure TFrmProjektionsflaeche.DrawGradientH(Canvas: TCanvas; Color1, Color2: TColor; Rect: TRect);
+var
+  x, r, g, b: integer;
+begin
+
+  for X := Rect.Top to Rect.Bottom do begin
+    R := Round(GetRValue(Color1) + ((GetRValue(Color2) - GetRValue(Color1)) *
+      X / (Rect.Bottom - Rect.Top)));
+    G := Round(GetGValue(Color1) + ((GetGValue(Color2) - GetGValue(Color1)) *
+      X / (Rect.Bottom - Rect.Top)));
+    B := Round(GetBValue(Color1) + ((GetBValue(Color2) - GetBValue(Color1)) *
+      X / (Rect.Bottom - Rect.Top)));
+
+    Canvas.Pen.Color := RGB(R, G, B);
+    Canvas.Pen.Width := 1;
+    Canvas.Pen.Style := psInsideFrame;
+
+    Canvas.MoveTo(Rect.Left, X);
+    Canvas.LineTo(Rect.Right, X);
+
+end;
+end;
+
+//Festlegung des Hintergrundes mit Abstimmung mit den Checkboxen der Graphischen Optionen
+procedure TFrmProjektionsflaeche.Background();
+begin
+
+  begin
+  if FrmgraphischeOptionen.ChBBgBlack.Checked = true then
+  begin
+    Schirm.Picture := nil;
+    Schirm.Canvas.Brush.Color:=clblack;
+    Schirm.Canvas.Pen.Color:=clblack;
+    Schirm.Canvas.Rectangle(0,0,Schirm.Width,Schirm.Height);
+  end;
+
+  if FrmgraphischeOptionen.ChBBgWhite.Checked = true then
+  begin
+    Schirm.Picture := nil;
+    Schirm.Canvas.Brush.Color:=clWhite;
+    Schirm.Canvas.Pen.Color:=clWhite;
+    Schirm.Canvas.Rectangle(0,0,Schirm.Width,Schirm.Height);
+  end;
+
+  if FrmgraphischeOptionen.ChBBgVerlauf.Checked = true then
+  begin
+    DrawGradientH(Schirm.Canvas, $00A2AA77, $00FFFFE3, Rect(0, 0, Width, Height));
+  end;
+end;
+
 end;
 
 
