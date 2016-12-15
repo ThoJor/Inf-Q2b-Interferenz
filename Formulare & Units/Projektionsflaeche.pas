@@ -328,6 +328,10 @@ begin
 
   //Fensterposition
   Position:= poScreenCenter;
+
+  //Pixeldichte festlegen (Full-HD 21,5 Zoll)
+  PixelsPerInch := 102;
+
 end;
 
 procedure TFrmProjektionsflaeche.BtnOptionenClick(Sender: TObject);
