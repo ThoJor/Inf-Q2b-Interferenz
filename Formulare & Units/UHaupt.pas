@@ -4,8 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, UInfo, UVersuchsuebersicht, UToolbox, Projektionsflaeche,
-  Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UInfo, UVersuchsuebersicht, UToolbox, Projektionsflaeche,
+  Vcl.ExtCtrls, Vcl.StdCtrls;
 
 type
   TFrmHaupt = class(TForm)
@@ -15,14 +15,15 @@ type
     LInfo: TLabel;
     TimerProjektionsflaeche: TTimer;
     procedure FormCreate(Sender: TObject);
-    procedure LInfoClick(Sender: TObject);
-    procedure BtnVersuchsaufbauClick(Sender: TObject);
     procedure HomeSettings();
     procedure HeadingSettings();
     procedure BtnStartSettings();
     procedure BtnVersuchsaufbauSettings();
     procedure LInfoSettings();
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BtnStartClick(Sender: TObject);
+    procedure BtnVersuchsaufbauClick(Sender: TObject);
+    procedure LInfoClick(Sender: TObject);
     procedure TimerProjektionsflaecheTimer(Sender: TObject);
   private
     { Private-Deklarationen }
@@ -31,11 +32,12 @@ type
   end;
 
 var
-  FormHaupt: TFrmHaupt;
+  FrmHaupt: TFrmHaupt;
 
 implementation
 
 {$R *.dfm}
+
 
 //Programm beim Schließen terminieren
 procedure TFrmHaupt.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -57,11 +59,11 @@ end;
 //Eigenschaften des Hauptmenüs
 procedure TFrmHaupt.HomeSettings();
 begin
-  FormHaupt.Width := 400;
-  FormHaupt.Height := 300;
-  FormHaupt.BorderStyle := bsDialog;
-  FormHaupt.Caption := 'Interferenzo - Home';
-  FormHaupt.Position := poDesktopCenter;
+  FrmHaupt.Width := 400;
+  FrmHaupt.Height := 300;
+  FrmHaupt.BorderStyle := bsDialog;
+  FrmHaupt.Caption := 'Interferenzo - Home';
+  FrmHaupt.Position := poDesktopCenter;
 end;
 
 //Eigenschaften der Überschrift
@@ -69,8 +71,8 @@ procedure TFrmHaupt.HeadingSettings;
 begin
   LProgrammname.AutoSize := false;
   LProgrammname.Left := 0;
-  LProgrammname.Top := FormHaupt.Height div 20;
-  LProgrammname.Width := FormHaupt.Width;
+  LProgrammname.Top := FrmHaupt.Height div 20;
+  LProgrammname.Width := FrmHaupt.Width;
   LProgrammname.Font.Size := 16;
   LProgrammname.Height := LProgrammname.Font.Size + 10;
   LProgrammname.Alignment := tacenter;
@@ -80,31 +82,52 @@ begin
   LProgrammname.Font.Style := [fsunderline];
 end;
 
+//Zeigen der Projektionsfläche und Verstecken des Hauptmenüs
+procedure TFrmHaupt.BtnStartClick(Sender: TObject);
+begin
+  FrmProjektionsflaeche.Show;
+  FrmHaupt.Hide;
+  TimerProjektionsflaeche.Enabled:= true;
+end;
+
+
 //Eigenschaften des Start-Button
 procedure TFrmHaupt.BtnStartSettings;
 begin
-  BtnStart.Top := LProgrammname.Top + (FormHaupt.Height div 5);
-  BtnStart.Left := FormHaupt.Width div 10;
-  BtnStart.Width := FormHaupt.Width - (FormHaupt.Width div 5);
+  BtnStart.Top := LProgrammname.Top + (FrmHaupt.Height div 5);
+  BtnStart.Left := FrmHaupt.Width div 10;
+  BtnStart.Width := FrmHaupt.Width - (FrmHaupt.Width div 5);
   BtnStart.Caption := 'Start';
+end;
+
+
+procedure TFrmHaupt.BtnVersuchsaufbauClick(Sender: TObject);
+begin
+  FormVersuchsuebersicht.ShowModal;
 end;
 
 //Eigenschaften des Versuchsaufbau-Button
 procedure TFrmHaupt.BtnVersuchsaufbauSettings;
 begin
-  BtnVersuchsaufbau.Top := BtnStart.Top + (FormHaupt.Height div 10);
+  BtnVersuchsaufbau.Top := BtnStart.Top + (FrmHaupt.Height div 10);
   BtnVersuchsaufbau.Left := BtnStart.Left;
   BtnVersuchsaufbau.Width := BtnStart.Width;
   BtnVersuchsaufbau.Caption := 'Versuchsübersicht';
 end;
 
-//Eigenschaften des Info-Labels (Inhalt: Nutzungsbedingungen und Impressum)
+
+procedure TFrmHaupt.LInfoClick(Sender: TObject);
+begin
+  FormInfo.ShowModal;
+end;
+
+//Eigenschaften des Info-Labels (Inhalt: Nutzungsbedingungen und Kontakt)
 procedure TFrmHaupt.LInfoSettings;
 begin
   LInfo.Autosize := false;
   LInfo.Left := 0;
-  LInfo.Top := FormHaupt.Height - (FormHaupt.Height div 5);
-  LInfo.Width := FormHaupt.Width;
+  LInfo.Top := FrmHaupt.Height - (FrmHaupt.Height div 5);
+  LInfo.Width := FrmHaupt.Width;
   LInfo.Font.Size := 8;
   LInfo.Height := LInfo.Font.Size + 10;
   LInfo.Alignment := tacenter;
@@ -122,24 +145,5 @@ begin
     TimerProjektionsflaeche.Enabled:= false;
   end;
 end;
-
-//Zeigen der Projektionsfläche und Verstecken des Hauptmenüs
-procedure TFrmHaupt.BtnStartClick(Sender: TObject);
-begin
-  FrmProjektionsflaeche.Show;
-  FormHaupt.Hide;
-  TimerProjektionsflaeche.Enabled:= true;
-end;
-
-procedure TFrmHaupt.BtnVersuchsaufbauClick(Sender: TObject);
-begin
-  FormVersuchsuebersicht.ShowModal;
-end;
-
-procedure TFrmHaupt.LInfoClick(Sender: TObject);
-begin
-  FormInfo.ShowModal;
-end;
-
 
 end.

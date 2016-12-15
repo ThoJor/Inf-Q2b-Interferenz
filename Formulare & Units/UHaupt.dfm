@@ -2,70 +2,54 @@ object FrmHaupt: TFrmHaupt
   Left = 0
   Top = 0
   Caption = 'FrmHaupt'
-  ClientHeight = 643
-  ClientWidth = 785
+  ClientHeight = 299
+  ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 120
-  TextHeight = 17
+  PixelsPerInch = 96
+  TextHeight = 13
   object LProgrammname: TLabel
-    Left = 0
-    Top = 0
-    Width = 106
-    Height = 17
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 8
+    Top = 8
+    Width = 79
+    Height = 13
     Caption = 'LProgrammname'
   end
   object LInfo: TLabel
-    Left = 0
-    Top = 106
-    Width = 31
-    Height = 17
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 8
+    Top = 89
+    Width = 25
+    Height = 13
     Caption = 'LInfo'
     OnClick = LInfoClick
   end
   object BtnStart: TButton
-    Left = 10
-    Top = 25
-    Width = 99
-    Height = 33
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 8
+    Top = 27
+    Width = 75
+    Height = 25
     Caption = 'BtnStart'
     TabOrder = 0
+    OnClick = BtnStartClick
   end
   object BtnVersuchsaufbau: TButton
-    Left = 10
-    Top = 65
-    Width = 99
-    Height = 33
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 8
+    Top = 58
+    Width = 75
+    Height = 25
     Caption = 'BtnVersuchsaufbau'
     TabOrder = 1
     OnClick = BtnVersuchsaufbauClick
   end
   object TimerProjektionsflaeche: TTimer
-    Interval = 50
-    OnTimer = TimerProjektionsflaecheTimer
-    Left = 696
-    Top = 16
+    Left = 8
+    Top = 112
   end
 end
