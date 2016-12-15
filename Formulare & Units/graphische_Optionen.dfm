@@ -15,8 +15,8 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
   PixelsPerInch = 96
   TextHeight = 12
   object CBLineal: TCheckBox
-    Left = 96
-    Top = 48
+    Left = 7
+    Top = 7
     Width = 73
     Height = 13
     Margins.Left = 2
@@ -25,5 +25,29 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
     Margins.Bottom = 2
     Caption = 'CBLineal'
     TabOrder = 0
+  end
+  object ChBBgBlack: TCheckBox
+    Left = 8
+    Top = 25
+    Width = 97
+    Height = 17
+    Caption = 'ChBBgBlack'
+    TabOrder = 1
+  end
+  object ChBBgWhite: TCheckBox
+    Left = 8
+    Top = 48
+    Width = 97
+    Height = 17
+    Caption = 'ChBBgWhite'
+    TabOrder = 2
+  end
+  object ChBBgVerlauf: TCheckBox
+    Left = 8
+    Top = 72
+    Width = 97
+    Height = 17
+    Caption = 'ChBBgVerlauf'
+    TabOrder = 3
   end
 end
