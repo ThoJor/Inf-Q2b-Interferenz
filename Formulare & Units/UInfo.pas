@@ -91,7 +91,7 @@ begin
   LImpressumHead.Left := FormInfo.Width div 10;
   LImpressumHead.Top := (FormInfo.Height div 2) + FormInfo.Height div 10;
   LImpressumHead.Font.Color := clTeal;
-  LImpressumHead.Caption := 'Impressum';
+  LImpressumHead.Caption := 'Kontakt';
 end;
 
 //Eigenschaften des Impressums

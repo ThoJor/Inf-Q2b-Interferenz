@@ -109,7 +109,7 @@ begin
   LInfo.Height := LInfo.Font.Size + 10;
   LInfo.Alignment := tacenter;
   LInfo.Layout := tlcenter;
-  LInfo.Caption := 'Nutzungsbedingungen und Impressum';
+  LInfo.Caption := 'Nutzungsbedingungen & Kontaktinformationen';
   LInfo.Font.Color := clgray;
 end;
 
