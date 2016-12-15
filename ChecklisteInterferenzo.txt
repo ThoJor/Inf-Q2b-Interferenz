@@ -58,6 +58,10 @@
   ■ Anzeigen eines Maßstabes
 □ Graphische Optionen
   ■ Möglichkeit der Aktivierung / Deaktivierung des Lineals mit Einheiten des metrischen Systems
+  ■ Möglichkeit der Aktivierung / Deaktivierung sich gegenseitig ausschließender Hintergründe
+    ■ weißer Hintergrund
+    ■ schwarzer Hintergrund
+    ■ Farbverlauf von Schwarz zu Weiß als Hintergrund
 
 <b>Sonstige nichtfunktionale Anforderungen</b>
 □ Gewährleistung von schneller Ergebnisberechnung
