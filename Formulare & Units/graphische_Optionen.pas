@@ -9,6 +9,9 @@ uses
 type
   TFrmGraphischeOptionen = class(TForm)
     CBLineal: TCheckBox;
+    ChBBgBlack: TCheckBox;
+    ChBBgWhite: TCheckBox;
+    ChBBgVerlauf: TCheckBox;
     procedure FormCreate(Sender: TObject);
   private
     { Private-Deklarationen }
@@ -27,11 +30,16 @@ implementation
 
 {$R *.dfm}
 
+
 procedure TFrmGraphischeOptionen.FormCreate(Sender: TObject);
 begin
   //Namensgebung
   FrmGraphischeOptionen.Caption:= 'Interferenzo - Optionen';
   CBLineal.Caption:= 'Lineal';
+  ChBBgBlack.Caption:= 'Schwarz';
+  ChBBgWhite.Caption:= 'Weiß';
+  ChBBgVerlauf.Caption:= 'Verlauf';
+
 
   //Fenstergröße
   FrmGraphischeOptionen.Width:= 500;
@@ -42,14 +50,28 @@ begin
 
   //Position CheckBox
   CBLineal.Top:= 15;
+  ChBBgBlack.Top:= 15*2+CheckBoxHoehe;
+  ChBBgBlack.Width:= 15*3+CheckBoxHoehe*2;
+  ChBBgVerlauf.Top:= 15*4+CheckBoxHoehe*3;
   CBLineal.Left:= 20;
+  ChBBgBlack.Left:= 20;
+  ChBBgWhite.Left:= 20;
+  ChBBgVerlauf.Left:= 20;
 
   //Größe CheckBox
   CBLineal.Height:= CheckBoxHoehe;
+  ChBBgBlack.Height := CheckBoxHoehe;
+  ChBBgWhite.Height := CheckBoxHoehe;
+  ChBBgVerlauf.Height := CheckBoxHoehe;
   CBLineal.Width:= CheckBoxWidth;
+  ChBBgBlack.Width := CheckBoxWidth;
+  ChBBgWhite.Width := CheckBoxWidth;
+  ChBBgVerlauf.Width := CheckBoxWidth;
 
   //Lineal per default an
   CBLineal.Checked:= true;
+
+
 end;
 
 end.
