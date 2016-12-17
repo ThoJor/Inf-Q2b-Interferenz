@@ -25,6 +25,7 @@ var
 const
   CheckBoxHoehe= 20;
   CheckBoxWidth= 300;
+  AnzahlCheckboxen= 4
 
 implementation
 
@@ -37,13 +38,13 @@ begin
   FrmGraphischeOptionen.Caption:= 'Interferenzo - Optionen';
   CBLineal.Caption:= 'Lineal';
   ChBBgBlack.Caption:= 'Schwarz';
-  ChBBgWhite.Caption:= 'Weiﬂ';
+  ChBBgWhite.Caption:= 'Wei√ü';
   ChBBgVerlauf.Caption:= 'Verlauf';
 
 
-  //Fenstergrˆﬂe
+  //Fenstergr√∂√üe
   FrmGraphischeOptionen.Width:= 500;
-  FrmGraphischeOptionen.Height:= 100;
+  FrmGraphischeOptionen.Height:= (50 * AnzahlCheckboxen) + 50;
 
   //Fensterposition
   Position:= poScreenCenter;
@@ -58,7 +59,7 @@ begin
   ChBBgWhite.Left:= 20;
   ChBBgVerlauf.Left:= 20;
 
-  //Grˆﬂe CheckBox
+  //Gr√∂√üe CheckBox
   CBLineal.Height:= CheckBoxHoehe;
   ChBBgBlack.Height := CheckBoxHoehe;
   ChBBgWhite.Height := CheckBoxHoehe;
