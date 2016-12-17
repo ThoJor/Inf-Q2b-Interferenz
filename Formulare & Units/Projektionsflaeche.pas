@@ -4,8 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
-  graphische_Optionen, UFarbtabelle, UToolbox, Math, Vcl.ComCtrls, Konstantenbox;
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Math,
+  graphische_Optionen, UFarbtabelle, UToolbox, Vcl.ComCtrls, Konstantenbox;
 
 type
   TFrmProjektionsflaeche = class(TForm)
@@ -33,6 +33,7 @@ type
     ImgLineal: TImage;
     TBZoom: TTrackBar;
     BtnStart: TButton;
+    BtnBeenden: TButton;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -57,8 +58,6 @@ type
     procedure Linealbasis;
     procedure Zoomleiste;
     procedure TBZoomChange(Sender: TObject);
-    procedure EdtWellenlaengeKeyPress(Sender: TObject; var Key: Char);
-    procedure EdtFrequenzKeyPress(Sender: TObject; var Key: Char);
     procedure Zeichnen(a: real);
     procedure PnlViolettClick(Sender: TObject);
     procedure BtnStartClick(Sender: TObject);
@@ -70,6 +69,8 @@ type
     procedure PnlGelbClick(Sender: TObject);
     procedure PnlOrangeClick(Sender: TObject);
     procedure PnlRotClick(Sender: TObject);
+    procedure BtnBeendenClick(Sender: TObject);
+    procedure Endbutton;
   private
     { Private-Deklarationen }
   public
@@ -257,6 +258,7 @@ begin
   EdtFrequenz.Width:= Schirm.Left - EdtFrequenz.Left;
   EdtFrequenz.Height:= EditHoehe;
   EdtFrequenz.Text:= '';
+  EdtFrequenz.ReadOnly:=true;
 end;
 
 procedure TFrmProjektionsflaeche.Option_Wellenlaenge;
@@ -332,11 +334,13 @@ begin
   //Pixeldichte festlegen (Full-HD 21,5 Zoll)
   PixelsPerInch:= 102;
 
-  //Textgröße festlegen (Full-HD 21,5 Zoll)
-  TextHeight:= 14;
-
   //Fontgröße festlegen (Full-HD 21,5 Zoll)
   Font.Height:= -13;
+end;
+
+procedure TFrmProjektionsflaeche.BtnBeendenClick(Sender: TObject);
+begin
+  FrmProjektionsflaeche.Hide;
 end;
 
 procedure TFrmProjektionsflaeche.BtnOptionenClick(Sender: TObject);
@@ -352,6 +356,7 @@ begin
   Linealbasis;
   Linealskala;
   Startbutton;
+  Endbutton;
   Zoomleiste;
 end;
 
@@ -364,15 +369,25 @@ begin
   BtnStart.Caption:='Start';
 end;
 
+procedure TFrmProjektionsflaeche.Endbutton;
+begin
+  BtnBeenden.Top:=BtnOptionen.Top+(BtnOptionen.Height*2)+50;
+  BtnBeenden.Left:=Schirm.Left;
+  BtnBeenden.Width:=20;
+  BtnBeenden.Height:=20;
+  BtnBeenden.Caption:='X';
+end;
+
 procedure TFrmProjektionsflaeche.Zoomleiste;
 begin
   TBZoom.Height:=20;
   TBZoom.Width:=120;
   TBZoom.Top:=ImgLineal.Top-TBZoom.Height;
   TBZoom.Left:=FrmProjektionsflaeche.Width-TBZoom.Width;
-  TBzoom.Max:=50;
+  TBzoom.Max:=100;
   TBZoom.Min:=1;
-  TBZoom.Position:=25;
+  TBZoom.Position:=50;
+  TBZoom.Visible:=False;
 end;
 
 procedure TFrmProjektionsflaeche.Linealbasis;
@@ -400,7 +415,7 @@ var
 begin
   //Graphische Optionen - CBLineal
   // if graphische_Optionen.CBLineal.checked:=true then
-  Zentimeter:=TBZoom.Position;
+  Zentimeter:=Round(ImgLineal.Width/20);
   J:=0;
   K:=0;
   ImgLineal.Picture:=nil;
@@ -450,117 +465,36 @@ end;
 
 //Berechnung und Zeichnen über Startbutton
 procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
-  var Wellenlaenge: real;
+  var Wellenlaenge,Frequenz: real;
 begin
-//Berechnung und Zeichnen über Wellenlängen-Eingabe
-if EdtFrequenz.Text = '' then
-begin
-    Zoomfaktor:=100000*TBZoom.Position;
-
-    //Fehlerabfrage für doppelte Eingabe
-  if not (EdtWellenlaenge.Text = '') and not (EdtFrequenz.Text = '') then
-    Showmessage('Bitte gib eine Wellenlänge ODER eine Frequenz an')
-    else
+  TBZoom.position:=50;
+  TBZoom.Visible:=true;
+  //Berechnung und Zeichnen über Wellenlängen-Eingabe
+  if EdtFrequenz.Text = '' then
+    if EdtWellenlaenge.Text<> '' then
     begin
-    //Fehlerabfrage für ungültige Wellenlänge
-    Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
-    if ((380.00*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (780.00*(Power(10,(-9))))) then
-      begin
-        Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
-        EdtWellenlaenge.Text := '380';
-        Wellenlaenge := 380 *(Power(10,(-9)));
-      end;
-
-    //Aufruf zur Berechnung und zum Zeichnen
-    Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
-    Zeichnen(Abstand*Zoomfaktor);
+      //Fehlerabfrage für doppelte Eingabe
+      if not (EdtFrequenz.Text = '') then
+        Showmessage('Bitte gib eine Wellenlänge ODER eine Frequenz an')
+        else
+          //Frequenz ergänzen
+          Frequenz:=Konstantenbox.KLichtgeschwindigkeit/(StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9))));
+          EdtFrequenz.text:=FloatToStr(Frequenz);
+          begin
+            //Fehlerabfrage für ungültige Wellenlänge
+            Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
+              if ((380.00*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (780.00*(Power(10,(-9))))) then
+                begin
+                  Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
+                  EdtWellenlaenge.Text := '380';
+                  Wellenlaenge := 380 *(Power(10,(-9)));
+                end;
+            //Aufruf zur Berechnung und zum Zeichnen
+            Zoomfaktor:=100000*Round(TBZoom.Position/2);
+            Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
+            Zeichnen(Abstand*Zoomfaktor);
+          end;
     end;
-end;
-
-//Berechnung und Zeichnen über Frequenz-Eingabe
-if EdtWellenlaenge.Text = '' then
-begin
-    Zoomfaktor:=100000*TBZoom.Position;
-
-    //Fehlerabfrage für ungültige Frequenz
-    Wellenlaenge := UToolbox.FrequenzInWellenlaenge(StrToFloat(EdtFrequenz.Text)*Power(10,(13)));
-    if ((380*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (780*(Power(10,(-9))))) then
-      begin
-        Showmessage('Bitte gib eine Frequenz aus dem Bereich des sichtbaren Lichts an.');
-        EdtFrequenz.Text := '47';
-        Wellenlaenge := UToolbox.FrequenzInWellenlaenge(StrToFloat(EdtFrequenz.Text)*Power(10,(13)));
-      end;
-
-    //Aufruf zur Berechnung und zum Zeichnen
-    Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
-    Zeichnen(Abstand*Zoomfaktor);
-end;
-
-//Fehlerabfrage für fehlende Eingabe
-if (EdtWellenlaenge.Text = '') and (EdtFrequenz.Text = '') then
-  Showmessage('Bitte gib eine Wellenlänge oder eine Frequenz an.');
-
-end;
-
-//Berechnung und Zeichnen bei Enter im Frequenz-Editfeld
-procedure TFrmProjektionsflaeche.EdtFrequenzKeyPress(Sender: TObject;
-  var Key: Char);
-var Frequenz, Wellenlaenge: real;
-begin
-if key = #13 then
-  begin
-    Zoomfaktor:=100000*TBZoom.Position;
-    //Fehlerabfrage für leeres Edit-Feld
-    if EdtFrequenz.Text = '' then
-    begin
-      Showmessage('Bitte gib einen gültigen Zahlenwert ein');
-      EdtFrequenz.Text := '47';
-    end;
-
-    //Fehlerabfrage für ungültige Frequenz
-    Wellenlaenge := UToolbox.FrequenzInWellenlaenge(StrToFloat(EdtFrequenz.Text)*Power(10,(13)));
-    if ((380*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (780*(Power(10,(-9))))) then
-      begin
-        Showmessage('Bitte gib eine Frequenz aus dem Bereich des sichtbaren Lichts an.');
-        EdtFrequenz.Text := '47';
-        Wellenlaenge := UToolbox.FrequenzInWellenlaenge(StrToFloat(EdtFrequenz.Text)*Power(10,(13)));
-      end;
-
-    //Aufruf zur Berechnung und zum Zeichnen
-    Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
-    Zeichnen(Abstand*Zoomfaktor);
-  end;
-end;
-
-
-//Berechnung und Zeichnen bei Enter im Wellenlängen-Editfeld
-procedure TFrmProjektionsflaeche.EdtWellenlaengeKeyPress(Sender: TObject;
-  var Key: Char);
-var Wellenlaenge: real;
-begin
-if key = #13 then
-  begin
-     Zoomfaktor := 100000*TBZoom.Position;
-    //Fehlerabfrage für leeres Edit-Feld
-    if EdtWellenlaenge.Text = '' then
-    begin
-      Showmessage('Bitte gib einen gültigen Zahlenwert ein.');
-      EdtWellenlaenge.Text := '380';
-    end;
-
-    //Fehlerabfrage für ungültige Wellenlängen
-    Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
-    if ((380*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (780*(Power(10,(-9))))) then
-      begin
-        Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
-        EdtWellenlaenge.Text := '380';
-        Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
-      end;
-
-    //Aufruf zur Berechnung und zum Zeichnen
-    Abstand := AbstandMaxima(1000,Wellenlaenge)*(1/TBZoom.position);
-    Zeichnen(Abstand*10000);
-  end;
 end;
 
 

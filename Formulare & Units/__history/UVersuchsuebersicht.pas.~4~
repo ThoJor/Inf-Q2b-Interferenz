@@ -67,8 +67,7 @@ begin
   ImgTYoung.Height := FormVersuchsuebersicht.Height div 4;
   ImgTYoung.Top := 0 + (FormVersuchsuebersicht.Width div 30);
   ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
-  ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
-  ImgTYoung.Stretch:=true;
+  //Bild von T. Young fehlt (mit Quelle)
 end;
 
 //Einstellungen für das Label, das den Versuchsaufbau und den historischen Hintergrund in Textform darstellt
