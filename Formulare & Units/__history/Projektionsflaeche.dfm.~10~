@@ -296,5 +296,6 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Height = 25
     Caption = 'Beenden'
     TabOrder = 10
+    OnClick = BtnBeendenClick
   end
 end
