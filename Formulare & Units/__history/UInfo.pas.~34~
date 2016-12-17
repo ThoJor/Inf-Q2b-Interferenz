@@ -125,7 +125,7 @@ begin
     begin
     temp := temp + txt.Strings[i];
       if (i mod 10)=0 then
-      temp := temp + txt.Strings[i] + #13#10
+      temp := temp + txt.Strings[i] + #1310
       else
       temp := temp + txt.Strings[i];
     end;
