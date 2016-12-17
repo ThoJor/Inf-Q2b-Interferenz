@@ -463,10 +463,10 @@ procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
 begin
 
 //Berechnung und Zeichnen über Wellenlängen-Eingabe
-if (EdtFrequenz.Text='') and (EdtWellenlaenge.Text<>'') then
+if EdtWellenlaenge.Text<>' ' then
 begin
     //Fehlerabfrage für doppelte Eingabe
-  if not (EdtWellenlaenge.Text <> '') and (EdtFrequenz.Text = '') then
+  if not (EdtWellenlaenge.Text = '') and (EdtFrequenz.Text = '') then
     Showmessage('Bitte gib eine Wellenlänge ODER eine Frequenz an')
     else
     begin

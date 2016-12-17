@@ -17,7 +17,7 @@ type
     procedure ImgAufbauEinstellungen();
     procedure ImgTYoungEinstellungen();
     procedure LVersuchEinstellungen();
-    function Textimport(Filename: string):string;
+    procedure Textimport();
   private
     { Private-Deklarationen }
   public
@@ -26,7 +26,6 @@ type
 
 var
   FormVersuchsuebersicht: TFormVersuchsuebersicht;
-  Path: String;
 
 implementation
 
@@ -34,7 +33,6 @@ implementation
 
 procedure TFormVersuchsuebersicht.FormCreate(Sender: TObject);
 begin
-  Path:= GetCurrentDir;
   FormEinstellungen;
   ImgAufbauEinstellungen;
   ImgTYoungEinstellungen;
@@ -77,30 +75,29 @@ begin
   LVersuch.Left := ImgTYoung.Left + ImgTYoung.Width + (FormVersuchsuebersicht.Width div 30);
   LVersuch.Width := FormVersuchsuebersicht.Width - ImgTYoung.Width - (FormVersuchsuebersicht.Width div 15);
   LVersuch.Height := ImgTYoung.Height;
-  LVersuch.Caption := Textimport(Path+'\Versuchsuebersicht.txt');
+  LVersuch.Caption := 'Hier wird mal ein Text aus einer .txt Datei hin importiert.';
   //textimport;
 end;
 
-//Prozedur zum Textimport (aus einer .txt Datei in einen String)
-function TFormVersuchsuebersicht.Textimport(Filename: string):string;
+//Prozedur, die aus einer .txt Datei Text importiert, diesen in eine StringList schreibt und von dort in einen String umwandelt, der dann auf ein Label geschrieben wird
+procedure TFormVersuchsuebersicht.Textimport;
 var
   txt: TStringList;
   i: Integer;
   temp: String;
 begin
-  temp:='';
   txt:= TStringList.Create;
-  txt.LoadFromFile(Filename);
+  txt.LoadFromFile('sinnvollesverzeichnis\Versuchsuebersicht.txt');
+
   for i:= 0 to txt.count - 1 do
     begin
-    temp := temp + txt.Strings[i];
-      if (i mod 10)=0 then
-      temp := temp + txt.Strings[i] + #13#10
+      if (i mod 10 = 0) then
+      temp := temp + txt.Strings[i] + #1310
       else
-      temp := temp + txt.Strings[i];
+      temp:= temp + txt.Strings[i];
     end;
 
-  result := temp;
+  LVersuch.Caption:= temp;
 end;
 
 end.

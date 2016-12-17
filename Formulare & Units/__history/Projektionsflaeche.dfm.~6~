@@ -273,6 +273,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Top = 314
     Width = 150
     Height = 45
+    Max = 100
     Min = 1
     Frequency = 10
     Position = 1
