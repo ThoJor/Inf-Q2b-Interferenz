@@ -278,6 +278,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Position = 1
     PositionToolTip = ptTop
     TabOrder = 8
+    Visible = False
     OnChange = TBZoomChange
   end
   object BtnStart: TButton
