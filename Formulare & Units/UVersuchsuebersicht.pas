@@ -67,7 +67,8 @@ begin
   ImgTYoung.Height := FormVersuchsuebersicht.Height div 4;
   ImgTYoung.Top := 0 + (FormVersuchsuebersicht.Width div 30);
   ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
-  //Bild von T. Young fehlt (mit Quelle)
+  ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
+  ImgTYoung.Stretch:=true;
 end;
 
 //Einstellungen für das Label, das den Versuchsaufbau und den historischen Hintergrund in Textform darstellt
@@ -78,7 +79,6 @@ begin
   LVersuch.Width := FormVersuchsuebersicht.Width - ImgTYoung.Width - (FormVersuchsuebersicht.Width div 15);
   LVersuch.Height := ImgTYoung.Height;
   LVersuch.Caption := Textimport(Path+'\Versuchsuebersicht.txt');
-  //textimport;
 end;
 
 //Prozedur zum Textimport (aus einer .txt Datei in einen String)
