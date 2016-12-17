@@ -328,6 +328,15 @@ begin
 
   //Fensterposition
   Position:= poScreenCenter;
+
+  //Pixeldichte festlegen (Full-HD 21,5 Zoll)
+  PixelsPerInch:= 102;
+
+  //Textgröße festlegen (Full-HD 21,5 Zoll)
+  TextHeight:= 14;
+
+  //Fontgröße festlegen (Full-HD 21,5 Zoll)
+  Font.Height:= -13;
 end;
 
 procedure TFrmProjektionsflaeche.BtnOptionenClick(Sender: TObject);
