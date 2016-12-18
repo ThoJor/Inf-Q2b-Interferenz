@@ -34,6 +34,10 @@ type
     TBZoom: TTrackBar;
     BtnStart: TButton;
     BtnBeenden: TButton;
+    LblOverlaySchirm: TLabel;
+    BtnOverlay: TButton;
+    LblOverlayEinstellungen: TLabel;
+    LblOverlayEinstellungen2: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -71,6 +75,9 @@ type
     procedure PnlRotClick(Sender: TObject);
     procedure BtnBeendenClick(Sender: TObject);
     procedure Endbutton;
+    procedure BtnOverlayClick(Sender: TObject);
+    procedure Overlay;
+    procedure OverlayButton;
   private
     { Private-Deklarationen }
   public
@@ -348,6 +355,45 @@ begin
   FrmGraphischeOptionen.Show;
 end;
 
+//Overlaybutton Einstellungen bestimmen
+procedure TFrmProjektionsflaeche.OverlayButton;
+begin
+  BtnOverlay.Top:= 50;
+  BtnOverlay.Left:= Schirm.Left;
+  BtnOverlay.Caption:= 'Hilfe';
+
+  //Alle Labels unsichtbar machen
+  LblOverlaySchirm.Visible:= false;
+  LblOverlayEinstellungen.Visible:= false;
+  LblOverlayEinstellungen2.Visible:= false;
+end;
+
+procedure TFrmProjektionsflaeche.BtnOverlayClick(Sender: TObject);
+begin
+  Overlay;
+end;
+
+procedure TFrmProjektionsflaeche.Overlay;
+begin
+  //Overlay Schirm
+  LblOverlaySchirm.Visible:= true;
+  LblOverlaySchirm.Top:= 50;
+  LblOverlaySchirm.Left:= Schirm.Width / 2;
+  LblOverlaySchirm.Caption:= 'Schirm - Die Projektionsfläche auf die der Laser strahlt.';
+
+  //Overlay Einstellungen
+  LblOverlayEinstellungen.Visible:= true;
+  LblOverlayEinstellungen.Top:= Schirm.Height / 2;
+  LblOverlayEinstellungen.Left:= Schirm.Left + 20;
+  LblOverlayEinstellungen.Caption:= '<-- Einstellungen - Veränderbare Werte des Versuchs sind:';
+
+  //Overlay Einstellungen Details
+  LblOverlayEinstellungen2.Visible:= true;
+  LblOverlayEinstellungen2.Top:= LblOverlayEinstellungen.Top + LblOverlayEinstellungen.Height;
+  LblOverlayEinstellungen2.Left:= LblOverlayEinstellungen.Left;
+  LblOverlayEinstellungen2.Caption:= 'Wellenlänge, Frequenz oder Farbe (zum Auswählen der Farbe auf diese klicken)';
+end;
+
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
 begin
   Fenstereinstellungen;
@@ -358,6 +404,7 @@ begin
   Startbutton;
   Endbutton;
   Zoomleiste;
+  OverlayButton;
 end;
 
 procedure TFrmProjektionsflaeche.Startbutton;

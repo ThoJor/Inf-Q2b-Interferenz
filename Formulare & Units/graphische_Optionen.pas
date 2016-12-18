@@ -25,7 +25,7 @@ var
 const
   CheckBoxHoehe= 20;
   CheckBoxWidth= 300;
-  AnzahlCheckboxen= 4
+  AnzahlCheckboxen= 4;
 
 implementation
 
