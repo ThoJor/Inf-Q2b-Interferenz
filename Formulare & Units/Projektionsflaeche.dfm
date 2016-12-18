@@ -72,6 +72,20 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Height = 16
     Caption = 'LblOverlaySchirm'
   end
+  object LblOverlayEinstellungen: TLabel
+    Left = 390
+    Top = 592
+    Width = 134
+    Height = 16
+    Caption = 'LblOverlayEinstellungen'
+  end
+  object LblOverlayEinstellungen2: TLabel
+    Left = 390
+    Top = 632
+    Width = 141
+    Height = 16
+    Caption = 'LblOverlayEinstellungen2'
+  end
   object PnlOptionen: TPanel
     Left = 8
     Top = 16
