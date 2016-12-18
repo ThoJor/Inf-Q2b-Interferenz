@@ -23,10 +23,10 @@
 □ Einheitliche Caption der einzelnen Fenster nach dem Schema "Interferenzo - Projektionsfläche"
 □ Beachtung von aktiven / inaktiven Fenstern sowie Schließen von Fenstern beim Öffnen von weiteren Fenstern (z.B. show / showmodal)
 □ Festgelegte Fenstergrößen
-  ■ Hauptmenü: 300*400
-  ■ Versuchsübersicht: 600*800
-  ■ Projektionsfläche: 9/16 Fensterlänge * 2/3 Bildschirmlänge
-  ■ Graphische Optionen: 500*100                                                       
+  ■ Hauptmenü: 400*300
+  ■ Versuchsübersicht: 800*600
+  ■ Projektionsfläche: Vollbild
+  ■ Graphische Optionen: an Menge und Größe der Checkboxen angepasst                                                     
 
 <b>Funktionale Anforderungen</b>
 □ Hauptmenü
