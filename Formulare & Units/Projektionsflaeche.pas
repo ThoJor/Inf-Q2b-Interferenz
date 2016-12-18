@@ -34,6 +34,8 @@ type
     TBZoom: TTrackBar;
     BtnStart: TButton;
     BtnBeenden: TButton;
+    LblOverlaySchirm: TLabel;
+    BtnOverlay: TButton;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -71,6 +73,9 @@ type
     procedure PnlRotClick(Sender: TObject);
     procedure BtnBeendenClick(Sender: TObject);
     procedure Endbutton;
+    procedure BtnOverlayClick(Sender: TObject);
+    procedure Overlay;
+    procedure OverlayButton;
   private
     { Private-Deklarationen }
   public
@@ -348,6 +353,27 @@ begin
   FrmGraphischeOptionen.Show;
 end;
 
+//Overlaybutton Einstellungen bestimmen
+procedure TFrmProjektionsflaeche.OverlayButton;
+begin
+  BtnOverlay.Top:= 50;
+  BtnOverlay.Left:= Schirm.Left;
+  BtnOverlay.Caption:= 'Hilfe';
+end;
+
+procedure TFrmProjektionsflaeche.BtnOverlayClick(Sender: TObject);
+begin
+  Overlay;
+end;
+
+procedure TFrmProjektionsflaeche.Overlay;
+begin
+  //Overlay Schirm
+  LblOverlaySchirm.Top:= 50;
+  LblOverlaySchirm.Left:= Schirm.Width / 2;
+  LblOverlaySchirm.Caption:= 'Schirm - Die Projektionsfläche auf die der Laser strahlt.';
+end;
+
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
 begin
   Fenstereinstellungen;
@@ -358,6 +384,7 @@ begin
   Startbutton;
   Endbutton;
   Zoomleiste;
+  OverlayButton;
 end;
 
 procedure TFrmProjektionsflaeche.Startbutton;
