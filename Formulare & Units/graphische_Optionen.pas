@@ -1,4 +1,4 @@
-unit graphische_Optionen;
+﻿unit graphische_Optionen;
 
 interface
 
@@ -42,7 +42,7 @@ begin
   ChBBgVerlauf.Caption:= 'Verlauf';
 
 
-  //Fenstergröße
+  //Fenstergroeße
   FrmGraphischeOptionen.Width:= 500;
   FrmGraphischeOptionen.Height:= (50 * AnzahlCheckboxen) + 50;
 
@@ -59,7 +59,7 @@ begin
   ChBBgWhite.Left:= 20;
   ChBBgVerlauf.Left:= 20;
 
-  //Größe CheckBox
+  //Groeße CheckBox
   CBLineal.Height:= CheckBoxHoehe;
   ChBBgBlack.Height := CheckBoxHoehe;
   ChBBgWhite.Height := CheckBoxHoehe;
