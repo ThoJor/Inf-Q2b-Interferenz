@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.jpeg, Vcl.ExtCtrls,
-  Vcl.StdCtrls, Vcl.Imaging.pngimage;
+  Vcl.StdCtrls, Vcl.Imaging.pngimage, Konstantenbox;
 
 type
   TFormVersuchsuebersicht = class(TForm)
@@ -79,6 +79,9 @@ begin
   LVersuch.Width := FormVersuchsuebersicht.Width - ImgTYoung.Width - (FormVersuchsuebersicht.Width div 15);
   LVersuch.Height := ImgTYoung.Height;
   LVersuch.Caption := Textimport(Path+'\Versuchsuebersicht.txt');
+  LVersuch.Font.Size:= Konstantenbox.Schrift;
+  LVersuch.Font.Color:= Konstantenbox.Schriftfarbe;
+  LVersuch.Font.Name:= Konstantenbox.Schriftart;
 end;
 
 //Prozedur zum Textimport (aus einer .txt Datei in einen String)
