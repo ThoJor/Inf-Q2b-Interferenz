@@ -7,14 +7,12 @@ function AbstandMaxima (a,lambda:real) :real;
 
 implementation
 
-uses Math;
-
-const KLichtgeschwindigkeit= 299792458;                                         //Lichtgeschwindigkeit in Meter pro Sekunde
+uses Math, Konstantenbox;
 
 //Umrechnung einer uebergebenen Frequenz f in die zugehoerige Wellenlaenge
 function FrequenzInWellenlaenge (f:real):real;
 begin
-  result:=KLichtgeschwindigkeit/f;
+  result:=Konstantenbox.KLichtgeschwindigkeit/f;
 end;
 
 //Berechnung des Abstands der Maxima 0. und 1. Ordnung auf dem Schirm mit uebergebenem Abstand a zwischen Schirm und Blende sowie uebergebener Wellenlaenge lambda
