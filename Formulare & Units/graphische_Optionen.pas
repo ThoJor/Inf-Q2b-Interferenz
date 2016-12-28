@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Konstantenbox;
 
 type
   TFrmGraphischeOptionen = class(TForm)
@@ -68,6 +68,24 @@ begin
   ChBBgBlack.Width := CheckBoxWidth;
   ChBBgWhite.Width := CheckBoxWidth;
   ChBBgVerlauf.Width := CheckBoxWidth;
+
+  //Schriftgroesse Checkbox
+  CBLineal.Font.Size:= Konstantenbox.Schrift;
+  ChBBgBlack.Font.Size:= Konstantenbox.Schrift;
+  ChBBgWhite.Font.Size:= Konstantenbox.Schrift;
+  ChBBgVerlauf.Font.Size:= Konstantenbox.Schrift;
+
+  //Schriftart Checkbox
+  CBLineal.Font.Name:= Konstantenbox.Schriftart;
+  ChBBgBlack.Font.Name:= Konstantenbox.Schriftart;
+  ChBBgWhite.Font.Name:= Konstantenbox.Schriftart;
+  ChBBgVerlauf.Font.Name:= Konstantenbox.Schriftart;
+
+  //Schriftfarbe Checkbox;
+  CBLineal.Font.Color:= Konstantenbox.Schriftfarbe;
+  ChBBgBlack.Font.Color:= Konstantenbox.Schriftfarbe;
+  ChBBgWhite.Font.Color:= Konstantenbox.Schriftfarbe;
+  ChBBgVerlauf.Font.Color:= Konstantenbox.Schriftfarbe;
 
   //Lineal per default an
   CBLineal.Checked:= true;

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UInfo, UVersuchsuebersicht, UToolbox, Projektionsflaeche,
-  Vcl.ExtCtrls, Vcl.StdCtrls;
+  Vcl.ExtCtrls, Vcl.StdCtrls, Konstantenbox;
 
 type
   TFrmHaupt = class(TForm)
@@ -73,13 +73,14 @@ begin
   LProgrammname.Left := 0;
   LProgrammname.Top := FrmHaupt.Height div 20;
   LProgrammname.Width := FrmHaupt.Width;
-  LProgrammname.Font.Size := 16;
+  LProgrammname.Font.Size := Konstantenbox.Ueberschrift;
   LProgrammname.Height := LProgrammname.Font.Size + 10;
   LProgrammname.Alignment := tacenter;
   LProgrammname.Layout := tlcenter;
   LProgrammname.Caption := 'Interferenzo';
-  LProgrammname.Font.Color := clteal;
+  LProgrammname.Font.Color := Konstantenbox.Schriftfarbe;
   LProgrammname.Font.Style := [fsunderline];
+  LProgrammname.Font.Name:= Konstantenbox.Schriftart;
 end;
 
 //Zeigen der Projektionsflaeche und Verstecken des Hauptmenues
@@ -98,6 +99,9 @@ begin
   BtnStart.Left := FrmHaupt.Width div 10;
   BtnStart.Width := FrmHaupt.Width - (FrmHaupt.Width div 5);
   BtnStart.Caption := 'Start';
+  BtnStart.Font.Size:= Konstantenbox.Schrift;
+  BtnStart.Font.Color:= Konstantenbox.Schriftfarbe;
+  BtnStart.Font.Name:= Konstantenbox.Schriftart;
 end;
 
 
@@ -113,6 +117,9 @@ begin
   BtnVersuchsaufbau.Left := BtnStart.Left;
   BtnVersuchsaufbau.Width := BtnStart.Width;
   BtnVersuchsaufbau.Caption := 'Versuchsübersicht';
+  BtnVersuchsaufbau.Size:= Konstantenbox.Schrift;
+  BtnVersuchsaufbau.Color:= Konstantenbox.Schriftfarbe;
+  BtnVersuchsaufbau.Name:= Konstantenbox.Schriftart;
 end;
 
 
@@ -128,12 +135,13 @@ begin
   LInfo.Left := 0;
   LInfo.Top := FrmHaupt.Height - (FrmHaupt.Height div 5);
   LInfo.Width := FrmHaupt.Width;
-  LInfo.Font.Size := 8;
+  LInfo.Font.Size := Konstantenbox.Schrift;
   LInfo.Height := LInfo.Font.Size + 10;
   LInfo.Alignment := tacenter;
   LInfo.Layout := tlcenter;
   LInfo.Caption := 'Nutzungsbedingungen & Kontaktinformationen';
-  LInfo.Font.Color := clgray;
+  LInfo.Font.Color := Konstantenbox.Schriftfarbe;
+  LInfo.Font.Name:= Konstantenbox.Schriftart;
 end;
 
 //Oeffnen des Hauptmenues beim Schließen der Projektionsflaeche
