@@ -313,10 +313,10 @@ begin
   //Image zu Canvas
   Schirm.Canvas;
 
-  //Canvasgröße veränderbar machen
+  //Canvasgroeße veraenderbar machen
   Schirm.Stretch:= true;
 
-  //Canvasgröße
+  //Canvasgroeße
   Schirm.Width:= Round((4/5) * FrmProjektionsflaeche.Width);
   Schirm.Height:= Round((4/5) * FrmProjektionsflaeche.Height);
 
@@ -331,7 +331,7 @@ begin
   //Namensgebung
   FrmProjektionsflaeche.Caption:= 'Interferenzo - Projektionsfläche';
 
-  //Fenstergröße (Vollbild)
+  //Fenstergroeße (Vollbild)
   FrmProjektionsflaeche.ClientWidth:= Screen.Width;
   FrmProjektionsflaeche.ClientHeight:= Screen.Height;
 
@@ -341,7 +341,7 @@ begin
   //Pixeldichte festlegen (Full-HD 21,5 Zoll)
   PixelsPerInch:= 102;
 
-  //Fontgröße festlegen (Full-HD 21,5 Zoll)
+  //Fontgroeße festlegen (Full-HD 21,5 Zoll)
   Font.Height:= -13;
 end;
 
@@ -439,7 +439,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Linealbasis;
 begin
-  //Größe und Position des Image
+  //Groeße und Position des Image
   ImgLineal.Height:=Round((1/5) * FrmProjektionsflaeche.Height);
   ImgLineal.Width:= Schirm.Width;
   ImgLineal.Left:=FrmProjektionsflaeche.Width-ImgLineal.Width;
@@ -516,7 +516,7 @@ procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
 begin
   TBZoom.position:=50;
   TBZoom.Visible:=true;
-  //Berechnung und Zeichnen über Wellenlängen-Eingabe
+  //Berechnung und Zeichnen über Wellenlaengen-Eingabe
   if EdtFrequenz.Text = '' then
     if EdtWellenlaenge.Text<> '' then
     begin
@@ -524,11 +524,11 @@ begin
       if not (EdtFrequenz.Text = '') then
         Showmessage('Bitte gib eine Wellenlänge ODER eine Frequenz an')
         else
-          //Frequenz ergänzen
+          //Frequenz ergaenzen
           Frequenz:=Konstantenbox.KLichtgeschwindigkeit/(StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9))));
           EdtFrequenz.text:=FloatToStr(Frequenz);
           begin
-            //Fehlerabfrage für ungültige Wellenlänge
+            //Fehlerabfrage für ungueltige Wellenlaenge
             Wellenlaenge := StrToFloat(EdtWellenlaenge.Text)*(Power(10,(-9)));
               if ((380.00*(Power(10,(-9)))) > Wellenlaenge) or (Wellenlaenge > (780.00*(Power(10,(-9))))) then
                 begin
@@ -599,7 +599,7 @@ begin
   Zeichnen(Abstand);
 end;
 
-//Panel Grün
+//Panel Gruen
 procedure TFrmProjektionsflaeche.PnlGruenClick(Sender: TObject);
 begin
   Abstand := AbstandMaxima(1000,Konstantenbox.KGruen)*(1/TBZoom.Position);
