@@ -103,7 +103,7 @@ begin
   repeat
   Inc(Zaehler);
   if Wellenlaenge= Farben[Zaehler,1] then Farbe_gefunden:= true;
-  until (Zaehler= 63) or (Farbe_gefunden= true);
+  until (Zaehler= 80) or (Farbe_gefunden= true);
 
   //Wert an aufrufende Prozedur geben
   if Farbe_gefunden= true
