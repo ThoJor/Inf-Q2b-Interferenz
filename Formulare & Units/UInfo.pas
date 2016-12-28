@@ -52,7 +52,7 @@ begin
   FormInfo.BorderStyle := bsDialog;
 end;
 
-//Eigenschaften der Überschrift für die Nutzungsbedingungen
+//Eigenschaften der Ueberschrift für die Nutzungsbedingungen
 procedure TFormInfo.HeadingNutzungsbedingungenSettings;
 begin
   LNutzungsbedingungenHead.AutoSize := false;
@@ -82,7 +82,7 @@ begin
 
 end;
 
-//Eigenschaften der Überschrift des Impressums
+//Eigenschaften der Ueberschrift des Impressums
 procedure TFormInfo.HeadingImpressumSettings;
 begin
   LImpressumHead.AutoSize := false;

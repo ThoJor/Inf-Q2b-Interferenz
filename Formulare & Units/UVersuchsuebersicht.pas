@@ -41,7 +41,7 @@ begin
   LVersuchEinstellungen;
 end;
 
-//Einstellungen bezüglich des Formulars an sich
+//Einstellungen bezueglich des Formulars an sich
 procedure TFormVersuchsuebersicht.FormEinstellungen();
 begin
   FormVersuchsuebersicht.Height := 600;
@@ -49,7 +49,7 @@ begin
   FormVersuchsuebersicht.Caption := 'Interferenzo - Versuchsübersicht';
 end;
 
-//Einstellungen für das Image, in dem der Versuchsaufbau dargestellt wird
+//Einstellungen fuer das Image, in dem der Versuchsaufbau dargestellt wird
 procedure TFormVersuchsuebersicht.ImgAufbauEinstellungen();
 begin
   ImgAufbau.Stretch := true;
@@ -59,7 +59,7 @@ begin
   ImgAufbau.Left := FormVersuchsuebersicht.Width div 30;
 end;
 
-//Einstellungen für das Image, das ein Bild von Thomas Young enthält
+//Einstellungen fuer das Image, das ein Bild von Thomas Young enthaelt
 procedure TFormVersuchsuebersicht.ImgTYoungEinstellungen();
 begin
   ImgTYoung.Stretch := true;
@@ -71,7 +71,7 @@ begin
   ImgTYoung.Stretch:=true;
 end;
 
-//Einstellungen für das Label, das den Versuchsaufbau und den historischen Hintergrund in Textform darstellt
+//Einstellungen fuer das Label, das den Versuchsaufbau und den historischen Hintergrund in Textform darstellt
 procedure TFormVersuchsuebersicht.LVersuchEinstellungen();
 begin
   LVersuch.Top := ImgTYoung.Top;

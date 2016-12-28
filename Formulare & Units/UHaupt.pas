@@ -56,7 +56,7 @@ begin
   TimerProjektionsflaeche.Enabled:= false;
 end;
 
-//Eigenschaften des Hauptmenüs
+//Eigenschaften des Hauptmenues
 procedure TFrmHaupt.HomeSettings();
 begin
   FrmHaupt.Width := 400;
@@ -66,7 +66,7 @@ begin
   FrmHaupt.Position := poDesktopCenter;
 end;
 
-//Eigenschaften der Überschrift
+//Eigenschaften der Ueberschrift
 procedure TFrmHaupt.HeadingSettings;
 begin
   LProgrammname.AutoSize := false;
@@ -82,7 +82,7 @@ begin
   LProgrammname.Font.Style := [fsunderline];
 end;
 
-//Zeigen der Projektionsfläche und Verstecken des Hauptmenüs
+//Zeigen der Projektionsflaeche und Verstecken des Hauptmenues
 procedure TFrmHaupt.BtnStartClick(Sender: TObject);
 begin
   FrmProjektionsflaeche.Show;
@@ -91,7 +91,7 @@ begin
 end;
 
 
-//Eigenschaften des Start-Button
+//Eigenschaften des Start-Buttons
 procedure TFrmHaupt.BtnStartSettings;
 begin
   BtnStart.Top := LProgrammname.Top + (FrmHaupt.Height div 5);
@@ -106,7 +106,7 @@ begin
   FormVersuchsuebersicht.ShowModal;
 end;
 
-//Eigenschaften des Versuchsaufbau-Button
+//Eigenschaften des Versuchsaufbau-Buttons
 procedure TFrmHaupt.BtnVersuchsaufbauSettings;
 begin
   BtnVersuchsaufbau.Top := BtnStart.Top + (FrmHaupt.Height div 10);
@@ -136,7 +136,7 @@ begin
   LInfo.Font.Color := clgray;
 end;
 
-//Öffnen des Hauptmenüs beim Schließen der Projektionsfläche
+//Oeffnen des Hauptmenues beim Schließen der Projektionsflaeche
 procedure TFrmHaupt.TimerProjektionsflaecheTimer(Sender: TObject);
 begin
   if FrmProjektionsflaeche.Visible= false then

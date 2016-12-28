@@ -7,7 +7,7 @@ function Farbe(Wellenlaenge: string): string;
 implementation
 
 procedure Farbtabelle;
-begin                                                        //Farben mit Wellenlängen 678.37nm bis 435.01 nm
+begin                                                        //Farben mit Wellenlaengen 678.37nm bis 435.01 nm
   Farben[1,0]:='610000';  Farben[1,1]:='780.00';
   Farben[2,0]:='6d0000';  Farben[2,1]:='775.00';
   Farben[3,0]:='770000';  Farben[3,1]:='770.00';
@@ -95,7 +95,7 @@ var
   Farbe_gefunden: Boolean;
   Zaehler: Integer;
 begin
-  //Variablen zurücksetzen
+  //Variablen zuruecksetzen
   Farbe_gefunden:= false;
   Zaehler:= 0;
 
