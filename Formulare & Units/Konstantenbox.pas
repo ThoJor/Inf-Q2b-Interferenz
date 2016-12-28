@@ -16,6 +16,13 @@ const
   KOrange= 0.00000062;
   KRot= 0.000000705;
 
+  //Schriftgroesse/ -art/ -farbe
+  Ueberschrift= 20;
+  Schrift= 12;
+  Schriftart= 'Arial';
+  Schriftfarbe= clBlack;
+
+
 implementation
 
 
