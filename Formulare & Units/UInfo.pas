@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Konstantenbox;
 
 type
   TFormInfo = class(TForm)
@@ -57,12 +57,13 @@ procedure TFormInfo.HeadingNutzungsbedingungenSettings;
 begin
   LNutzungsbedingungenHead.AutoSize := false;
   LNutzungsbedingungenHead.Width := FormInfo.Width - (FormInfo.Width div 5);
-  LNutzungsbedingungenHead.Font.Size := 16;
+  LNutzungsbedingungenHead.Font.Size := Konstantenbox.Ueberschrift;
   LNutzungsbedingungenHead.Height := LNutzungsbedingungenHead.Font.Size + 10;
   LNutzungsbedingungenHead.Left := FormInfo.Width div 10;
   LNutzungsbedingungenHead.Top := FormInfo.Height div 10;
-  LNutzungsbedingungenHead.Font.Color := clTeal;
+  LNutzungsbedingungenHead.Font.Color := Konstantenbox.Schriftfarbe;
   LNutzungsbedingungenHead.Caption := 'Nutzungsbedingungen';
+  LNutzungsbedingungenHead.Font.Name:= Konstantenbox.Schriftart;
 
 end;
 
@@ -72,13 +73,14 @@ var NutzungsbedingungenText, Filename: string;
 begin
   LNutzungsbedingungenBody.AutoSize := false;
   LNutzungsbedingungenBody.Width := FormInfo.Width - (FormInfo.Width div 5);
-  LNutzungsbedingungenBody.Font.Size := 10;
+  LNutzungsbedingungenBody.Font.Size := Konstantenbox.Schrift;
   LNutzungsbedingungenBody.Left := FormInfo.Width div 10;
   LNutzungsbedingungenBody.Top := LNutzungsbedingungenHead.Height + 2*(FormInfo.Height div 10);
   LNutzungsbedingungenBody.Height := FormInfo.Height div 2 - LNutzungsbedingungenBody.Top;
-  LNutzungsbedingungenBody.Font.Color := clblack;
+  LNutzungsbedingungenBody.Font.Color := Konstantenbox.Schriftfarbe;
   Filename:= Path+'\Nutzungsbedingungen.txt';
   LNutzungsbedingungenBody.Caption := Textimport(Filename);;
+  LNutzungsbedingungenBody.Font.Name:= Konstantenbox.Schriftart;
 
 end;
 
@@ -87,12 +89,13 @@ procedure TFormInfo.HeadingImpressumSettings;
 begin
   LImpressumHead.AutoSize := false;
   LImpressumHead.Width := FormInfo.Width - (FormInfo.Width div 5);
-  LImpressumHead.Font.Size := 16;
+  LImpressumHead.Font.Size := Konstantenbox.Ueberschrift;
   LImpressumHead.Height := LImpressumHead.Font.Size + 10;
   LImpressumHead.Left := FormInfo.Width div 10;
   LImpressumHead.Top := (FormInfo.Height div 2) + FormInfo.Height div 10;
-  LImpressumHead.Font.Color := clTeal;
+  LImpressumHead.Font.Color := Konstantenbox.Schriftfarbe;
   LImpressumHead.Caption := 'Kontakt';
+  LImpressumHead.Font.Name:= Konstantenbox.Schriftart;
 end;
 
 //Eigenschaften des Impressums
@@ -101,14 +104,15 @@ var ImpressumText, Filename: string;
 begin
   LImpressumBody.AutoSize := false;
   LImpressumBody.Width := FormInfo.Width - (FormInfo.Width div 5);
-  LImpressumBody.Font.Size := 10;
+  LImpressumBody.Font.Size := Konstantenbox.Schrift;
   LImpressumBody.Left := FormInfo.Width div 10;
   LImpressumBody.Top := (FormInfo.Height div 2) + LImpressumHead.Height + 2*(FormInfo.Height div 10);
   LImpressumBody.Height := FormInfo.Height div 2 - LNutzungsbedingungenBody.Top;
-  LImpressumBody.Font.Color := clblack;
+  LImpressumBody.Font.Color := Konstantenbox.Schriftfarbe;
   LImpressumBody.Caption := 'Hier wird dann auch mal Inhalt aus einer .txt Datei' + #13#10 + 'eingelesen, weil 255 Zeichen vermutlich nicht reichen.';
   Filename :=Path+'\Kontaktinformationen.txt';
   LImpressumBody.Caption := TextImport(Filename);
+  LImpressumBody.Font.Name:= Konstantenbox.Schriftart;
 end;
 
 //Prozedur zum Textimport (aus einer .txt Datei in einen String)
