@@ -78,6 +78,7 @@ type
     procedure BtnOverlayClick(Sender: TObject);
     procedure Overlay;
     procedure OverlayButton;
+    procedure Schrifteinstellungen;
   private
     { Private-Deklarationen }
   public
@@ -405,6 +406,7 @@ begin
   Endbutton;
   Zoomleiste;
   OverlayButton;
+  Schrifteinstellungen;
 end;
 
 procedure TFrmProjektionsflaeche.Startbutton;
@@ -682,6 +684,72 @@ begin
   end;
 end;
 
+end;
+
+procedure TFrmProjektionsflaeche.Schrifteinstellungen;
+begin
+  //Schriftgroesse
+  PnlOptionen.Font.Size:= Konstantenbox.Ueberschrift;
+  EdtWellenlaenge.Font.Size:= Konstantenbox.Schrift;
+  LblWellenlaenge.Font.Size:= Konstantenbox.Schrift;
+  LblFrequenz.Font.Size:= Konstantenbox.Schrift;
+  EdtFrequenz.Font.Size:= Konstantenbox.Schrift;
+  EdtAbstand.Font.Size:= Konstantenbox.Schrift;
+  LblAbstand.Font.Size:= Konstantenbox.Schrift;
+  LblSpaltanzahl.Font.Size:= Konstantenbox.Schrift;
+  EdtSpaltanzahl.Font.Size:= Konstantenbox.Schrift;
+  LblSpaltabstand.Font.Size:= Konstantenbox.Schrift;
+  EdtSpaltabstand.Font.Size:= Konstantenbox.Schrift;
+  BtnOptionen.Font.Size:= Konstantenbox.Schrift;
+  PnlFarbeCaption.Font.Size:= Konstantenbox.Ueberschrift;
+  BtnStart.Font.Size:= Konstantenbox.Schrift;
+  BtnBeenden.Font.Size:= Konstantenbox.Schrift;
+  LblOverlaySchirm.Font.Size:= Konstantenbox.Schrift;
+  BtnOverlay.Font.Size:= Konstantenbox.Schrift;
+  LblOverlayEinstellungen.Font.Size:= Konstantenbox.Schrift;
+  LblOverlayEinstellungen2.Font.Size:= Konstantenbox.Schrift;
+
+  //Schriftart
+  PnlOptionen.Font.Name:= Konstantenbox.Schriftart;
+  EdtWellenlaenge.Font.Name:= Konstantenbox.Schriftart;
+  LblWellenlaenge.Font.Name:= Konstantenbox.Schriftart;
+  LblFrequenz.Font.Name:= Konstantenbox.Schriftart;
+  EdtFrequenz.Font.Name:= Konstantenbox.Schriftart;
+  EdtAbstand.Font.Name:= Konstantenbox.Schriftart;
+  LblAbstand.Font.Name:= Konstantenbox.Schriftart;
+  LblSpaltanzahl.Font.Name:= Konstantenbox.Schriftart;
+  EdtSpaltanzahl.Font.Name:= Konstantenbox.Schriftart;
+  LblSpaltabstand.Font.Name:= Konstantenbox.Schriftart;
+  EdtSpaltabstand.Font.Name:= Konstantenbox.Schriftart;
+  BtnOptionen.Font.Name:= Konstantenbox.Schriftart;
+  PnlFarbeCaption.Font.Name:= Konstantenbox.Schriftart;
+  BtnStart.Font.Name:= Konstantenbox.Schriftart;
+  BtnBeenden.Font.Name:= Konstantenbox.Schriftart;
+  LblOverlaySchirm.Font.Name:= Konstantenbox.Schriftart;
+  BtnOverlay.Font.Name:= Konstantenbox.Schriftart;
+  LblOverlayEinstellungen.Font.Name:= Konstantenbox.Schriftart;
+  LblOverlayEinstellungen2.Font.Name:= Konstantenbox.Schriftart;
+
+  //Schriftfarbe
+  PnlOptionen.Font.Color:= Konstantenbox.Schriftfarbe;
+  EdtWellenlaenge.Font.Color:= Konstantenbox.Schriftfarbe;
+  LblWellenlaenge.Font.Color:= Konstantenbox.Schriftfarbe;
+  LblFrequenz.Font.Color:= Konstantenbox.Schriftfarbe;
+  EdtFrequenz.Font.Color:= Konstantenbox.Schriftfarbe;
+  EdtAbstand.Font.Color:= Konstantenbox.Schriftfarbe;
+  LblAbstand.Font.Color:= Konstantenbox.Schriftfarbe;
+  LblSpaltanzahl.Font.Color:= Konstantenbox.Schriftfarbe;
+  EdtSpaltanzahl.Font.Color:= Konstantenbox.Schriftfarbe;
+  LblSpaltabstand.Font.Color:= Konstantenbox.Schriftfarbe;
+  EdtSpaltabstand.Font.Color:= Konstantenbox.Schriftfarbe;
+  BtnOptionen.Font.Color:= Konstantenbox.Schriftfarbe;
+  PnlFarbeCaption.Font.Color:= Konstantenbox.Schriftfarbe;
+  BtnStart.Font.Color:= Konstantenbox.Schriftfarbe;
+  BtnBeenden.Font.Color:= Konstantenbox.Schriftfarbe;
+  LblOverlaySchirm.Font.Color:= Konstantenbox.Schriftfarbe;
+  BtnOverlay.Font.Color:= Konstantenbox.Schriftfarbe;
+  LblOverlayEinstellungen.Font.Color:= Konstantenbox.Schriftfarbe;
+  LblOverlayEinstellungen2.Font.Color:= Konstantenbox.Schriftfarbe;
 end;
 
 
