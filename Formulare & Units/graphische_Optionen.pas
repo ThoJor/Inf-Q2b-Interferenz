@@ -52,7 +52,7 @@ begin
   //Position CheckBox
   CBLineal.Top:= 15;
   ChBBgBlack.Top:= 15*2+CheckBoxHoehe;
-  ChBBgBlack.Width:= 15*3+CheckBoxHoehe*2;
+  ChBBgWhite.Top:= 15*3+CheckBoxHoehe*2;
   ChBBgVerlauf.Top:= 15*4+CheckBoxHoehe*3;
   CBLineal.Left:= 20;
   ChBBgBlack.Left:= 20;

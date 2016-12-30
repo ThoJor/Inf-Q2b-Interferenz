@@ -170,8 +170,8 @@ end;
 
 procedure TFrmProjektionsflaeche.Farbe_Panel;
 begin
-  PnlFarbe.Top:= (EdtFrequenz.Top + EdtFrequenz.Height) + 10;
-  PnlFarbe.Height:= (BtnOptionen.Top - (EdtFrequenz.Top + EdtFrequenz.Height)) - 20;
+  PnlFarbe.Top:= (EdtFrequenz.Top + EdtFrequenz.Height) + 60;
+  PnlFarbe.Height:= (BtnOptionen.Top - (EdtFrequenz.Top + EdtFrequenz.Height)) - 70;
   PnlFarbe.Left:= 0;
   PnlFarbe.Width:= Schirm.Left - PnlFarbe.Left;
   PnlFarbe.Caption:= '';
@@ -379,12 +379,12 @@ begin
   //Overlay Schirm
   LblOverlaySchirm.Visible:= true;
   LblOverlaySchirm.Top:= 50;
-  LblOverlaySchirm.Left:= Schirm.Width / 2;
+  LblOverlaySchirm.Left:= Round(Schirm.Width / 2);
   LblOverlaySchirm.Caption:= 'Schirm - Die Projektionsfläche auf die der Laser strahlt.';
 
   //Overlay Einstellungen
   LblOverlayEinstellungen.Visible:= true;
-  LblOverlayEinstellungen.Top:= Schirm.Height / 2;
+  LblOverlayEinstellungen.Top:=Round(Schirm.Height / 2);
   LblOverlayEinstellungen.Left:= Schirm.Left + 20;
   LblOverlayEinstellungen.Caption:= '<-- Einstellungen - Veränderbare Werte des Versuchs sind:';
 
@@ -411,20 +411,20 @@ end;
 
 procedure TFrmProjektionsflaeche.Startbutton;
 begin
-  BtnStart.Top:=BtnOptionen.Top+(BtnOptionen.Height*2)+5;
-  BtnStart.Left:=Schirm.Left;
-  BtnStart.Width:=50;
+  BtnStart.Top:=(EdtFrequenz.Top + EdtFrequenz.Height) + 10;
+  BtnStart.Left:=0;
+  BtnStart.Width:=60;
   BtnStart.Height:=20;
   BtnStart.Caption:='Start';
 end;
 
 procedure TFrmProjektionsflaeche.Endbutton;
 begin
-  BtnBeenden.Top:=BtnOptionen.Top+(BtnOptionen.Height*2)+50;
-  BtnBeenden.Left:=Schirm.Left;
-  BtnBeenden.Width:=20;
+  BtnBeenden.Top:=(EdtFrequenz.Top + EdtFrequenz.Height) + 10;
+  BtnBeenden.Left:=80;
+  BtnBeenden.Width:=60;
   BtnBeenden.Height:=20;
-  BtnBeenden.Caption:='X';
+  BtnBeenden.Caption:='Beenden';
 end;
 
 procedure TFrmProjektionsflaeche.Zoomleiste;

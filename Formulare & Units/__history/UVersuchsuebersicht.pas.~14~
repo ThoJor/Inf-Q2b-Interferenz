@@ -12,13 +12,13 @@ type
     ImgAufbau: TImage;
     ImgTYoung: TImage;
     LVersuch: TLabel;
-    LQuelle: TLabel;
+    PnlQuelle: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormEinstellungen();
     procedure ImgAufbauEinstellungen();
     procedure ImgTYoungEinstellungen();
     procedure LVersuchEinstellungen();
-    procedure LQuelleEinstellungen();
+    procedure PnlQuelleEinstellungen();
     function Textimport(Filename: string):string;
     procedure ImgTYoungClick(Sender: TObject);
   private
@@ -42,7 +42,7 @@ begin
   FormEinstellungen;
   ImgAufbauEinstellungen;
   ImgTYoungEinstellungen;
-  LQuelleEinstellungen;
+  PnlQuelleEinstellungen;
   LVersuchEinstellungen;
 end;
 
@@ -74,8 +74,7 @@ begin
                           ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
                           ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
                           Vergroessert:=True;
-                          LquelleEinstellungen;
-                          LQuelle.Visible:=true;
+                          PnlQuelle.Visible:=true;
                         end
   else begin
     ImgTYoung.Stretch := true;
@@ -85,7 +84,7 @@ begin
     ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
     ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
     Vergroessert:=False;
-    LQuelle.Visible:=false;
+    PnlQuelle.Visible:=false;
   end;
 end;
 
@@ -101,14 +100,14 @@ begin
   Vergroessert:=False;
 end;
 
-procedure TFormVersuchsuebersicht.LQuelleEinstellungen();
+procedure TFormVersuchsuebersicht.PnlQuelleEinstellungen();
 begin
-  LQuelle.Visible:=false;
-  lQuelle.Height:=50;
-  lQuelle.Width:=400;
-  lQuelle.Caption:='https://en.wikipedia.org/wiki/Thomas_Young_(scientist)#/media/File:Thomas_Young_(scientist).jpg';
-  lQuelle.Left:=ImgTYoung.Left;
-  lQuelle.Top:=ImgTYoung.Top+ImgTYoung.Height-LQuelle.Height;
+  PnlQuelle.Visible:=false;
+  PnlQuelle.Height:=50;
+  PnlQuelle.Width:=400;
+  PnlQuelle.Caption:='https://en.wikipedia.org/wiki/Thomas_Young_(scientist)#/media/File:Thomas_Young_(scientist).jpg';
+  PnlQuelle.Left:=ImgTYoung.Left;
+  PnlQuelle.Top:=ImgTYoung.Top+ImgTYoung.Height-PnlQuelle.Height;
 end;
 
 //Einstellungen fuer das Label, das den Versuchsaufbau und den historischen Hintergrund in Textform darstellt

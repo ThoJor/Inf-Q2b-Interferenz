@@ -117,8 +117,8 @@ begin
   BtnVersuchsaufbau.Left := BtnStart.Left;
   BtnVersuchsaufbau.Width := BtnStart.Width;
   BtnVersuchsaufbau.Caption := 'Versuchsübersicht';
-  BtnVersuchsaufbau.Size:= Konstantenbox.Schrift;
-  BtnVersuchsaufbau.Color:= Konstantenbox.Schriftfarbe;
+  //BtnVersuchsaufbau.Size:= Konstantenbox.Schrift;
+  //BtnVersuchsaufbau.Color:= Konstantenbox.Schriftfarbe;
   BtnVersuchsaufbau.Name:= Konstantenbox.Schriftart;
 end;
 
