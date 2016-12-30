@@ -423,11 +423,12 @@ object FormVersuchsuebersicht: TFormVersuchsuebersicht
     Height = 13
     Caption = 'LVersuch'
   end
-  object LQuelle: TLabel
-    Left = 456
-    Top = 184
-    Width = 35
-    Height = 13
-    Caption = 'LQuelle'
+  object PnlQuelle: TPanel
+    Left = 352
+    Top = 144
+    Width = 185
+    Height = 41
+    Caption = 'PnlQuelle'
+    TabOrder = 0
   end
 end
