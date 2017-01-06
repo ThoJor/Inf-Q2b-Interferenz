@@ -2,222 +2,310 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
   Left = 0
   Top = 0
   Caption = 'Interferenzo - Projektionsfl'#228'che'
-  ClientHeight = 735
-  ClientWidth = 1007
+  ClientHeight = 551
+  ClientWidth = 755
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -10
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 12
   object Schirm: TImage
-    Left = 16
-    Top = 195
-    Width = 411
-    Height = 326
+    Left = 12
+    Top = 146
+    Width = 308
+    Height = 245
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
   end
   object LblWellenlaenge: TLabel
-    Left = 216
-    Top = 27
-    Width = 93
-    Height = 16
+    Left = 162
+    Top = 20
+    Width = 72
+    Height = 12
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Caption = 'LblWellenlaenge'
   end
   object LblFrequenz: TLabel
-    Left = 216
-    Top = 56
-    Width = 69
-    Height = 16
+    Left = 162
+    Top = 42
+    Width = 55
+    Height = 12
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Caption = 'LblFrequenz'
   end
   object LblAbstand: TLabel
-    Left = 16
-    Top = 155
-    Width = 62
-    Height = 16
+    Left = 12
+    Top = 116
+    Width = 50
+    Height = 12
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Caption = 'LblAbstand'
   end
   object LblSpaltanzahl: TLabel
-    Left = 16
-    Top = 120
-    Width = 82
-    Height = 16
+    Left = 12
+    Top = 90
+    Width = 63
+    Height = 12
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Caption = 'LblSpaltanzahl'
   end
   object LblSpaltabstand: TLabel
-    Left = 16
-    Top = 91
-    Width = 90
-    Height = 16
+    Left = 12
+    Top = 68
+    Width = 70
+    Height = 12
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Caption = 'LblSpaltabstand'
   end
   object ImgLineal: TImage
-    Left = 532
-    Top = 419
-    Width = 163
-    Height = 100
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 399
+    Top = 314
+    Width = 122
+    Height = 75
   end
   object LblOverlaySchirm: TLabel
-    Left = 390
-    Top = 552
-    Width = 99
-    Height = 16
+    Left = 293
+    Top = 414
+    Width = 80
+    Height = 12
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Caption = 'LblOverlaySchirm'
   end
   object LblOverlayEinstellungen: TLabel
-    Left = 390
-    Top = 592
-    Width = 134
-    Height = 16
+    Left = 293
+    Top = 444
+    Width = 108
+    Height = 12
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Caption = 'LblOverlayEinstellungen'
   end
   object LblOverlayEinstellungen2: TLabel
-    Left = 390
-    Top = 632
-    Width = 141
-    Height = 16
+    Left = 293
+    Top = 474
+    Width = 113
+    Height = 12
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Caption = 'LblOverlayEinstellungen2'
   end
   object PnlOptionen: TPanel
-    Left = 8
-    Top = 16
-    Width = 185
-    Height = 41
+    Left = 6
+    Top = 12
+    Width = 139
+    Height = 31
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Caption = 'PnlOptionen'
     TabOrder = 0
   end
   object EdtWellenlaenge: TEdit
-    Left = 328
-    Top = 24
-    Width = 121
-    Height = 24
+    Left = 246
+    Top = 18
+    Width = 91
+    Height = 20
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     TabOrder = 1
     Text = '500'
   end
   object EdtFrequenz: TEdit
-    Left = 328
-    Top = 56
-    Width = 121
-    Height = 24
+    Left = 246
+    Top = 42
+    Width = 91
+    Height = 20
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     TabOrder = 2
     Text = 'EdtFrequenz'
   end
   object EdtAbstand: TEdit
-    Left = 88
-    Top = 152
-    Width = 121
-    Height = 24
+    Left = 66
+    Top = 114
+    Width = 91
+    Height = 20
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     TabOrder = 3
     Text = 'EdtAbstand'
   end
   object EdtSpaltanzahl: TEdit
-    Left = 88
-    Top = 117
-    Width = 121
-    Height = 24
+    Left = 66
+    Top = 88
+    Width = 91
+    Height = 20
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     TabOrder = 4
     Text = 'EdtSpaltanzahl'
   end
   object EdtSpaltabstand: TEdit
-    Left = 88
-    Top = 87
-    Width = 121
-    Height = 24
+    Left = 66
+    Top = 65
+    Width = 91
+    Height = 20
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     TabOrder = 5
     Text = 'EdtSpaltabstand'
   end
   object BtnOptionen: TButton
-    Left = 455
-    Top = 24
-    Width = 76
-    Height = 25
+    Left = 341
+    Top = 18
+    Width = 57
+    Height = 19
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Caption = 'BtnOptionen'
     TabOrder = 6
     OnClick = BtnOptionenClick
   end
   object PnlFarbe: TPanel
-    Left = 464
-    Top = 87
-    Width = 481
-    Height = 325
+    Left = 348
+    Top = 65
+    Width = 361
+    Height = 244
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Caption = 'PnlFarbe'
     TabOrder = 7
     object PnlFarbeCaption: TPanel
-      Left = 144
-      Top = 9
-      Width = 185
-      Height = 42
+      Left = 108
+      Top = 7
+      Width = 139
+      Height = 31
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
       Caption = 'PnlFarbeCaption'
       TabOrder = 0
     end
     object PnlViolett: TPanel
-      Left = 23
-      Top = 80
-      Width = 185
-      Height = 41
+      Left = 17
+      Top = 60
+      Width = 139
+      Height = 31
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
       Caption = 'PnlViolett'
       ParentBackground = False
       TabOrder = 1
     end
     object PnlBlau: TPanel
-      Left = 264
-      Top = 80
-      Width = 185
-      Height = 41
+      Left = 198
+      Top = 60
+      Width = 139
+      Height = 31
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
       Caption = 'PnlBlau'
       ParentBackground = False
       TabOrder = 2
     end
     object PnlGruen: TPanel
-      Left = 23
-      Top = 168
-      Width = 185
-      Height = 41
+      Left = 17
+      Top = 126
+      Width = 139
+      Height = 31
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
       Caption = 'PnlGruen'
       TabOrder = 3
     end
     object PnlGelb: TPanel
-      Left = 264
-      Top = 168
-      Width = 185
-      Height = 41
+      Left = 198
+      Top = 126
+      Width = 139
+      Height = 31
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
       Caption = 'PnlGelb'
       TabOrder = 4
     end
     object PnlOrange: TPanel
-      Left = 23
-      Top = 256
-      Width = 185
-      Height = 41
+      Left = 17
+      Top = 192
+      Width = 139
+      Height = 31
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
       Caption = 'PnlOrange'
       TabOrder = 5
     end
     object PnlRot: TPanel
-      Left = 264
-      Top = 256
-      Width = 185
-      Height = 41
+      Left = 198
+      Top = 192
+      Width = 139
+      Height = 31
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
       Caption = 'PnlRot'
       TabOrder = 6
     end
   end
   object TBZoom: TTrackBar
-    Left = 779
-    Top = 419
-    Width = 200
-    Height = 60
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 584
+    Top = 314
+    Width = 150
+    Height = 45
     Min = 1
     Frequency = 10
     Position = 1
@@ -227,36 +315,32 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     OnChange = TBZoomChange
   end
   object BtnStart: TButton
-    Left = 288
-    Top = 128
-    Width = 100
-    Height = 33
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 216
+    Top = 96
+    Width = 75
+    Height = 25
     Caption = 'BtnStart'
     TabOrder = 9
     OnClick = BtnStartClick
   end
   object BtnBeenden: TButton
-    Left = 433
-    Top = 459
-    Width = 100
-    Height = 33
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 325
+    Top = 344
+    Width = 75
+    Height = 25
     Caption = 'Beenden'
     TabOrder = 10
     OnClick = BtnBeendenClick
   end
   object BtnOverlay: TButton
-    Left = 31
-    Top = 549
-    Width = 75
-    Height = 25
+    Left = 23
+    Top = 412
+    Width = 57
+    Height = 19
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Caption = 'BtnOverlay'
     TabOrder = 11
     OnClick = BtnOverlayClick

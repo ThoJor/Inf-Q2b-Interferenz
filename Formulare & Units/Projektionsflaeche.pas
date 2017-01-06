@@ -87,7 +87,6 @@ type
 
 var
   FrmProjektionsflaeche: TFrmProjektionsflaeche;
-  Zentimeter : Integer;
   Abstand : real;
   Zoomfaktor : Integer;
 
@@ -460,11 +459,11 @@ end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
-  I,J,K : Integer;
+  Strichabstand,I,J,K : Integer;
 begin
   //Graphische Optionen - CBLineal
   // if graphische_Optionen.CBLineal.checked:=true then
-  Zentimeter:=Round(ImgLineal.Width/20);
+  Strichabstand:=Round(ImgLineal.Width/20);
   J:=0;
   K:=0;
   ImgLineal.Picture:=nil;
@@ -474,26 +473,26 @@ begin
       for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
         begin
           J:=J+1;
-          if J = Zentimeter then begin
+          if J = Strichabstand then begin
                                    moveto(I,1);
                                    lineto(I,Round(ImgLineal.Height/3));
                                    J:=0;
                                    K:=K+1;
-                                   textout(penpos.X-2,penpos.Y,IntToStr(K));
+                                   textout(penpos.X-2,penpos.Y,FloatToStr(K*TBZoom.position/100));
                                  end;
         end;
       //Striche von Mitte->Rechts mit Beschriftung
-      J:=Zentimeter;
+      J:=Strichabstand;
       K:=1;
-      for I := Round(ImgLineal.Width/2)+Zentimeter downto 1 do
+      for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
         begin
           J:=J-1;
           if J = 0 then begin
                           moveto(I,1);
                           lineto(I,Round(ImgLineal.Height/3));
-                          J:=Zentimeter;
+                          J:=Strichabstand;
                           K:=K-1;
-                          textout(penpos.X-7,penpos.Y,IntToStr(K));
+                          textout(penpos.X-7,penpos.Y,FloatToStr(K*TBZoom.position/100));
                         end;
 
         end;

@@ -116,7 +116,6 @@ begin
   LImpressumBody.Caption := TextImport(Filename);
   LImpressumBody.Font.Name:= Konstantenbox.Schriftart;
   LImpressumBody.Font.Size:=8;
-  LImpressumBody.WordWrap:=true;
 end;
 
 //Prozedur zum Textimport (aus einer .txt Datei in einen String)
@@ -171,24 +170,16 @@ end;  }
 function TFormInfo.Textimport(Filename: string):string;
 var
   txt: TStringList;
-  i,k: Integer;
+  i: Integer;
   temp: String;
 begin
   temp:='';
-  k:=0;
   txt:= TStringList.Create;
   txt.LoadFromFile(Filename);
   for i:= 0 to txt.count - 1 do
     begin
-    k:=k+1;
-    system.UTF8Decode(txt.Strings[i]);
-    if k=1 then
-      begin
-        temp := temp + txt.Strings[i]+ sLineBreak;
-        k:=0;
-      end
-    else temp := temp + txt.Strings[i];
-
+      system.UTF8Decode(txt.Strings[i]);
+      temp := temp + txt.Strings[i];
     end;
   result := temp;
 end;

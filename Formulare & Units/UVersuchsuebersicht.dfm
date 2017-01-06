@@ -409,19 +409,19 @@ object FormVersuchsuebersicht: TFormVersuchsuebersicht
       7817EF9EC23C68A614314D4792BAF37F002EA8814A6D8F8AA20000000049454E
       44AE426082}
   end
-  object ImgTYoung: TImage
-    Left = 8
-    Top = 8
-    Width = 193
-    Height = 233
-    OnClick = ImgTYoungClick
-  end
   object LVersuch: TLabel
     Left = 208
     Top = 8
     Width = 43
     Height = 13
     Caption = 'LVersuch'
+  end
+  object ImgTYoung: TImage
+    Left = 8
+    Top = 8
+    Width = 193
+    Height = 233
+    OnClick = ImgTYoungClick
   end
   object LQuelle: TLabel
     Left = 456
