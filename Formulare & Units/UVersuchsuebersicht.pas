@@ -109,6 +109,7 @@ begin
   lQuelle.Caption:='https://en.wikipedia.org/wiki/Thomas_Young_(scientist)#/media/File:Thomas_Young_(scientist).jpg';
   lQuelle.Left:=ImgTYoung.Left;
   lQuelle.Top:=ImgTYoung.Top+ImgTYoung.Height-LQuelle.Height;
+  Lquelle.Font.Color:=clred;
 end;
 
 //Einstellungen fuer das Label, das den Versuchsaufbau und den historischen Hintergrund in Textform darstellt
@@ -119,30 +120,34 @@ begin
   LVersuch.Width := FormVersuchsuebersicht.Width - ImgTYoung.Width - (FormVersuchsuebersicht.Width div 15);
   LVersuch.Height := ImgTYoung.Height;
   LVersuch.Caption := Textimport(Path+'\Versuchsuebersicht.txt');
-  LVersuch.Font.Size:= Konstantenbox.Schrift;
+  LVersuch.Font.Size:= 8;
   LVersuch.Font.Color:= Konstantenbox.Schriftfarbe;
   LVersuch.Font.Name:= Konstantenbox.Schriftart;
 end;
 
-//Prozedur zum Textimport (aus einer .txt Datei in einen String)
+//experimento  v4
 function TFormVersuchsuebersicht.Textimport(Filename: string):string;
 var
   txt: TStringList;
-  i: Integer;
+  i,k: Integer;
   temp: String;
 begin
   temp:='';
+  k:=0;
   txt:= TStringList.Create;
   txt.LoadFromFile(Filename);
   for i:= 0 to txt.count - 1 do
     begin
-    temp := temp + txt.Strings[i];
-      if (i mod 10)=0 then
-      temp := temp + txt.Strings[i] + #13#10
-      else
-      temp := temp + txt.Strings[i];
-    end;
+    k:=k+1;
+    system.UTF8Decode(txt.Strings[i]);
+    if k=1 then
+      begin
+        temp := temp + txt.Strings[i]+ sLineBreak;
+        k:=0;
+      end
+    else temp := temp + txt.Strings[i];
 
+    end;
   result := temp;
 end;
 
