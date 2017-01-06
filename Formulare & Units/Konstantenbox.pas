@@ -23,6 +23,17 @@ const
   Schriftfarbe= clBlack;
 
 
+  KCheckBoxHoehe= 20;
+  KCheckBoxWidth= 300;
+  KAnzahlCheckboxen= 4;
+
+  KLabelHoehe= 20;
+  KLabelLeft= 10;
+  KEditHoehe= 20;
+  KEditLeft= 0;
+  KPanelHoehe= 50;
+
+
 implementation
 
 
