@@ -22,10 +22,6 @@ type
 var
   FrmGraphischeOptionen: TFrmGraphischeOptionen;
 
-const
-  CheckBoxHoehe= 20;
-  CheckBoxWidth= 300;
-  AnzahlCheckboxen= 4;
 
 implementation
 
@@ -44,30 +40,30 @@ begin
 
   //Fenstergroeße
   FrmGraphischeOptionen.Width:= 500;
-  FrmGraphischeOptionen.Height:= (50 * AnzahlCheckboxen) + 50;
+  FrmGraphischeOptionen.Height:= (50 * Konstantenbox.KAnzahlCheckboxen) + 50;
 
   //Fensterposition
   Position:= poScreenCenter;
 
   //Position CheckBox
   CBLineal.Top:= 15;
-  ChBBgBlack.Top:= 15*2+CheckBoxHoehe;
-  ChBBgWhite.Top:= 15*3+CheckBoxHoehe*2;
-  ChBBgVerlauf.Top:= 15*4+CheckBoxHoehe*3;
+  ChBBgBlack.Top:= 15*2+Konstantenbox.KCheckBoxHoehe;
+  ChBBgWhite.Top:= 15*3+Konstantenbox.KCheckBoxHoehe*2;
+  ChBBgVerlauf.Top:= 15*4+Konstantenbox.KCheckBoxHoehe*3;
   CBLineal.Left:= 20;
   ChBBgBlack.Left:= 20;
   ChBBgWhite.Left:= 20;
   ChBBgVerlauf.Left:= 20;
 
   //Groeße CheckBox
-  CBLineal.Height:= CheckBoxHoehe;
-  ChBBgBlack.Height := CheckBoxHoehe;
-  ChBBgWhite.Height := CheckBoxHoehe;
-  ChBBgVerlauf.Height := CheckBoxHoehe;
-  CBLineal.Width:= CheckBoxWidth;
-  ChBBgBlack.Width := CheckBoxWidth;
-  ChBBgWhite.Width := CheckBoxWidth;
-  ChBBgVerlauf.Width := CheckBoxWidth;
+  CBLineal.Height:= Konstantenbox.KCheckBoxHoehe;
+  ChBBgBlack.Height := Konstantenbox.KCheckBoxHoehe;
+  ChBBgWhite.Height := Konstantenbox.KCheckBoxHoehe;
+  ChBBgVerlauf.Height := Konstantenbox.KCheckBoxHoehe;
+  CBLineal.Width:= Konstantenbox.KCheckBoxWidth;
+  ChBBgBlack.Width := Konstantenbox.KCheckBoxWidth;
+  ChBBgWhite.Width := Konstantenbox.KCheckBoxWidth;
+  ChBBgVerlauf.Width := Konstantenbox.KCheckBoxWidth;
 
   //Schriftgroesse Checkbox
   CBLineal.Font.Size:= Konstantenbox.Schrift;
