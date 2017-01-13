@@ -3,7 +3,7 @@ unit UToolbox;
 interface
 
 function FrequenzInWellenlaenge (f:real):real;
-function AbstandMaxima (a,lambda:real) :real;
+function AbstandMaxima (e,d,lambda:real) :real;
 
 implementation
 
@@ -15,10 +15,11 @@ begin
   result:=Konstantenbox.KLichtgeschwindigkeit/f;
 end;
 
-//Berechnung des Abstands der Maxima 0. und 1. Ordnung auf dem Schirm mit uebergebenem Abstand a zwischen Schirm und Blende sowie uebergebener Wellenlaenge lambda
-function AbstandMaxima (a,lambda:real) :real;
+//Berechnung des Abstands der Maxima, e = SchirmAbstand (Abstand Spalt-Schirm), d = SpaltAbstand, lambda = Wellenlaenge
+function AbstandMaxima (e,d,lambda:real) :real;
 begin
-  result:= a*tan(arcsin(lambda));
+  //result:= a*tan(arcsin(lambda));
+  result:=e*lambda/d
 end;
 
 

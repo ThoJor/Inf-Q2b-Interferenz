@@ -46,16 +46,16 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Bottom = 2
     Caption = 'LblFrequenz'
   end
-  object LblAbstand: TLabel
+  object LblSchirmAbstand: TLabel
     Left = 12
     Top = 116
-    Width = 50
+    Width = 81
     Height = 12
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
     Margins.Bottom = 2
-    Caption = 'LblAbstand'
+    Caption = 'LblSchirmAbstand'
   end
   object LblSpaltanzahl: TLabel
     Left = 12
@@ -154,7 +154,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     TabOrder = 2
     Text = 'EdtFrequenz'
   end
-  object EdtAbstand: TEdit
+  object EdtSchirmAbstand: TEdit
     Left = 66
     Top = 114
     Width = 91
@@ -164,7 +164,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Right = 2
     Margins.Bottom = 2
     TabOrder = 3
-    Text = 'EdtAbstand'
+    Text = 'EdtSchirmAbstand'
   end
   object EdtSpaltanzahl: TEdit
     Left = 66
