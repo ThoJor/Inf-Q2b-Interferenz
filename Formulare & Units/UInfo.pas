@@ -48,7 +48,7 @@ procedure TFormInfo.FormEinstellungen;
 begin
   FormInfo.Caption := 'Nutzungsbedingungen & Impressum';
   FormInfo.Width := 400;
-  FormInfo.Height := 600;
+  FormInfo.Height := 900;
   FormInfo.BorderStyle := bsDialog;
 end;
 
@@ -60,7 +60,7 @@ begin
   LNutzungsbedingungenHead.Font.Size := Konstantenbox.Ueberschrift;
   LNutzungsbedingungenHead.Height := LNutzungsbedingungenHead.Font.Size + 10;
   LNutzungsbedingungenHead.Left := FormInfo.Width div 10;
-  LNutzungsbedingungenHead.Top := FormInfo.Height div 10;
+  LNutzungsbedingungenHead.Top := FormInfo.Height div 30;
   LNutzungsbedingungenHead.Font.Color := Konstantenbox.Schriftfarbe;
   LNutzungsbedingungenHead.Caption := 'Nutzungsbedingungen';
   LNutzungsbedingungenHead.Font.Name:= Konstantenbox.Schriftart;
@@ -75,7 +75,7 @@ begin
   LNutzungsbedingungenBody.Width := FormInfo.Width - (FormInfo.Width div 5);
   LNutzungsbedingungenBody.Font.Size := Konstantenbox.Schrift;
   LNutzungsbedingungenBody.Left := FormInfo.Width div 10;
-  LNutzungsbedingungenBody.Top := LNutzungsbedingungenHead.Height + 2*(FormInfo.Height div 10);
+  LNutzungsbedingungenBody.Top := LNutzungsbedingungenHead.Height + (FormInfo.Height div 20);
   LNutzungsbedingungenBody.Height := FormInfo.Height div 2 - LNutzungsbedingungenBody.Top;
   LNutzungsbedingungenBody.Font.Color := Konstantenbox.Schriftfarbe;
   Filename:= Path+'\Nutzungsbedingungen.txt';
@@ -94,7 +94,7 @@ begin
   LImpressumHead.Font.Size := Konstantenbox.Ueberschrift;
   LImpressumHead.Height := LImpressumHead.Font.Size + 10;
   LImpressumHead.Left := FormInfo.Width div 10;
-  LImpressumHead.Top := (FormInfo.Height div 2) + FormInfo.Height div 10;
+  LImpressumHead.Top := 300;
   LImpressumHead.Font.Color := Konstantenbox.Schriftfarbe;
   LImpressumHead.Caption := 'Kontakt';
   LImpressumHead.Font.Name:= Konstantenbox.Schriftart;
@@ -108,8 +108,8 @@ begin
   LImpressumBody.Width := FormInfo.Width - (FormInfo.Width div 5);
   LImpressumBody.Font.Size := Konstantenbox.Schrift;
   LImpressumBody.Left := FormInfo.Width div 10;
-  LImpressumBody.Top := (FormInfo.Height div 2) + LImpressumHead.Height + 2*(FormInfo.Height div 10);
-  LImpressumBody.Height := FormInfo.Height div 2 - LNutzungsbedingungenBody.Top;
+  LImpressumBody.Top := 300 + LImpressumHead.Height;
+  LImpressumBody.Height := 10000;
   LImpressumBody.Font.Color := Konstantenbox.Schriftfarbe;
   LImpressumBody.Caption := 'Hier wird dann auch mal Inhalt aus einer .txt Datei' + #13#10 + 'eingelesen, weil 255 Zeichen vermutlich nicht reichen.';
   Filename :=Path+'\Kontaktinformationen.txt';

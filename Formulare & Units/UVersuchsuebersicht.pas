@@ -80,7 +80,7 @@ begin
   else begin
     ImgTYoung.Stretch := true;
     ImgTYoung.Width := FormVersuchsuebersicht.Width div 4;
-    ImgTYoung.Height := FormVersuchsuebersicht.Height div 4;
+    ImgTYoung.Height := (FormVersuchsuebersicht.Height div 25)*10;
     ImgTYoung.Top := 0 + (FormVersuchsuebersicht.Width div 30);
     ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
     ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
@@ -93,7 +93,7 @@ procedure TFormVersuchsuebersicht.ImgTYoungEinstellungen();
 begin
   ImgTYoung.Stretch := true;
   ImgTYoung.Width := FormVersuchsuebersicht.Width div 4;
-  ImgTYoung.Height := FormVersuchsuebersicht.Height div 4;
+  ImgTYoung.Height := (FormVersuchsuebersicht.Height div 25)*10;
   ImgTYoung.Top := 0 + (FormVersuchsuebersicht.Width div 30);
   ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
   ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
