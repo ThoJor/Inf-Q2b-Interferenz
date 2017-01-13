@@ -264,7 +264,7 @@ begin
   EdtFrequenz.Width:= Schirm.Left - EdtFrequenz.Left;
   EdtFrequenz.Height:= Konstantenbox.KEditHoehe;
   EdtFrequenz.Text:= '';
-  EdtFrequenz.ReadOnly:=true;
+  EdtFrequenz.ReadOnly:=false;
 end;
 
 procedure TFrmProjektionsflaeche.Option_Wellenlaenge;
