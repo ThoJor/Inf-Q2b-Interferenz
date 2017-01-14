@@ -1,114 +1,125 @@
 unit UFarbtabelle;
 
 interface
-var Farben: Array[1..80,0..1] of string;                     //2D Statisches Array mit 80 Zeilen und 2 Spalten
-function Farbe(Wellenlaenge: string): string;
+
+function Farbe(Wellenlaenge: extended): string;
+
+type
+  TTabelle = Record
+    Hex: String;
+    WLaenge: Integer;
+  End;
+
+var
+  Farben: Array[1..80] of TTabelle;
 
 implementation
 
 procedure Farbtabelle;
 begin                                                        //Farben mit Wellenlaengen 678.37nm bis 435.01 nm
-  Farben[1,0]:='610000';  Farben[1,1]:='780';
-  Farben[2,0]:='6d0000';  Farben[2,1]:='775';
-  Farben[3,0]:='770000';  Farben[3,1]:='770';
-  Farben[4,0]:='820000';  Farben[4,1]:='765';
-  Farben[5,0]:='8d0000';  Farben[5,1]:='760';
-  Farben[6,0]:='970000';  Farben[6,1]:='755';
-  Farben[7,0]:='a10000';  Farben[7,1]:='750';
-  Farben[8,0]:='ab0000';  Farben[8,1]:='745';
-  Farben[9,0]:='b50000';  Farben[9,1]:='740';
-  Farben[10,0]:='be0000'; Farben[10,1]:='735';
-  Farben[11,0]:='c80000'; Farben[11,1]:='730';
-  Farben[12,0]:='d10000'; Farben[12,1]:='725';
-  Farben[13,0]:='db0000'; Farben[13,1]:='720';
-  Farben[14,0]:='e40000'; Farben[14,1]:='715';
-  Farben[15,0]:='ed0000'; Farben[15,1]:='710';
-  Farben[16,0]:='f60000'; Farben[16,1]:='705';
-  Farben[17,0]:='ff0000'; Farben[17,1]:='700';
-  Farben[18,0]:='ff0000'; Farben[18,1]:='695';
-  Farben[19,0]:='ff0000'; Farben[19,1]:='690';
-  Farben[20,0]:='ff0000'; Farben[20,1]:='685';
-  Farben[21,0]:='ff0000'; Farben[21,1]:='680';
-  Farben[22,0]:='ff0000'; Farben[22,1]:='675';
-  Farben[23,0]:='ff0000'; Farben[23,1]:='670';
-  Farben[24,0]:='ff0000'; Farben[24,1]:='665';
-  Farben[25,0]:='ff0000'; Farben[25,1]:='660';
-  Farben[26,0]:='ff0000'; Farben[26,1]:='655';
-  Farben[27,0]:='ff0000'; Farben[27,1]:='650';
-  Farben[28,0]:='ff0000'; Farben[28,1]:='645';
-  Farben[29,0]:='ff2100'; Farben[29,1]:='640';
-  Farben[30,0]:='ff3900'; Farben[30,1]:='635';
-  Farben[31,0]:='ff4f00'; Farben[31,1]:='630';
-  Farben[32,0]:='ff6300'; Farben[32,1]:='625';
-  Farben[33,0]:='ff7700'; Farben[33,1]:='620';
-  Farben[34,0]:='ff8900'; Farben[34,1]:='615';
-  Farben[35,0]:='ff9b00'; Farben[35,1]:='610';
-  Farben[36,0]:='ffad00'; Farben[36,1]:='605';
-  Farben[37,0]:='ffbe00'; Farben[37,1]:='600';
-  Farben[38,0]:='ffcf00'; Farben[38,1]:='595';
-  Farben[39,0]:='ffdf00'; Farben[39,1]:='590';
-  Farben[40,0]:='ffef00'; Farben[40,1]:='585';
-  Farben[41,0]:='ffff00'; Farben[41,1]:='580';
-  Farben[42,0]:='f0ff00'; Farben[42,1]:='575';
-  Farben[43,0]:='e1ff00'; Farben[43,1]:='570';
-  Farben[44,0]:='d2ff00'; Farben[44,1]:='565';
-  Farben[45,0]:='c3ff00'; Farben[45,1]:='560';
-  Farben[46,0]:='b3ff00'; Farben[46,1]:='555';
-  Farben[47,0]:='a3ff00'; Farben[47,1]:='550';
-  Farben[48,0]:='92ff00'; Farben[48,1]:='545';
-  Farben[49,0]:='81ff00'; Farben[49,1]:='540';
-  Farben[50,0]:='70ff00'; Farben[50,1]:='535';
-  Farben[51,0]:='5eff00'; Farben[51,1]:='530';
-  Farben[52,0]:='4aff00'; Farben[52,1]:='525';
-  Farben[53,0]:='36ff00'; Farben[53,1]:='520';
-  Farben[54,0]:='1fff00'; Farben[54,1]:='515';
-  Farben[55,0]:='00ff00'; Farben[55,1]:='510';
-  Farben[56,0]:='00ff54'; Farben[56,1]:='505';
-  Farben[57,0]:='00ff92'; Farben[57,1]:='500';
-  Farben[58,0]:='00ffcb'; Farben[58,1]:='495';
-  Farben[59,0]:='00ffff'; Farben[59,1]:='490';
-  Farben[60,0]:='00eaff'; Farben[60,1]:='485';
-  Farben[61,0]:='00d5ff'; Farben[61,1]:='480';
-  Farben[62,0]:='00c0ff'; Farben[62,1]:='475';
-  Farben[63,0]:='00a9ff'; Farben[63,1]:='470';
-  Farben[64,0]:='0092ff'; Farben[64,1]:='465';
-  Farben[65,0]:='007bff'; Farben[65,1]:='460';
-  Farben[66,0]:='0061ff'; Farben[66,1]:='455';
-  Farben[67,0]:='0046ff'; Farben[67,1]:='450';
-  Farben[68,0]:='0000ff'; Farben[68,1]:='445';
-  Farben[69,0]:='2300ff'; Farben[69,1]:='435';
-  Farben[70,0]:='3d00ff'; Farben[70,1]:='430';
-  Farben[71,0]:='5400ff'; Farben[71,1]:='425';
-  Farben[72,0]:='6a00ff'; Farben[72,1]:='420';
-  Farben[73,0]:='7600ed'; Farben[73,1]:='415';
-  Farben[74,0]:='7e00db'; Farben[74,1]:='410';
-  Farben[75,0]:='8200c8'; Farben[75,1]:='405';
-  Farben[76,0]:='8300b5'; Farben[76,1]:='400';
-  Farben[77,0]:='8000a1'; Farben[77,1]:='395';
-  Farben[78,0]:='79008d'; Farben[78,1]:='390';
-  Farben[79,0]:='6f0077'; Farben[79,1]:='385';
-  Farben[80,0]:='610061'; Farben[80,1]:='380';
+  Farben[1].Hex:='006100';  Farben[1].WLaenge:= 780;
+  Farben[2].Hex:='006d00';  Farben[2].WLaenge:= 775;
+  Farben[3].Hex:='007700';  Farben[3].WLaenge:= 770;
+  Farben[4].Hex:='008200';  Farben[4].WLaenge:= 765;
+  Farben[5].Hex:='008d00';  Farben[5].WLaenge:= 760;
+  Farben[6].Hex:='009700';  Farben[6].WLaenge:= 755;
+  Farben[7].Hex:='00a100';  Farben[7].WLaenge:= 750;
+  Farben[8].Hex:='00ab00';  Farben[8].WLaenge:= 745;
+  Farben[9].Hex:='00b500';  Farben[9].WLaenge:= 740;
+  Farben[10].Hex:='00be00'; Farben[10].WLaenge:= 735;
+  Farben[11].Hex:='00c800'; Farben[11].WLaenge:= 730;
+  Farben[12].Hex:='00d100'; Farben[12].WLaenge:= 725;
+  Farben[13].Hex:='00db00'; Farben[13].WLaenge:= 720;
+  Farben[14].Hex:='00e400'; Farben[14].WLaenge:= 715;
+  Farben[15].Hex:='00ed00'; Farben[15].WLaenge:= 710;
+  Farben[16].Hex:='00f600'; Farben[16].WLaenge:= 705;
+  Farben[17].Hex:='00ff00'; Farben[17].WLaenge:= 700;
+  Farben[18].Hex:='00ff00'; Farben[18].WLaenge:= 695;
+  Farben[19].Hex:='00ff00'; Farben[19].WLaenge:= 690;
+  Farben[20].Hex:='00ff00'; Farben[20].WLaenge:= 685;
+  Farben[21].Hex:='00ff00'; Farben[21].WLaenge:= 680;
+  Farben[22].Hex:='00ff00'; Farben[22].WLaenge:= 675;
+  Farben[23].Hex:='00ff00'; Farben[23].WLaenge:= 670;
+  Farben[24].Hex:='00ff00'; Farben[24].Wlaenge:= 665;
+  Farben[25].Hex:='00ff00'; Farben[25].Wlaenge:= 660;
+  Farben[26].Hex:='00ff00'; Farben[26].Wlaenge:= 655;
+  Farben[27].Hex:='00ff00'; Farben[27].Wlaenge:= 650;
+  Farben[28].Hex:='00ff00'; Farben[28].Wlaenge:= 645;
+  Farben[29].Hex:='00ff21'; Farben[29].Wlaenge:= 640;
+  Farben[30].Hex:='00ff39'; Farben[30].Wlaenge:= 635;
+  Farben[31].Hex:='00ff4f'; Farben[31].Wlaenge:= 630;
+  Farben[32].Hex:='00ff63'; Farben[32].Wlaenge:= 625;
+  Farben[33].Hex:='00ff77'; Farben[33].Wlaenge:= 620;
+  Farben[34].Hex:='00ff89'; Farben[34].Wlaenge:= 615;
+  Farben[35].Hex:='00ff9b'; Farben[35].Wlaenge:= 610;
+  Farben[36].Hex:='00ffad'; Farben[36].Wlaenge:= 605;
+  Farben[37].Hex:='00ffbe'; Farben[37].Wlaenge:= 600;
+  Farben[38].Hex:='00ffcf'; Farben[38].Wlaenge:= 595;
+  Farben[39].Hex:='00ffdf'; Farben[39].Wlaenge:= 590;
+  Farben[40].Hex:='00ffef'; Farben[40].Wlaenge:= 585;
+  Farben[41].Hex:='00ffff'; Farben[41].Wlaenge:= 580;
+  Farben[42].Hex:='00f0ff'; Farben[42].Wlaenge:= 575;
+  Farben[43].Hex:='00e1ff'; Farben[43].Wlaenge:= 570;
+  Farben[44].Hex:='00d2ff'; Farben[44].Wlaenge:= 565;
+  Farben[45].Hex:='00c3ff'; Farben[45].Wlaenge:= 560;
+  Farben[46].Hex:='00b3ff'; Farben[46].Wlaenge:= 555;
+  Farben[47].Hex:='00a3ff'; Farben[47].Wlaenge:= 550;
+  Farben[48].Hex:='0092ff'; Farben[48].Wlaenge:= 545;
+  Farben[49].Hex:='0081ff'; Farben[49].Wlaenge:= 540;
+  Farben[50].Hex:='0070ff'; Farben[50].Wlaenge:= 535;
+  Farben[51].Hex:='005eff'; Farben[51].Wlaenge:= 530;
+  Farben[52].Hex:='004aff'; Farben[52].Wlaenge:= 525;
+  Farben[53].Hex:='0036ff'; Farben[53].Wlaenge:= 520;
+  Farben[54].Hex:='001fff'; Farben[54].Wlaenge:= 515;
+  Farben[55].Hex:='0000ff'; Farben[55].Wlaenge:= 510;
+  Farben[56].Hex:='5400ff'; Farben[56].Wlaenge:= 505;
+  Farben[57].Hex:='9200ff'; Farben[57].Wlaenge:= 500;
+  Farben[58].Hex:='cb00ff'; Farben[58].Wlaenge:= 495;
+  Farben[59].Hex:='ff00ff'; Farben[59].Wlaenge:= 490;
+  Farben[60].Hex:='ff00ea'; Farben[60].Wlaenge:= 485;
+  Farben[61].Hex:='ff00d5'; Farben[61].Wlaenge:= 480;
+  Farben[62].Hex:='ff00c0'; Farben[62].Wlaenge:= 475;
+  Farben[63].Hex:='ff00a9'; Farben[63].Wlaenge:= 470;
+  Farben[64].Hex:='ff0092'; Farben[64].Wlaenge:= 465;
+  Farben[65].Hex:='ff007b'; Farben[65].Wlaenge:= 460;
+  Farben[66].Hex:='ff0061'; Farben[66].Wlaenge:= 455;
+  Farben[67].Hex:='ff0046'; Farben[67].Wlaenge:= 450;
+  Farben[68].Hex:='ff0000'; Farben[68].Wlaenge:= 445;
+  Farben[69].Hex:='ff2300'; Farben[69].Wlaenge:= 435;
+  Farben[70].Hex:='ff3d00'; Farben[70].Wlaenge:= 430;
+  Farben[71].Hex:='ff5400'; Farben[71].Wlaenge:= 425;
+  Farben[72].Hex:='ff6a00'; Farben[72].Wlaenge:= 420;
+  Farben[73].Hex:='ed7600'; Farben[73].Wlaenge:= 415;
+  Farben[74].Hex:='db7e00'; Farben[74].Wlaenge:= 410;
+  Farben[75].Hex:='c88200'; Farben[75].Wlaenge:= 405;
+  Farben[76].Hex:='b58300'; Farben[76].Wlaenge:= 400;
+  Farben[77].Hex:='a18000'; Farben[77].Wlaenge:= 395;
+  Farben[78].Hex:='8d7900'; Farben[78].Wlaenge:= 390;
+  Farben[79].Hex:='776f00'; Farben[79].Wlaenge:= 385;
+  Farben[80].Hex:='616100'; Farben[80].Wlaenge:= 380;
 end;
 
-function Farbe(Wellenlaenge: string): string;
+function Farbe(Wellenlaenge: extended): string;
 var
   Farbe_gefunden: Boolean;
   Zaehler: Integer;
 begin
+  Farbtabelle;
+
   //Variablen zuruecksetzen
   Farbe_gefunden:= false;
   Zaehler:= 0;
 
   //Hexcode zur Wellenlaenge ermitteln
   repeat
-  Inc(Zaehler);
-  if Wellenlaenge= Farben[Zaehler,1] then Farbe_gefunden:= true;
-  until (Zaehler= 80) or (Farbe_gefunden= true);
+    if (Farben[Zaehler].WLaenge = Round(Wellenlaenge))
+          then Farbe_gefunden:= true else Inc(Zaehler);
+  until (Zaehler = 80) or (Farbe_gefunden = true);
 
   //Wert an aufrufende Prozedur geben
   if Farbe_gefunden= true
-    then Result:= Farben[Zaehler,0]
-    else Result:= '000000';
+    then Result:= Farben[Zaehler].Hex
+      else Result:= '000000';
 
 end;
 

@@ -691,9 +691,9 @@ begin
     Schirm.Picture := nil;
 
     //Zuweisung der Stiftfarbe
-    farbe := '$' + Ufarbtabelle.Farbe(EdtWellenlaenge.Text);
-    //Schirm.Canvas.Pen.Color := Stringtocolor(farbe);
-    Schirm.Canvas.Pen.Color := clgreen;
+    farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*Power(10,(9)));
+    Schirm.Canvas.Pen.Color := Stringtocolor(farbe);
+   // Schirm.Canvas.Pen.Color := clgreen;
 
     //Stift in Schirmmitte positionieren
     posx := Schirm.Width div 2;
@@ -824,6 +824,7 @@ end;
 
 end;
 
+
 procedure TFrmProjektionsflaeche.Schrifteinstellungen;
 begin
   //Schriftgroesse
@@ -847,7 +848,7 @@ begin
   LblOverlayEinstellungen.Font.Size:= Konstantenbox.Schrift;
   LblOverlayEinstellungen2.Font.Size:= Konstantenbox.Schrift;
   BtnReset.Font.Size := Konstantenbox.Schrift;
-  
+
   //Schriftart
   PnlOptionen.Font.Name:= Konstantenbox.Schriftart;
   EdtWellenlaenge.Font.Name:= Konstantenbox.Schriftart;
@@ -907,12 +908,11 @@ begin
   //Schirm zurücksetzen
   Schirm.Picture:=nil;
   Schirm.Canvas;
-   Canvaseinstellungen;
+  Canvaseinstellungen;
 
   //Linela zurücksetzen
   Linealbasis;
   Linealskala;
 end;
-
 
 end.
