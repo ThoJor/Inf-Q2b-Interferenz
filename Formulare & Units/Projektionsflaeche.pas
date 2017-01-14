@@ -490,6 +490,7 @@ begin
   if GLineal=false then else
   //Graphische Optionen - CBLineal
   // if graphische_Optionen.CBLineal.checked:=true then
+  Strichabstand:=100;
   if GDynZoom>0 then LDynZoom:=GDynZoom;
   J:=0;
   K:=0;
