@@ -906,7 +906,8 @@ begin
   //Schirm zurücksetzen
   Schirm.Picture:=nil;
   Schirm.Canvas;
-   Canvaseinstellungen;
+  Canvaseinstellungen;
+  EdtFrequenz.Text := '';
 
   //Linela zurücksetzen
   Linealbasis;
