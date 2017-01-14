@@ -335,6 +335,8 @@ begin
 
   //Vollbild
   FrmProjektionsflaeche.BorderStyle:= bsNone;
+  FrmProjektionsflaeche.ClientHeight:= Screen.Height;
+  FrmProjektionsflaeche.ClientWidth:= Screen.Width;
   FrmProjektionsflaeche.WindowState:= wsMaximized;
 
   //Fensterposition
