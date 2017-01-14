@@ -63,7 +63,7 @@ begin
   FrmHaupt.Height := 300;
   FrmHaupt.BorderStyle := bsDialog;
   FrmHaupt.Caption := 'Interferenzo - Home';
-  FrmHaupt.Position := poDesktopCenter;
+  FrmHaupt.Position := poScreenCenter;
 end;
 
 //Eigenschaften der Ueberschrift
