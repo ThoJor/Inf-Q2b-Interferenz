@@ -691,9 +691,8 @@ begin
     Schirm.Picture := nil;
 
     //Zuweisung der Stiftfarbe
-    farbe := '$' + Ufarbtabelle.Farbe(EdtWellenlaenge.Text);
-    //Schirm.Canvas.Pen.Color := Stringtocolor(farbe);
-    Schirm.Canvas.Pen.Color := clgreen;
+    farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
+    Schirm.Canvas.Pen.Color := Stringtocolor(farbe);
 
     //Stift in Schirmmitte positionieren
     posx := Schirm.Width div 2;
