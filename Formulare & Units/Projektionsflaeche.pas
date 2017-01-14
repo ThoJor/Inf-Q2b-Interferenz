@@ -81,6 +81,7 @@ type
     procedure Schrifteinstellungen;
     procedure EdtFrequenzKeyPress(Sender: TObject; var Key: Char);
     procedure EdtWellenlaengeKeyPress(Sender: TObject; var Key: Char);
+    function dynamicZoom (Zahl: Real):Real;
   private
     { Private-Deklarationen }
   public
@@ -94,7 +95,7 @@ var
   GWellenlaenge : real;
   GSpaltabstand : real;
   GMaximaAbstand : real;
-
+  GDynZoom : Real;
 
 implementation
 
@@ -431,9 +432,9 @@ begin
   TBZoom.Width:=120;
   TBZoom.Top:=ImgLineal.Top-TBZoom.Height;
   TBZoom.Left:=FrmProjektionsflaeche.Width-TBZoom.Width;
-  TBzoom.Max:=100;
+  TBzoom.Max:=200;
   TBZoom.Min:=1;
-  TBZoom.Position:=50;
+  TBZoom.Position:=100;
   TBZoom.Visible:=False;
 end;
 
@@ -459,10 +460,12 @@ end;
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
   Strichabstand, I,J,K : Integer;
+  LDynZoom: Real;
 begin
   //Graphische Optionen - CBLineal
   // if graphische_Optionen.CBLineal.checked:=true then
   Strichabstand:=Round(ImgLineal.Width/20);
+  if GDynZoom>0 then LDynZoom:=GDynZoom;
   J:=0;
   K:=0;
   ImgLineal.Picture:=nil;
@@ -477,7 +480,7 @@ begin
                                    lineto(I,Round(ImgLineal.Height/3));
                                    J:=0;
                                    K:=K+1;
-                                   textout(penpos.X-2,penpos.Y,FloatToStr(K*TBZoom.position/100));
+                                   textout(penpos.X-2,penpos.Y,FloatToStr(K/(TBZoom.position/100)/LDynZoom));
                                  end;
         end;
       //Striche von Mitte->Rechts mit Beschriftung
@@ -491,7 +494,7 @@ begin
                           lineto(I,Round(ImgLineal.Height/3));
                           J:=Strichabstand;
                           K:=K-1;
-                          textout(penpos.X-7,penpos.Y,FloatToStr(K*TBZoom.position/100));
+                          textout(penpos.X-7,penpos.Y,FloatToStr(K/(TBZoom.position/100)/LDynZoom));
                         end;
 
         end;
@@ -505,7 +508,30 @@ begin
   //Lineal neu Zeichnen
   Linealskala;
 //SCHIRM
-  Zeichnen(GMaximaAbstand*TBZoom.Position*1000);
+  Zeichnen(GMaximaAbstand*(TBZoom.Position)*GDynZoom);
+end;
+
+function TFrmProjektionsflaeche.dynamicZoom (Zahl: Real):Real;
+var
+  ZahlTest: Real;
+  Success: Boolean;
+  Zoom:Integer;
+begin
+  Success:= false;
+  Zoom:=0;
+  repeat
+  //z.B. 1,234 zu 1 machen oder 5,461 zu 5
+  ZahlTest:= StrToFloat(System.SysUtils.FormatFloat('0.', Zahl));
+  //wenn ZahlTest 0 oder kleiner ist, dann soll das Komma von Zahl um 1 nach links verschoben werden
+  if ZahlTest<= 0 then begin
+                         Zahl:= Zahl * 10;
+                         Zoom:=Zoom+1;
+                       end
+                  else begin
+                         Success:= true;
+                         Result:=Power(10,Zoom);
+                       end;
+  until Success= true;
 end;
 
 //Loeschen von ungewollten Eingaben aus EdtFrequenz (waehrend der Eingabe)
@@ -544,7 +570,7 @@ end;
 procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
   var Wellenlaenge,Frequenz: real;
 begin
-  TBZoom.position:=50;
+  TBZoom.position:=100;
   TBZoom.Visible:=true;
 
   //fehlerabfrage für doppelte Eingabe
@@ -583,8 +609,8 @@ begin
     GZoomfaktor:=100000*Round(TBZoom.Position/2);
     GWellenlaenge := Wellenlaenge;
     GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge);
-    Zeichnen(GMaximaAbstand*TBZoom.Position*1000);
-
+    GDynZoom:=DynamicZoom(GMaximaAbstand);
+    Zeichnen(GMaximaAbstand*(TBZoom.Position/100)*GDynZoom);
   end;
 
 
@@ -620,7 +646,8 @@ procedure TFrmProjektionsflaeche.Zeichnen(a: real);
 var posx: integer;                                                              //x-Position des Stiftes
     farbe: string;
 begin
-
+  if A>0.5 then
+   begin
     //Leeren des Schirms
     Schirm.Picture := nil;
 
@@ -652,7 +679,7 @@ begin
       Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
       Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
     until posx < 0;
-
+  end;
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
