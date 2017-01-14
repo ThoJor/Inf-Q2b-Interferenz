@@ -333,9 +333,9 @@ begin
   //Namensgebung
   FrmProjektionsflaeche.Caption:= 'Interferenzo - Projektionsfläche';
 
-  //Fenstergroeße (Vollbild)
-  FrmProjektionsflaeche.ClientWidth:= Screen.Width;
-  FrmProjektionsflaeche.ClientHeight:= Screen.Height;
+  //Vollbild
+  FrmProjektionsflaeche.BorderStyle:= bsNone;
+  FrmProjektionsflaeche.WindowState:= wsMaximized;
 
   //Fensterposition
   Position:= poScreenCenter;
