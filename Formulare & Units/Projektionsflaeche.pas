@@ -38,6 +38,7 @@ type
     BtnOverlay: TButton;
     LblOverlayEinstellungen: TLabel;
     LblOverlayEinstellungen2: TLabel;
+    BtnReset: TButton;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -83,6 +84,9 @@ type
     procedure EdtFrequenzKeyPress(Sender: TObject; var Key: Char);
     procedure EdtWellenlaengeKeyPress(Sender: TObject; var Key: Char);
     function dynamicZoom (Zahl: Real):Real;
+    procedure Resetbutton;
+    procedure Reset;
+    procedure BtnResetClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -352,7 +356,8 @@ end;
 
 procedure TFrmProjektionsflaeche.BtnBeendenClick(Sender: TObject);
 begin
-  FrmProjektionsflaeche.Hide;
+  FrmProjektionsflaeche.close;
+  Reset;
 end;
 
 procedure TFrmProjektionsflaeche.BtnOptionenClick(Sender: TObject);
@@ -379,6 +384,11 @@ end;
 procedure TFrmProjektionsflaeche.BtnOverlayClick(Sender: TObject);
 begin
   if GOverlay=false then Overlay else Overlay_aus;
+end;
+
+procedure TFrmProjektionsflaeche.BtnResetClick(Sender: TObject);
+begin
+  Reset;
 end;
 
 procedure TFrmProjektionsflaeche.Overlay;
@@ -424,6 +434,7 @@ begin
   Linealbasis;
   Startbutton;
   Endbutton;
+  Resetbutton;
   Zoomleiste;
   OverlayButton;
   Schrifteinstellungen;
@@ -835,7 +846,8 @@ begin
   BtnOverlay.Font.Size:= Konstantenbox.Schrift;
   LblOverlayEinstellungen.Font.Size:= Konstantenbox.Schrift;
   LblOverlayEinstellungen2.Font.Size:= Konstantenbox.Schrift;
-
+  BtnReset.Font.Size := Konstantenbox.Schrift;
+  
   //Schriftart
   PnlOptionen.Font.Name:= Konstantenbox.Schriftart;
   EdtWellenlaenge.Font.Name:= Konstantenbox.Schriftart;
@@ -856,6 +868,7 @@ begin
   BtnOverlay.Font.Name:= Konstantenbox.Schriftart;
   LblOverlayEinstellungen.Font.Name:= Konstantenbox.Schriftart;
   LblOverlayEinstellungen2.Font.Name:= Konstantenbox.Schriftart;
+  BtnReset.Font.Name:= Konstantenbox.Schriftart;
 
   //Schriftfarbe
   PnlOptionen.Font.Color:= Konstantenbox.Schriftfarbe;
@@ -877,6 +890,28 @@ begin
   BtnOverlay.Font.Color:= Konstantenbox.Schriftfarbe;
   LblOverlayEinstellungen.Font.Color:= Konstantenbox.Schriftfarbe;
   LblOverlayEinstellungen2.Font.Color:= Konstantenbox.Schriftfarbe;
+  BtnReset.Font.Color:= Konstantenbox.Schriftfarbe;
+end;
+
+procedure TFrmProjektionsflaeche.Resetbutton;
+begin
+  BtnReset.Top := BtnStart.Top;
+  BtnReset.Left := 160;
+  BtnReset.Width := 60;
+  BtnReset.Height := 20;
+  BtnReset.Caption := 'Reset';
+end;
+
+procedure TFrmProjektionsflaeche.Reset;
+begin
+  //Schirm zurücksetzen
+  Schirm.Picture:=nil;
+  Schirm.Canvas;
+   Canvaseinstellungen;
+
+  //Linela zurücksetzen
+  Linealbasis;
+  Linealskala;
 end;
 
 
