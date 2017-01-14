@@ -87,7 +87,6 @@ end;
 procedure TFrmHaupt.BtnStartClick(Sender: TObject);
 begin
   FrmProjektionsflaeche.Show;
-  FrmHaupt.Hide;
   TimerProjektionsflaeche.Enabled:= true;
 end;
 
