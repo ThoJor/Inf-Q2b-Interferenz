@@ -345,4 +345,13 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     TabOrder = 11
     OnClick = BtnOverlayClick
   end
+  object BtnReset: TButton
+    Left = 142
+    Top = 409
+    Width = 75
+    Height = 25
+    Caption = 'BtnReset'
+    TabOrder = 12
+    OnClick = BtnResetClick
+  end
 end

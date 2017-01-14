@@ -112,7 +112,7 @@ begin
 
   //Hexcode zur Wellenlaenge ermitteln
   repeat
-    if (Farben[Zaehler].WLaenge = Round(Wellenlaenge))
+    if (Farben[Zaehler].WLaenge >= Round(Wellenlaenge)) and (Farben[Zaehler+1].WLaenge < Round(Wellenlaenge))
           then Farbe_gefunden:= true else Inc(Zaehler);
   until (Zaehler = 80) or (Farbe_gefunden = true);
 
