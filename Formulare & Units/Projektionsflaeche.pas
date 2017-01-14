@@ -480,7 +480,7 @@ begin
                                    lineto(I,Round(ImgLineal.Height/3));
                                    J:=0;
                                    K:=K+1;
-                                   textout(penpos.X-2,penpos.Y,FloatToStr(K/(TBZoom.position/100)/LDynZoom));
+                                   textout(penpos.X-2,penpos.Y,FloatToStr(K/LDynZoom/(TBZoom.position/100)));
                                  end;
         end;
       //Striche von Mitte->Rechts mit Beschriftung
@@ -494,7 +494,7 @@ begin
                           lineto(I,Round(ImgLineal.Height/3));
                           J:=Strichabstand;
                           K:=K-1;
-                          textout(penpos.X-7,penpos.Y,FloatToStr(K/(TBZoom.position/100)/LDynZoom));
+                          textout(penpos.X-7,penpos.Y,FloatToStr(K/LDynZoom/(TBZoom.position/100)));
                         end;
 
         end;
