@@ -98,6 +98,7 @@ var
   GMaximaAbstand : real;
   GDynZoom : Real;
   GOverlay : Boolean;
+  GLineal : Boolean;
 
 implementation
 
@@ -421,7 +422,6 @@ begin
   Canvaseinstellungen;
   Optionen;
   Linealbasis;
-  Linealskala;
   Startbutton;
   Endbutton;
   Zoomleiste;
@@ -461,6 +461,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Linealbasis;
 begin
+  GLineal:=false;
   //Groeße und Position des Image
   ImgLineal.Height:=Round((1/5) * FrmProjektionsflaeche.Height);
   ImgLineal.Width:= Schirm.Width;
@@ -470,22 +471,25 @@ begin
     begin
       pen.Color:=ClBlack;
     //Umriss des Lineals
-      Moveto(ImgLineal.Width-1,1);
-      Lineto(1,1);
-      Lineto(1,ImgLineal.Height-1);
-      Lineto(ImgLineal.Width-1,ImgLineal.Height-1);
-      Lineto(ImgLineal.Width-1,1);
+      Moveto(ImgLineal.Width-2,2);
+      Lineto(2,2);
+      Lineto(2,ImgLineal.Height-2);
+      Lineto(ImgLineal.Width-2,ImgLineal.Height-2);
+      Lineto(ImgLineal.Width-2,2);
     end;
 end;
+
+
+
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
   Strichabstand, I,J,K : Integer;
   LDynZoom: Real;
 begin
+  if GLineal=false then else
   //Graphische Optionen - CBLineal
   // if graphische_Optionen.CBLineal.checked:=true then
-  Strichabstand:=Round(ImgLineal.Width/20);
   if GDynZoom>0 then LDynZoom:=GDynZoom;
   J:=0;
   K:=0;
@@ -631,7 +635,9 @@ begin
     GWellenlaenge := Wellenlaenge;
     GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge);
     GDynZoom:=DynamicZoom(GMaximaAbstand);
-    Zeichnen(GMaximaAbstand*(TBZoom.Position/100)*GDynZoom);
+    GLineal:=true;
+    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
+    Linealskala;
   end;
 
 
