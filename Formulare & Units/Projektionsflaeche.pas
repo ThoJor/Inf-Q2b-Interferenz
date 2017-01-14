@@ -77,6 +77,7 @@ type
     procedure Endbutton;
     procedure BtnOverlayClick(Sender: TObject);
     procedure Overlay;
+    procedure Overlay_aus;
     procedure OverlayButton;
     procedure Schrifteinstellungen;
     procedure EdtFrequenzKeyPress(Sender: TObject; var Key: Char);
@@ -96,6 +97,7 @@ var
   GSpaltabstand : real;
   GMaximaAbstand : real;
   GDynZoom : Real;
+  GOverlay : Boolean;
 
 implementation
 
@@ -331,9 +333,9 @@ begin
   //Namensgebung
   FrmProjektionsflaeche.Caption:= 'Interferenzo - Projektionsfläche';
 
-  //Fenstergroeße (Vollbild)
-  FrmProjektionsflaeche.ClientWidth:= Screen.Width;
-  FrmProjektionsflaeche.ClientHeight:= Screen.Height;
+  //Vollbild
+  FrmProjektionsflaeche.BorderStyle:= bsNone;
+  FrmProjektionsflaeche.WindowState:= wsMaximized;
 
   //Fensterposition
   Position:= poScreenCenter;
@@ -366,11 +368,14 @@ begin
   LblOverlaySchirm.Visible:= false;
   LblOverlayEinstellungen.Visible:= false;
   LblOverlayEinstellungen2.Visible:= false;
+
+  //Overlay ist inaktiv -> GOverlay:= false
+  GOverlay:= false;
 end;
 
 procedure TFrmProjektionsflaeche.BtnOverlayClick(Sender: TObject);
 begin
-  Overlay;
+  if GOverlay=false then Overlay else Overlay_aus;
 end;
 
 procedure TFrmProjektionsflaeche.Overlay;
@@ -392,6 +397,20 @@ begin
   LblOverlayEinstellungen2.Top:= LblOverlayEinstellungen.Top + LblOverlayEinstellungen.Height;
   LblOverlayEinstellungen2.Left:= LblOverlayEinstellungen.Left;
   LblOverlayEinstellungen2.Caption:= 'Wellenlänge, Frequenz oder Farbe (zum Auswählen der Farbe auf diese klicken)';
+
+  //dem Programm mitteilen, dass das Overlay eingeblendet ist
+  GOverlay:= true;
+end;
+
+procedure TFrmProjektionsflaeche.Overlay_aus;
+begin
+  //alle Overlay-Labels verstecken
+  LblOverlaySchirm.Visible:= false;
+  LblOverlayEinstellungen.Visible:= false;
+  LblOverlayEinstellungen2.Visible:= false;
+
+  //dem Programm mitteilen, dass das Overlay ausgeblendet ist
+  GOverlay:= false;
 end;
 
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
