@@ -870,9 +870,12 @@ begin
   Canvaseinstellungen;
   EdtFrequenz.Text := '';
 
-  //Linela zurücksetzen
+  //Lineal zurücksetzen
   Linealbasis;
   Linealskala;
+
+  //Overlay zurücksetzen
+  Overlay_aus;
 end;
 
 
