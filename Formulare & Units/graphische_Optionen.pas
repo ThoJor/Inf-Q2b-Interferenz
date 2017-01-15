@@ -104,7 +104,6 @@ end;
 
 procedure TFrmGraphischeOptionen.ChBBgBlackClick(Sender: TObject);
 begin
-  ChBBgBlack.Checked:= true;
   ChBBgWhite.Checked := false;
   ChBBgVerlauf.Checked := false;
 
@@ -115,7 +114,6 @@ end;
 
 procedure TFrmGraphischeOptionen.ChBBgVerlaufClick(Sender: TObject);
 begin
-  ChBBgVerlauf.Checked:= true;
   ChBBgBlack.Checked := false;
   ChBBgWhite.Checked := false;
 
@@ -126,7 +124,6 @@ end;
 
 procedure TFrmGraphischeOptionen.ChBBgWhiteClick(Sender: TObject);
 begin
-  ChBBgWhite.Checked:= true;
   ChBBgBlack.Checked := false;
   ChBBgVerlauf.Checked := false;
 
