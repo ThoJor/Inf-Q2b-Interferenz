@@ -442,6 +442,8 @@ begin
   Zoomleiste;
   OverlayButton;
   Schrifteinstellungen;
+
+  //nur vorrübergehend
 end;
 
 procedure TFrmProjektionsflaeche.Startbutton;
