@@ -14,6 +14,12 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 12
+  object Image1: TImage
+    Left = 362
+    Top = 8
+    Width = 105
+    Height = 105
+  end
   object CBLineal: TCheckBox
     Left = 7
     Top = 7
@@ -33,6 +39,7 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
     Height = 17
     Caption = 'ChBBgBlack'
     TabOrder = 1
+    OnClick = ChBBgBlackClick
   end
   object ChBBgWhite: TCheckBox
     Left = 8
@@ -41,6 +48,7 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
     Height = 17
     Caption = 'ChBBgWhite'
     TabOrder = 2
+    OnClick = ChBBgWhiteClick
   end
   object ChBBgVerlauf: TCheckBox
     Left = 8
@@ -49,5 +57,6 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
     Height = 17
     Caption = 'ChBBgVerlauf'
     TabOrder = 3
+    OnClick = ChBBgVerlaufClick
   end
 end
