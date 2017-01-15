@@ -610,6 +610,8 @@ begin
   TBZoom.position:=100;
   TBZoom.Visible:=true;
 
+  Background;
+
   //fehlerabfrage für doppelte Eingabe
   if not (EdtWellenlaenge.Text = '') and not (EdtFrequenz.Text = '') then
   begin
@@ -637,7 +639,7 @@ begin
       end;
 
     //Frequenz ergaenzen
-    Frequenz := Konstantenbox.KLichtgeschwindigkeit/Wellenlaenge;
+    Frequenz := UToolbox.WellenlaengeInFrequenz(Wellenlaenge);
     EdtFrequenz.Text := FloatToStr(Frequenz/Power(10,(13)));
 
     //Aufruf zur Berechnung und zum Zeichnen
@@ -775,7 +777,7 @@ procedure TFrmProjektionsflaeche.DrawGradientH(Canvas: TCanvas; Color1, Color2: 
 var
   x, r, g, b: integer;
 begin
-
+{
   for X := Rect.Top to Rect.Bottom do begin
     R := Round(GetRValue(Color1) + ((GetRValue(Color2) - GetRValue(Color1)) *
       X / (Rect.Bottom - Rect.Top)));
@@ -791,15 +793,17 @@ begin
     Canvas.MoveTo(Rect.Left, X);
     Canvas.LineTo(Rect.Right, X);
 
-end;
+end; }
 end;
 
 //Festlegung des Hintergrundes mit Abstimmung mit den Checkboxen der Graphischen Optionen
 procedure TFrmProjektionsflaeche.Background();
 begin
 
-  begin
-  if FrmgraphischeOptionen.ChBBgBlack.Checked = true then
+  FrmgraphischeOptionen.DrawBackground(Schirm);
+
+{  begin
+  if graphische_Optionen.GBackgroundBlack = true then
   begin
     Schirm.Picture := nil;
     Schirm.Canvas.Brush.Color:=clblack;
@@ -819,7 +823,7 @@ begin
   begin
     //DrawGradientH(Schirm.Canvas, $00A2AA77, $00FFFFE3, Rect(0, 0, Width, Height));
   end;
-end;
+end; }
 
 end;
 

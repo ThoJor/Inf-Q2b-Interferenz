@@ -4,6 +4,7 @@ interface
 
 function FrequenzInWellenlaenge (f:real):real;
 function AbstandMaxima (e,d,lambda:real) :real;
+function WellenlaengeInFrequenz (lambda: real):real;
 
 implementation
 
@@ -13,6 +14,12 @@ uses Math, Konstantenbox;
 function FrequenzInWellenlaenge (f:real):real;
 begin
   result:=Konstantenbox.KLichtgeschwindigkeit/f;
+end;
+
+//Umrechnung einer uebergebenen Wellenlaenge lambda in die zugehoerige Frequenz
+function WellenlaengeInFrequenz(lambda:real):real;
+begin
+  result := Konstantenbox.KLichtgeschwindigkeit/lambda;
 end;
 
 //Berechnung des Abstands der Maxima, e = SchirmAbstand (Abstand Spalt-Schirm), d = SpaltAbstand, lambda = Wellenlaenge
