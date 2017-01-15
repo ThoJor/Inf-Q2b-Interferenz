@@ -726,49 +726,79 @@ end;
 //Panel Blau
 procedure TFrmProjektionsflaeche.PnlBlauClick(Sender: TObject);
 begin
-  GMaximaAbstand := AbstandMaxima(1000,10,Konstantenbox.KBlau)*(1/TBZoom.Position);
+  GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
+  GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
   GWellenlaenge := Konstantenbox.KBlau;
-  Zeichnen(GMaximaAbstand);
+  GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge);
+  GDynZoom:=DynamicZoom(GMaximaAbstand);
+  GLineal:=true;
+  Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
+  Linealskala;
 end;
 
 //Panel Gelb
 procedure TFrmProjektionsflaeche.PnlGelbClick(Sender: TObject);
 begin
-  GMaximaAbstand := AbstandMaxima(1000,10,Konstantenbox.KGelb)*(1/TBZoom.Position);
-  GWellenlaenge := Konstantenbox.KGelb;
-  Zeichnen(GMaximaAbstand);
+    GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
+    GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
+    GWellenlaenge := Konstantenbox.KGelb;
+    GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge);
+    GDynZoom:=DynamicZoom(GMaximaAbstand);
+    GLineal:=true;
+    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
+    Linealskala;
 end;
 
 //Panel Gruen
 procedure TFrmProjektionsflaeche.PnlGruenClick(Sender: TObject);
 begin
-  GMaximaAbstand := AbstandMaxima(1000,10,Konstantenbox.KGruen)*(1/TBZoom.Position);
-  GWellenlaenge := Konstantenbox.KGruen;
-  Zeichnen(GMaximaAbstand);
+    GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
+    GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
+    GWellenlaenge := Konstantenbox.KGruen;
+    GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge);
+    GDynZoom:=DynamicZoom(GMaximaAbstand);
+    GLineal:=true;
+    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
+    Linealskala;
 end;
 
 //Panel Orange
 procedure TFrmProjektionsflaeche.PnlOrangeClick(Sender: TObject);
 begin
-  GMaximaAbstand := AbstandMaxima(1000,10,Konstantenbox.KOrange)*(1/TBZoom.Position);
-  GWellenlaenge := Konstantenbox.KOrange;
-  Zeichnen(GMaximaAbstand);
+    GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
+    GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
+    GWellenlaenge := Konstantenbox.KOrange;
+    GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge);
+    GDynZoom:=DynamicZoom(GMaximaAbstand);
+    GLineal:=true;
+    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
+    Linealskala;
 end;
 
 //Panel Rot
 procedure TFrmProjektionsflaeche.PnlRotClick(Sender: TObject);
 begin
-  GMaximaAbstand := AbstandMaxima(1000,10,Konstantenbox.KRot)*(1/TBZoom.Position);
-  GWellenlaenge := Konstantenbox.KRot;
-  Zeichnen(GMaximaAbstand);
+    GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
+    GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
+    GWellenlaenge := Konstantenbox.KRot;
+    GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge);
+    GDynZoom:=DynamicZoom(GMaximaAbstand);
+    GLineal:=true;
+    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
+    Linealskala;
 end;
 
 //Panel Violett
 procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
 begin
-  GMaximaAbstand := AbstandMaxima(1000,10,Konstantenbox.KViolett)*(1/TBZoom.Position);
-  GWellenlaenge := Konstantenbox.KViolett;
-  Zeichnen(GMaximaAbstand);
+    GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
+    GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
+    GWellenlaenge := Konstantenbox.KViolett;
+    GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge);
+    GDynZoom:=DynamicZoom(GMaximaAbstand);
+    GLineal:=true;
+    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
+    Linealskala;
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
