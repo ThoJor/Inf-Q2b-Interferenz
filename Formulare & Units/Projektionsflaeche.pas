@@ -115,6 +115,7 @@ begin
   PnlRot.Caption:= '';
   PnlRot.ParentBackground:= false;
   PnlRot.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KRot*(Power(10,(9)))));
+  TBZoom.Visible:= true;
 end;
 
 procedure TFrmProjektionsflaeche.Farbe_Orange;
@@ -126,6 +127,7 @@ begin
   PnlOrange.Caption:= '';
   PnlOrange.ParentBackground:= false;
   PnlOrange.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KOrange*(Power(10,(9)))));
+  TBZoom.Visible:= true;
 end;
 
 procedure TFrmProjektionsflaeche.Farbe_Gelb;
@@ -137,6 +139,7 @@ begin
   PnlGelb.Caption:= '';
   PnlGelb.ParentBackground:= false;
   PnlGelb.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KGelb*(Power(10,(9)))));
+  TBZoom.Visible:= true;
 end;
 
 procedure TFrmProjektionsflaeche.Farbe_Gruen;
@@ -148,6 +151,7 @@ begin
   PnlGruen.Caption:= '';
   PnlGruen.ParentBackground:= false;
   PnlGruen.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KGruen*(Power(10,(9)))));
+  TBZoom.Visible:= true;
 end;
 
 procedure TFrmProjektionsflaeche.Farbe_Blau;
@@ -159,6 +163,7 @@ begin
   PnlBlau.Caption:= '';
   PnlBlau.ParentBackground:= false;
   PnlBlau.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KBlau*(Power(10,(9)))));
+  TBZoom.Visible:= true;
 end;
 
 procedure TFrmProjektionsflaeche.Farbe_Violett;
@@ -170,6 +175,7 @@ begin
   PnlViolett.Caption:= '';
   PnlViolett.ParentBackground:= false;
   PnlViolett.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KViolett*(Power(10,(9)))));
+  TBZoom.Visible:= true;
 end;
 
 procedure TFrmProjektionsflaeche.Farbe_Panel;
