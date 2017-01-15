@@ -95,7 +95,6 @@ type
 var
   FrmProjektionsflaeche: TFrmProjektionsflaeche;
   GSchirmAbstand : real;
-  GZoomfaktor : Integer;
   GWellenlaenge : real;
   GSpaltabstand : real;
   GMaximaAbstand : real;
@@ -495,7 +494,7 @@ end;
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
   Strichabstand, I,J,K : Integer;
-  LDynZoom: Real;
+  LDynZoom, Beschriftung: Real;
 begin
   if GLineal=false then else
   //Graphische Optionen - CBLineal
@@ -516,7 +515,8 @@ begin
                                    lineto(I,Round(ImgLineal.Height/3));
                                    J:=0;
                                    K:=K+1;
-                                   textout(penpos.X-2,penpos.Y,FloatToStr(System.SysUtils.FormatFloat('0.0000',(K/LDynZoom/(TBZoom.position/100)))));
+                                   Beschriftung:=K/LDynZoom/(TBZoom.position/100);
+                                   textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
                                  end;
         end;
       //Striche von Mitte->Rechts mit Beschriftung
@@ -530,7 +530,8 @@ begin
                           lineto(I,Round(ImgLineal.Height/3));
                           J:=Strichabstand;
                           K:=K-1;
-                          textout(penpos.X-7,penpos.Y,FloatToStr(System.SysUtils.FormatFloat('0.0000',(K/LDynZoom/(TBZoom.position/100)))));
+                          Beschriftung:=K/LDynZoom/(TBZoom.position/100);
+                          textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
                         end;
 
         end;
@@ -539,7 +540,6 @@ end;
 
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
-  GZoomfaktor:=100000*TBZoom.Position;
 //LINEAL
   //Lineal neu Zeichnen
   Linealskala;
@@ -644,7 +644,6 @@ begin
     //Aufruf zur Berechnung und zum Zeichnen
     GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
     GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
-    GZoomfaktor:=100000*Round(TBZoom.Position/2);
     GWellenlaenge := Wellenlaenge;
     GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge);
     GDynZoom:=DynamicZoom(GMaximaAbstand);
@@ -671,7 +670,6 @@ begin
     EdtWellenlaenge.Text := FloatToStr(Wellenlaenge * Power(10,9));
 
     //Aufruf zur Berechnung und zum Zeichnen
-    GZoomfaktor:=100000*Round(TBZoom.Position/2);
     GWellenlaenge := Wellenlaenge;
     GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge);
     //Zeichnen(GMaximaAbstand);
@@ -870,12 +868,9 @@ begin
   Canvaseinstellungen;
   EdtFrequenz.Text := '';
 
-  //Lineal zurücksetzen
+  //Linela zurücksetzen
   Linealbasis;
   Linealskala;
-
-  //Overlay zurücksetzen
-  Overlay_aus;
 end;
 
 
