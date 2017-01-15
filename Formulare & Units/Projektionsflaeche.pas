@@ -67,7 +67,6 @@ type
     procedure PnlViolettClick(Sender: TObject);
     procedure BtnStartClick(Sender: TObject);
     procedure Startbutton;
-    procedure DrawGradientH(Canvas: TCanvas; Color1, Color2: TColor; Rect: TRect);
     procedure Background();
     procedure PnlBlauClick(Sender: TObject);
     procedure PnlGruenClick(Sender: TObject);
