@@ -238,6 +238,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
       Caption = 'PnlViolett'
       ParentBackground = False
       TabOrder = 1
+      OnClick = PnlViolettClick
     end
     object PnlBlau: TPanel
       Left = 198
@@ -251,6 +252,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
       Caption = 'PnlBlau'
       ParentBackground = False
       TabOrder = 2
+      OnClick = PnlBlauClick
     end
     object PnlGruen: TPanel
       Left = 17
@@ -263,6 +265,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
       Margins.Bottom = 2
       Caption = 'PnlGruen'
       TabOrder = 3
+      OnClick = PnlGruenClick
     end
     object PnlGelb: TPanel
       Left = 198
@@ -275,6 +278,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
       Margins.Bottom = 2
       Caption = 'PnlGelb'
       TabOrder = 4
+      OnClick = PnlGelbClick
     end
     object PnlOrange: TPanel
       Left = 17
@@ -287,6 +291,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
       Margins.Bottom = 2
       Caption = 'PnlOrange'
       TabOrder = 5
+      OnClick = PnlOrangeClick
     end
     object PnlRot: TPanel
       Left = 198
@@ -299,6 +304,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
       Margins.Bottom = 2
       Caption = 'PnlRot'
       TabOrder = 6
+      OnClick = PnlRotClick
     end
   end
   object TBZoom: TTrackBar

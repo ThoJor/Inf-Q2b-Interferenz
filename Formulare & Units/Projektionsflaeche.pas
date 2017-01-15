@@ -772,59 +772,11 @@ end;
 
 //HINTERGRUND
 
-//Farbverlauf von einer beliebigen Farbe Color1 zu einer beliebigen Farbe Color2 (horizontal)
-procedure TFrmProjektionsflaeche.DrawGradientH(Canvas: TCanvas; Color1, Color2: TColor; Rect: TRect);
-var
-  x, r, g, b: integer;
-begin
-{
-  for X := Rect.Top to Rect.Bottom do begin
-    R := Round(GetRValue(Color1) + ((GetRValue(Color2) - GetRValue(Color1)) *
-      X / (Rect.Bottom - Rect.Top)));
-    G := Round(GetGValue(Color1) + ((GetGValue(Color2) - GetGValue(Color1)) *
-      X / (Rect.Bottom - Rect.Top)));
-    B := Round(GetBValue(Color1) + ((GetBValue(Color2) - GetBValue(Color1)) *
-      X / (Rect.Bottom - Rect.Top)));
-
-    Canvas.Pen.Color := RGB(R, G, B);
-    Canvas.Pen.Width := 1;
-    Canvas.Pen.Style := psInsideFrame;
-
-    Canvas.MoveTo(Rect.Left, X);
-    Canvas.LineTo(Rect.Right, X);
-
-end; }
-end;
 
 //Festlegung des Hintergrundes mit Abstimmung mit den Checkboxen der Graphischen Optionen
 procedure TFrmProjektionsflaeche.Background();
 begin
-
   FrmgraphischeOptionen.DrawBackground(Schirm);
-
-{  begin
-  if graphische_Optionen.GBackgroundBlack = true then
-  begin
-    Schirm.Picture := nil;
-    Schirm.Canvas.Brush.Color:=clblack;
-    Schirm.Canvas.Pen.Color:=clblack;
-    Schirm.Canvas.Rectangle(0,0,Schirm.Width,Schirm.Height);
-  end;
-
-  if FrmgraphischeOptionen.ChBBgWhite.Checked = true then
-  begin
-    Schirm.Picture := nil;
-    Schirm.Canvas.Brush.Color:=clWhite;
-    Schirm.Canvas.Pen.Color:=clWhite;
-    Schirm.Canvas.Rectangle(0,0,Schirm.Width,Schirm.Height);
-  end;
-
-  if FrmgraphischeOptionen.ChBBgVerlauf.Checked = true then
-  begin
-    //DrawGradientH(Schirm.Canvas, $00A2AA77, $00FFFFE3, Rect(0, 0, Width, Height));
-  end;
-end; }
-
 end;
 
 procedure TFrmProjektionsflaeche.Schrifteinstellungen;
