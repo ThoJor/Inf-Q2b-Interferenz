@@ -444,6 +444,7 @@ begin
   Schrifteinstellungen;
 
   //nur vorrübergehend
+  EdtSpaltanzahl.Enabled:= false;
 end;
 
 procedure TFrmProjektionsflaeche.Startbutton;
