@@ -46,7 +46,7 @@ end;
 //Eigenschaften des Formulars
 procedure TFormInfo.FormEinstellungen;
 begin
-  FormInfo.Caption := 'Nutzungsbedingungen & Impressum';
+  FormInfo.Caption := 'Nutzungsbedingungen & Kontaktinformationen';
   FormInfo.Width := 400;
   FormInfo.Height := 900;
   FormInfo.BorderStyle := bsDialog;
