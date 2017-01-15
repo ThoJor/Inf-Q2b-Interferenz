@@ -730,6 +730,7 @@ end;
 procedure TFrmProjektionsflaeche.PnlBlauClick(Sender: TObject);
 begin
   GMaximaAbstand := AbstandMaxima(1000,10,Konstantenbox.KBlau)*(1/TBZoom.Position);
+  GWellenlaenge := Konstantenbox.KBlau;
   Zeichnen(GMaximaAbstand);
 end;
 
@@ -737,6 +738,7 @@ end;
 procedure TFrmProjektionsflaeche.PnlGelbClick(Sender: TObject);
 begin
   GMaximaAbstand := AbstandMaxima(1000,10,Konstantenbox.KGelb)*(1/TBZoom.Position);
+  GWellenlaenge := Konstantenbox.KGelb;
   Zeichnen(GMaximaAbstand);
 end;
 
@@ -744,6 +746,7 @@ end;
 procedure TFrmProjektionsflaeche.PnlGruenClick(Sender: TObject);
 begin
   GMaximaAbstand := AbstandMaxima(1000,10,Konstantenbox.KGruen)*(1/TBZoom.Position);
+  GWellenlaenge := Konstantenbox.KGruen;
   Zeichnen(GMaximaAbstand);
 end;
 
@@ -751,6 +754,7 @@ end;
 procedure TFrmProjektionsflaeche.PnlOrangeClick(Sender: TObject);
 begin
   GMaximaAbstand := AbstandMaxima(1000,10,Konstantenbox.KOrange)*(1/TBZoom.Position);
+  GWellenlaenge := Konstantenbox.KOrange;
   Zeichnen(GMaximaAbstand);
 end;
 
@@ -758,6 +762,7 @@ end;
 procedure TFrmProjektionsflaeche.PnlRotClick(Sender: TObject);
 begin
   GMaximaAbstand := AbstandMaxima(1000,10,Konstantenbox.KRot)*(1/TBZoom.Position);
+  GWellenlaenge := Konstantenbox.KRot;
   Zeichnen(GMaximaAbstand);
 end;
 
@@ -765,6 +770,7 @@ end;
 procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
 begin
   GMaximaAbstand := AbstandMaxima(1000,10,Konstantenbox.KViolett)*(1/TBZoom.Position);
+  GWellenlaenge := Konstantenbox.KViolett;
   Zeichnen(GMaximaAbstand);
 end;
 
