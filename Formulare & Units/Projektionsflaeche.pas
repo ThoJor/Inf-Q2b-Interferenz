@@ -68,6 +68,8 @@ type
     procedure BtnStartClick(Sender: TObject);
     procedure Startbutton;
     procedure Background();
+    procedure DrawBackground(Flaeche: TImage);
+    procedure DrawGradientH(Canvas: TCanvas; Color1, Color2: TColor; Rect: TRect);
     procedure PnlBlauClick(Sender: TObject);
     procedure PnlGruenClick(Sender: TObject);
     procedure PnlGelbClick(Sender: TObject);
@@ -698,6 +700,9 @@ begin
     //Leeren des Schirms
     Schirm.Picture := nil;
 
+    //Hintergrund zeichnen
+    Background;
+
     //Zuweisung der Stiftfarbe
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
     Schirm.Canvas.Pen.Color := Stringtocolor(farbe);
@@ -818,7 +823,55 @@ end;
 //Festlegung des Hintergrundes mit Abstimmung mit den Checkboxen der Graphischen Optionen
 procedure TFrmProjektionsflaeche.Background();
 begin
-  FrmgraphischeOptionen.DrawBackground(Schirm);
+  DrawBackground(Schirm);
+end;
+
+procedure TFrmProjektionsflaeche.DrawBackground(Flaeche: TImage);
+begin
+  if GBackgroundBlack = true then
+  begin
+    Flaeche.Picture := nil;
+    Flaeche.Canvas.Brush.Color:=clblack;
+    Flaeche.Canvas.Pen.Color:=clblack;
+    Flaeche.Canvas.Rectangle(0,0,Flaeche.Width,Flaeche.Height);
+  end;
+
+  if GBackgroundWhite = true then
+  begin
+    Flaeche.Picture := nil;
+    Flaeche.Canvas.Brush.Color:=clwhite;
+    Flaeche.Canvas.Pen.Color:=clwhite;
+    Flaeche.Canvas.Rectangle(0,0,Flaeche.Width,Flaeche.Height);
+  end;
+
+  if GBackgroundGradient = true then
+  begin
+    //DrawGradientH(Flaeche.Canvas, $00A2AA77, $00FFFFE3, Rect(0, 0, Width, Height))
+    DrawGradientH(Flaeche.Canvas, $00000000, $FFFFFFFF, Rect(0, 0, Width, Height))
+  end;
+end;
+
+procedure TFrmProjektionsflaeche.DrawGradientH(Canvas: TCanvas; Color1, Color2: TColor; Rect: TRect);
+var
+  x, r, g, b: integer;
+begin
+
+  for X := Rect.Top to Rect.Bottom do
+    begin
+      R := Round(GetRValue(Color1) + ((GetRValue(Color2) - GetRValue(Color1)) *
+        X / (Rect.Bottom - Rect.Top)));
+      G := Round(GetGValue(Color1) + ((GetGValue(Color2) - GetGValue(Color1)) *
+        X / (Rect.Bottom - Rect.Top)));
+      B := Round(GetBValue(Color1) + ((GetBValue(Color2) - GetBValue(Color1)) *
+        X / (Rect.Bottom - Rect.Top)));
+
+      Canvas.Pen.Color := RGB(R, G, B);
+      Canvas.Pen.Width := 1;
+      Canvas.Pen.Style := psInsideFrame;
+
+      Canvas.MoveTo(Rect.Left, X);
+      Canvas.LineTo(Rect.Right, X);
+    end;
 end;
 
 procedure TFrmProjektionsflaeche.Schrifteinstellungen;
