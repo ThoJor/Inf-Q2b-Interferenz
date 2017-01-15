@@ -126,7 +126,7 @@ end;
 
 procedure TFrmGraphischeOptionen.ChBBgWhiteClick(Sender: TObject);
 begin
-  ChBBgWhite:= true;
+  ChBBgWhite.Checked:= true;
   ChBBgBlack.Checked := false;
   ChBBgVerlauf.Checked := false;
 
