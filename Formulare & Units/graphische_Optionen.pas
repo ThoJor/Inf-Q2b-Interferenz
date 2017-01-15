@@ -93,8 +93,9 @@ begin
   ChBBgWhite.Font.Color:= Konstantenbox.Schriftfarbe;
   ChBBgVerlauf.Font.Color:= Konstantenbox.Schriftfarbe;
 
-  //Lineal per default an
+  //Lineal per default an und deaktiviert
   CBLineal.Checked:= true;
+  CBLineal.Enabled:= false;
 
   //Default Hintergrundeinstellungen - weiß ist Hintergrundfarbe
   ChBBgWhite.Checked := true;
