@@ -130,7 +130,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Caption = 'PnlOptionen'
     TabOrder = 0
   end
-  object EdtWellenlaenge: TEdit
+  object EdtEingabe: TEdit
     Left = 246
     Top = 18
     Width = 91
@@ -141,8 +141,10 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Bottom = 2
     TabOrder = 1
     Text = '500'
+    OnChange = EdtEingabeChange
+    OnKeyPress = EdtEingabeKeyPress
   end
-  object EdtFrequenz: TEdit
+  object EdtAusgabe: TEdit
     Left = 246
     Top = 42
     Width = 91
@@ -152,7 +154,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Right = 2
     Margins.Bottom = 2
     TabOrder = 2
-    Text = 'EdtFrequenz'
+    Text = 'EdtAusgabe'
   end
   object EdtSchirmAbstand: TEdit
     Left = 66
@@ -359,5 +361,21 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Caption = 'BtnReset'
     TabOrder = 12
     OnClick = BtnResetClick
+  end
+  object CmbEinheit: TComboBox
+    Left = 120
+    Top = 471
+    Width = 145
+    Height = 20
+    TabOrder = 13
+    Text = 'CmbEinheit'
+  end
+  object EdtAusgabeEinheit: TEdit
+    Left = 464
+    Top = 472
+    Width = 121
+    Height = 20
+    TabOrder = 14
+    Text = 'EdtAusgabeEinheit'
   end
 end

@@ -9,6 +9,7 @@ uses
 const
   KLichtgeschwindigkeit= 299792458;
 
+  //Feste Wellenlaengenzuordnung fuer bestimmte Farben
   KViolett= 0.00000041;
   KBlau= 0.00000046;
   KGruen= 0.00000053;
