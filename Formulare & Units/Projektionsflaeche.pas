@@ -712,7 +712,6 @@ var posx: integer;                                                              
 begin
   GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
   GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
-  n:=0;
   if GWellenlaenge>0 then
 
    begin
@@ -734,30 +733,31 @@ begin
     Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
 
     //Maxima >0. Ordnung zeichnen (Maxima rechts der Mitte)
+    n:=0;
     posx := Schirm.Width div 2;
 
-    GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1),-5);
+    GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1),-10);
     GDynZoom:=DynamicZoom(GMaximaAbstand);
 
     repeat
       //Berechnen von a
       n:=n+1;
       if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
-      GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-5);
+      GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-10);
       A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
       //Zeichnen;
       posx := round(posx + a);
       Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
       Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
     until posx > Schirm.Width;
-    n:=0;
     //Maxima <0. Ordnung zeichnen (Maxima links der Mitte)
+    n:=0;
     posx := Schirm.Width div 2;
     repeat
       //Berechnen von a
       n:=n+1;
       if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
-      GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-5);
+      GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-10);
       A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
       //Zeichnen
       posx := round(posx - a);
