@@ -94,6 +94,7 @@ type
     procedure EdtAusgabeEinheiten;
     procedure EdtEingabeChange(Sender: TObject);
     procedure EditFuellerBeiPanelbedienung(Wellenlaenge:Real);
+    procedure FormActivate(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -277,7 +278,7 @@ begin
   LblFrequenz.Left:= Konstantenbox.KLabelLeft;
   LblFrequenz.Width:= Schirm.Left - LblFrequenz.Left;
   LblFrequenz.Height:= Konstantenbox.KLabelHoehe;
-  LblFrequenz.Caption:= 'Frequenz f in 10^13 Hz';
+  LblFrequenz.Caption:= 'Frequenz f';
 
   EdtAusgabe.Top:= LblFrequenz.Top + LblFrequenz.Height;
   EdtAusgabe.Left:= Konstantenbox.KEditLeft;
@@ -294,7 +295,7 @@ begin
   LblWellenlaenge.Left:= Konstantenbox.KLabelLeft;
   LblWellenlaenge.Width:= Schirm.Left - LblWellenlaenge.Left;
   LblWellenlaenge.Height:= Konstantenbox.KLabelHoehe;
-  LblWellenlaenge.Caption:= 'Wellenlänge λ in nm';
+  LblWellenlaenge.Caption:= 'Wellenlänge λ';
 
   EdtEingabe.Top:= LblWellenlaenge.Top + LblWellenlaenge.Height;
   EdtEingabe.Left:= Konstantenbox.KEditLeft;
@@ -436,6 +437,14 @@ begin
 
   //dem Programm mitteilen, dass das Overlay ausgeblendet ist
   GOverlay:= false;
+end;
+
+procedure TFrmProjektionsflaeche.FormActivate(Sender: TObject);
+begin
+  //graphische Optionen schließen beim Klick in die Projektionsflaeche
+  FrmGraphischeOptionen.Close;
+  //Hintergrund aktualisieren
+  Background;
 end;
 
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
@@ -658,6 +667,9 @@ begin
       //Frequenz ergaenzen
       Frequenz := UToolbox.WellenlaengeInFrequenz(Wellenlaenge);
       EdtAusgabe.Text := FloatToStrF((Frequenz/Power(10,(13))),ffNumber,20,5);
+      //Label aktualisieren
+      LblWellenlaenge.caption:='Wellenlänge λ';
+      LblFrequenz.caption:='Frequenz f';
     end;
 
 
@@ -679,6 +691,9 @@ begin
 
       //Wellenlaenge ergaenzen
       EdtAusgabe.Text := FloatToStrF((Wellenlaenge * Power(10,9)),ffNumber,20,5);
+      //Label aktualisieren
+      LblWellenlaenge.Caption:='Frequenz f';
+      LblFrequenz.Caption:='Wellenlaenge λ';
     end;
 
   //Aufruf zur Berechnung und zum Zeichnen
@@ -710,7 +725,7 @@ procedure TFrmProjektionsflaeche.Zeichnen(a: real);
 var posx: integer;                                                              //x-Position des Stiftes
     farbe: string;
 begin
-  //if A>0.5 then
+  if A>0.5 then
    begin
     //Leeren des Schirms
     Schirm.Picture := nil;

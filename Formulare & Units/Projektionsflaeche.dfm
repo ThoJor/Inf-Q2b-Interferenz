@@ -11,6 +11,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 12
