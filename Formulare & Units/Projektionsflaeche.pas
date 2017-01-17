@@ -669,11 +669,18 @@ begin
       exit;
     end;
 
+    //Fehlerabfrage für Spaltabstand
+    if StrToInt(EdtSpaltabstand.Text)<=0 then
+    begin
+      ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
+      exit;
+    end;
+
 
   //Fehlerabfrage für fehlende Eingabe
   if (EdtEingabe.Text = '') {and (EdtAusgabe.Text = '')} then
     begin
-      Showmessage('Bitte gib eine Wellenlänge oder eine Frequenz an')
+      Showmessage('Das Fehlen einer Angabe der Wellenlänge/Frequenz war doch ein Versehen, oder?')
     end;
 
   //Berechnung und Zeichnen über Wellenlaengen-Eingabe
