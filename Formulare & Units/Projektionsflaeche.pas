@@ -95,6 +95,9 @@ type
     procedure EdtEingabeChange(Sender: TObject);
     procedure EditFuellerBeiPanelbedienung(Wellenlaenge:Real);
     procedure FormActivate(Sender: TObject);
+    procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
   private
     { Private-Deklarationen }
   public
@@ -592,21 +595,6 @@ begin
   until Success= true;
 end;
 
-//Loeschen von ungewollten Eingaben aus EdtAusgabe (waehrend der Eingabe)
-procedure TFrmProjektionsflaeche.EdtAusgabeKeyPress(Sender: TObject;
-  var Key: Char);
-const
-  Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', Backspace];
-var
-  Text: string;
-begin
-  if not (Key in AllowKeys) then
-  begin
-    Key := #0;
-  end;
-end;
-
 //Loeschen von ungewollten Eingaben aus EdtEingabe (waehrend der Eingabe)
 procedure TFrmProjektionsflaeche.EdtEingabeChange(Sender: TObject);
 begin
@@ -618,6 +606,48 @@ procedure TFrmProjektionsflaeche.EdtEingabeKeyPress(Sender: TObject;
 const
   Backspace = #8;
   AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+var
+  Text: string;
+begin
+  if not (Key in AllowKeys) then
+  begin
+    Key := #0;
+  end;
+end;
+
+procedure TFrmProjektionsflaeche.EdtSchirmAbstandKeyPress(Sender: TObject;
+  var Key: Char);
+const
+  Backspace = #8;
+  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+var
+  Text: string;
+begin
+  if not (Key in AllowKeys) then
+  begin
+    Key := #0;
+  end;
+end;
+
+procedure TFrmProjektionsflaeche.EdtSpaltabstandKeyPress(Sender: TObject;
+  var Key: Char);
+const
+  Backspace = #8;
+  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+var
+  Text: string;
+begin
+  if not (Key in AllowKeys) then
+  begin
+    Key := #0;
+  end;
+end;
+
+procedure TFrmProjektionsflaeche.EdtSpaltanzahlKeyPress(Sender: TObject;
+  var Key: Char);
+const
+  Backspace = #8;
+  AllowKeys: set of Char = ['0'..'9', Backspace];
 var
   Text: string;
 begin
