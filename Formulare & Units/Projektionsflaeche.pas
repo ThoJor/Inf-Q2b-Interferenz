@@ -97,6 +97,7 @@ type
     procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
+    procedure CmbEinheitChange(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -346,6 +347,19 @@ begin
   Schirm.Left:= FrmProjektionsflaeche.Width - Schirm.Width;
   Schirm.Top:= 0;
 
+end;
+
+procedure TFrmProjektionsflaeche.CmbEinheitChange(Sender: TObject);
+begin
+  if CMBEinheit.ItemIndex= 0
+    then begin
+      LblWellenlaenge.caption:='Wellenlänge λ';
+      LblFrequenz.caption:='Frequenz f';
+    end
+    else begin
+      LblWellenlaenge.Caption:='Frequenz f';
+      LblFrequenz.Caption:='Wellenlaenge λ';
+    end;
 end;
 
 procedure TFrmProjektionsflaeche.Fenstereinstellungen;
@@ -710,6 +724,7 @@ begin
       //Frequenz ergaenzen
       Frequenz := UToolbox.WellenlaengeInFrequenz(GWellenlaenge);
       EdtAusgabe.Text := FloatToStrF((Frequenz/Power(10,(13))),ffNumber,20,5);
+
       //Label aktualisieren
       LblWellenlaenge.caption:='Wellenlänge λ';
       LblFrequenz.caption:='Frequenz f';
@@ -734,6 +749,7 @@ begin
 
       //Wellenlaenge ergaenzen
       EdtAusgabe.Text := FloatToStrF((GWellenlaenge * Power(10,9)),ffNumber,20,5);
+
       //Label aktualisieren
       LblWellenlaenge.Caption:='Frequenz f';
       LblFrequenz.Caption:='Wellenlaenge λ';
@@ -755,6 +771,7 @@ end;
 //    GLineal:=true;
 //    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
 //    Linealskala;
+
 
 
 procedure TFrmProjektionsflaeche.Zeichnen;
