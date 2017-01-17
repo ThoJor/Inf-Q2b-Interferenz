@@ -270,7 +270,7 @@ begin
   LblSchirmAbstand.Top:= EdtSchirmAbstand.Top - LblSchirmAbstand.Height;
   LblSchirmAbstand.Left:= Konstantenbox.KLabelLeft;
   LblSchirmAbstand.Width:= Schirm.Left - LblSchirmAbstand.Left;
-  LblSchirmAbstand.Caption:= 'Abstand Spalt-Schirm e in m';
+  LblSchirmAbstand.Caption:= 'Abstand Blende-Schirm e in m';
 end;
 
 procedure TFrmProjektionsflaeche.Option_Frequenz;
@@ -676,11 +676,19 @@ begin
       exit;
     end;
 
+    //Fehlerabfrage für Abstand Blende-Spalt
+    if StrToInt(EdtSchirmAbstand.Text)<= 0 then
+    begin
+      ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu niedrig.');
+      exit;
+    end;
+
 
   //Fehlerabfrage für fehlende Eingabe
   if (EdtEingabe.Text = '') {and (EdtAusgabe.Text = '')} then
     begin
-      Showmessage('Das Fehlen einer Angabe der Wellenlänge/Frequenz war doch ein Versehen, oder?')
+      Showmessage('Das Fehlen einer Angabe der Wellenlänge/Frequenz war doch ein Versehen, oder?');
+      exit;
     end;
 
   //Berechnung und Zeichnen über Wellenlaengen-Eingabe
