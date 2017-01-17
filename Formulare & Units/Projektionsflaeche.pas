@@ -62,7 +62,7 @@ type
     procedure Farbe_Orange;
     procedure Farbe_Rot;
     procedure Linealskala;
-    procedure Linealbasis;
+    procedure Lineal;
     procedure Zoomleiste;
     procedure TBZoomChange(Sender: TObject);
     procedure Zeichnen;
@@ -452,7 +452,7 @@ begin
   Fenstereinstellungen;
   Canvaseinstellungen;
   Optionen;
-  Linealbasis;
+  Lineal;
   Startbutton;
   Endbutton;
   Resetbutton;
@@ -492,13 +492,14 @@ begin
   TBZoom.Left:=FrmProjektionsflaeche.Width-TBZoom.Width;
   TBzoom.Max:=200;
   TBZoom.Min:=1;
+  TBZoom.Frequency:=1;
   TBZoom.Position:=100;
   TBZoom.Visible:=False;
 end;
 
-procedure TFrmProjektionsflaeche.Linealbasis;
+procedure TFrmProjektionsflaeche.Lineal;
 begin
-  GLineal:=false;
+  ImgLineal.Picture:=nil;
   //Groeße und Position des Image
   ImgLineal.Height:=Round((1/5) * FrmProjektionsflaeche.Height);
   ImgLineal.Width:= Schirm.Width;
@@ -508,12 +509,10 @@ begin
     begin
       pen.Color:=ClBlack;
     //Umriss des Lineals
-      Moveto(ImgLineal.Width-2,2);
-      Lineto(2,2);
-      Lineto(2,ImgLineal.Height-2);
-      Lineto(ImgLineal.Width-2,ImgLineal.Height-2);
-      Lineto(ImgLineal.Width-2,2);
+      Moveto(ImgLineal.Width,0);
+      Lineto(0,0);
     end;
+  Linealskala;
 end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
@@ -528,7 +527,6 @@ begin
   if GDynZoom>0 then LDynZoom:=GDynZoom;
   J:=0;
   K:=0;
-  ImgLineal.Picture:=nil;
   with ImgLineal.Canvas do
     begin
       //Striche von Mitte->Links mit Beschriftung
@@ -565,6 +563,7 @@ end;
 
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
+   GLineal:=true;
   Zeichnen;
 end;
 
@@ -632,12 +631,6 @@ end;
 procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
 var Frequenz: real;
 begin
-  TBZoom.position:=1;
-  TBZoom.Visible:=true;
-
-  Background;
-
-
   //Fehlerabfrage für fehlende Eingabe
   if (EdtEingabe.Text = '') {and (EdtAusgabe.Text = '')} then
     begin
@@ -753,7 +746,7 @@ begin
       posx := round(posx + a);
       Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
       Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
-    until posx>Schirm.Width;
+    until posx > Schirm.Width;
     n:=0;
     //Maxima <0. Ordnung zeichnen (Maxima links der Mitte)
     posx := Schirm.Width div 2;
@@ -772,7 +765,7 @@ begin
 
     //Lineal Zeichnen
     GLineal:=true;
-    Linealskala;
+    Lineal;
     TBZoom.Visible:=true;
   end;
 end;
@@ -977,9 +970,8 @@ begin
   Canvaseinstellungen;
   EdtAusgabe.Text := '';
 
-  //Linela zurücksetzen
-  Linealbasis;
-  Linealskala;
+  //Lineal zurücksetzen
+  Lineal;
 
   //Eingabefelder zurücksetzten
   EdtEingabe.Text:='500';
