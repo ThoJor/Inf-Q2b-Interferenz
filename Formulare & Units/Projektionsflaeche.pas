@@ -511,6 +511,8 @@ begin
     //Umriss des Lineals
       Moveto(ImgLineal.Width,0);
       Lineto(0,0);
+      Moveto(Round(ImgLineal.Width*21/22),Round(imgLineal.Height*5/6));
+      Textout(penpos.x,penpos.y,'in m');
     end;
   Linealskala;
 end;
@@ -974,6 +976,9 @@ begin
 
   //Lineal zurücksetzen
   Lineal;
+
+  //Zoomleiste zurücksetzen
+  TBZoom.Visible:=false;
 
   //Eingabefelder zurücksetzten
   EdtEingabe.Text:='500';
