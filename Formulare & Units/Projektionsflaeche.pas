@@ -662,6 +662,14 @@ end;
 procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
 var Frequenz: real;
 begin
+  //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
+  if STrToInt(EdtSpaltanzahl.Text)<=1 then
+    begin
+      ShowMessage('Die angegebene Spaltanzahl ist zu niedrig.');
+      exit;
+    end;
+
+
   //Fehlerabfrage für fehlende Eingabe
   if (EdtEingabe.Text = '') {and (EdtAusgabe.Text = '')} then
     begin
