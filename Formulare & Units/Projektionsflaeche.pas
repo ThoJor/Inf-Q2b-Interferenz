@@ -735,12 +735,15 @@ begin
 
     //Maxima >0. Ordnung zeichnen (Maxima rechts der Mitte)
     posx := Schirm.Width div 2;
+
+    GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1),-5);
+    GDynZoom:=DynamicZoom(GMaximaAbstand);
+
     repeat
       //Berechnen von a
       n:=n+1;
       if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
       GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-5);
-      GDynZoom:=DynamicZoom(GMaximaAbstand);
       A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
       //Zeichnen;
       posx := round(posx + a);
@@ -755,7 +758,6 @@ begin
       n:=n+1;
       if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
       GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-5);
-      GDynZoom:=DynamicZoom(GMaximaAbstand);
       A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
       //Zeichnen
       posx := round(posx - a);
