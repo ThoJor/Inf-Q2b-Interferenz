@@ -715,6 +715,7 @@ var posx: integer;                                                              
     farbe: string;
     a: real;
     n: integer;
+    debug,debug2: real;
 begin
   GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
   GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
@@ -744,6 +745,7 @@ begin
     repeat
       //Berechnen von a
       n:=n+1;
+      if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
       GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-5);
       GDynZoom:=DynamicZoom(GMaximaAbstand);
       A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
@@ -751,13 +753,14 @@ begin
       posx := round(posx + a);
       Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
       Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
-    until (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n)=-1) or (posx>=Schirm.Width);
+    until posx>Schirm.Width;
     n:=0;
     //Maxima <0. Ordnung zeichnen (Maxima links der Mitte)
     posx := Schirm.Width div 2;
     repeat
       //Berechnen von a
       n:=n+1;
+      if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
       GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-5);
       GDynZoom:=DynamicZoom(GMaximaAbstand);
       A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
