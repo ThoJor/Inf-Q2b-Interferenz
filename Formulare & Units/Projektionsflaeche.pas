@@ -62,10 +62,10 @@ type
     procedure Farbe_Orange;
     procedure Farbe_Rot;
     procedure Linealskala;
-    procedure Linealbasis;
+    procedure Lineal;
     procedure Zoomleiste;
     procedure TBZoomChange(Sender: TObject);
-    procedure Zeichnen(a: real);
+    procedure Zeichnen;
     procedure PnlViolettClick(Sender: TObject);
     procedure BtnStartClick(Sender: TObject);
     procedure Startbutton;
@@ -94,6 +94,7 @@ type
     procedure EdtAusgabeEinheiten;
     procedure EdtEingabeChange(Sender: TObject);
     procedure EditFuellerBeiPanelbedienung(Wellenlaenge:Real);
+    procedure FormActivate(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -277,7 +278,7 @@ begin
   LblFrequenz.Left:= Konstantenbox.KLabelLeft;
   LblFrequenz.Width:= Schirm.Left - LblFrequenz.Left;
   LblFrequenz.Height:= Konstantenbox.KLabelHoehe;
-  LblFrequenz.Caption:= 'Frequenz f in 10^13 Hz';
+  LblFrequenz.Caption:= 'Frequenz f';
 
   EdtAusgabe.Top:= LblFrequenz.Top + LblFrequenz.Height;
   EdtAusgabe.Left:= Konstantenbox.KEditLeft;
@@ -294,7 +295,7 @@ begin
   LblWellenlaenge.Left:= Konstantenbox.KLabelLeft;
   LblWellenlaenge.Width:= Schirm.Left - LblWellenlaenge.Left;
   LblWellenlaenge.Height:= Konstantenbox.KLabelHoehe;
-  LblWellenlaenge.Caption:= 'Wellenlänge λ in nm';
+  LblWellenlaenge.Caption:= 'Wellenlänge λ';
 
   EdtEingabe.Top:= LblWellenlaenge.Top + LblWellenlaenge.Height;
   EdtEingabe.Left:= Konstantenbox.KEditLeft;
@@ -438,12 +439,20 @@ begin
   GOverlay:= false;
 end;
 
+procedure TFrmProjektionsflaeche.FormActivate(Sender: TObject);
+begin
+  //graphische Optionen schließen beim Klick in die Projektionsflaeche
+  FrmGraphischeOptionen.close;
+  //Hintergrund aktualisieren
+  Background;
+end;
+
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
 begin
   Fenstereinstellungen;
   Canvaseinstellungen;
   Optionen;
-  Linealbasis;
+  Lineal;
   Startbutton;
   Endbutton;
   Resetbutton;
@@ -483,13 +492,14 @@ begin
   TBZoom.Left:=FrmProjektionsflaeche.Width-TBZoom.Width;
   TBzoom.Max:=200;
   TBZoom.Min:=1;
+  TBZoom.Frequency:=1;
   TBZoom.Position:=100;
   TBZoom.Visible:=False;
 end;
 
-procedure TFrmProjektionsflaeche.Linealbasis;
+procedure TFrmProjektionsflaeche.Lineal;
 begin
-  GLineal:=false;
+  ImgLineal.Picture:=nil;
   //Groeße und Position des Image
   ImgLineal.Height:=Round((1/5) * FrmProjektionsflaeche.Height);
   ImgLineal.Width:= Schirm.Width;
@@ -499,12 +509,10 @@ begin
     begin
       pen.Color:=ClBlack;
     //Umriss des Lineals
-      Moveto(ImgLineal.Width-2,2);
-      Lineto(2,2);
-      Lineto(2,ImgLineal.Height-2);
-      Lineto(ImgLineal.Width-2,ImgLineal.Height-2);
-      Lineto(ImgLineal.Width-2,2);
+      Moveto(ImgLineal.Width,0);
+      Lineto(0,0);
     end;
+  Linealskala;
 end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
@@ -519,7 +527,6 @@ begin
   if GDynZoom>0 then LDynZoom:=GDynZoom;
   J:=0;
   K:=0;
-  ImgLineal.Picture:=nil;
   with ImgLineal.Canvas do
     begin
       //Striche von Mitte->Links mit Beschriftung
@@ -556,11 +563,8 @@ end;
 
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
-//LINEAL
-  //Lineal neu Zeichnen
-  Linealskala;
-//SCHIRM
-  Zeichnen(GMaximaAbstand*(TBZoom.Position)*GDynZoom);
+   GLineal:=true;
+  Zeichnen;
 end;
 
 function TFrmProjektionsflaeche.dynamicZoom (Zahl: Real):Real;
@@ -625,14 +629,8 @@ end;
 
 //Berechnung und Zeichnen über Startbutton
 procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
-  var Wellenlaenge,Frequenz: real;
+var Frequenz: real;
 begin
-  TBZoom.position:=100;
-  TBZoom.Visible:=true;
-
-  Background;
-
-
   //Fehlerabfrage für fehlende Eingabe
   if (EdtEingabe.Text = '') {and (EdtAusgabe.Text = '')} then
     begin
@@ -644,53 +642,52 @@ begin
     begin
 
       //Fehlerabfrage für ungueltige Wellenlaenge
-      Wellenlaenge := StrToFloat(EdtEingabe.Text)/(Power(10,(9)));
-        if ((380/(Power(10,(9)))) >Wellenlaenge) or (Wellenlaenge >=(781/(power(10,(9))))) then
+      GWellenlaenge := StrToFloat(EdtEingabe.Text)/(Power(10,(9)));
+        if ((380/(Power(10,(9)))) >GWellenlaenge) or (GWellenlaenge >=(781/(power(10,(9))))) then
           begin
             Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
             EdtEingabe.Text := '380';
-            Wellenlaenge := 380 /(Power(10,(9)));
+            GWellenlaenge := 380 /(Power(10,(9)));
           end;
 
       //Einheit ergänzen
       EdtAusgabeEinheit.Text:= '10^13 Hz';
 
       //Frequenz ergaenzen
-      Frequenz := UToolbox.WellenlaengeInFrequenz(Wellenlaenge);
+      Frequenz := UToolbox.WellenlaengeInFrequenz(GWellenlaenge);
       EdtAusgabe.Text := FloatToStrF((Frequenz/Power(10,(13))),ffNumber,20,5);
+      //Label aktualisieren
+      LblWellenlaenge.caption:='Wellenlänge λ';
+      LblFrequenz.caption:='Frequenz f';
     end;
 
 
   //Berechnung und Zeichnen ueber Frequenz-Eingabe
   if (CmbEinheit.ItemIndex=1) then
     begin
-      Wellenlaenge := FrequenzInWellenlaenge(StrToFloat(EdtEingabe.Text)*(Power(10,13)));
+      GWellenlaenge := FrequenzInWellenlaenge(StrToFloat(EdtEingabe.Text)*(Power(10,13)));
 
       //Fehlerabfrage für ungueltige Frequenz
-        if ((380.00/(Power(10,(9)))) > Wellenlaenge) or (Wellenlaenge > (780.00/(Power(10,(9))))) then
+        if ((380.00/(Power(10,(9)))) > GWellenlaenge) or (GWellenlaenge > (780.00/(Power(10,(9))))) then
           begin
             Showmessage('Bitte gib eine Frequenz aus dem Bereich des sichtbaren Lichts an.');
-            Wellenlaenge := FrequenzInWellenlaenge(47 * (Power(10,(13))));                                     //hier wird Wert fuer falsche Eingaben eingesetzt
-            EdtEingabe.Text:= FloatToStr(WellenlaengeInFrequenz(Wellenlaenge)/(Power(10,(13))));
+            GWellenlaenge := FrequenzInWellenlaenge(47 * (Power(10,(13))));                                     //hier wird Wert fuer falsche Eingaben eingesetzt
+            EdtEingabe.Text:= FloatToStr(WellenlaengeInFrequenz(GWellenlaenge)/(Power(10,(13))));
           end;
 
       //Einheit ergänzen
        EdtAusgabeEinheit.Text:= 'nm';
 
       //Wellenlaenge ergaenzen
-      EdtAusgabe.Text := FloatToStrF((Wellenlaenge * Power(10,9)),ffNumber,20,5);
+      EdtAusgabe.Text := FloatToStrF((GWellenlaenge * Power(10,9)),ffNumber,20,5);
+      //Label aktualisieren
+      LblWellenlaenge.Caption:='Frequenz f';
+      LblFrequenz.Caption:='Wellenlaenge λ';
     end;
 
   //Aufruf zur Berechnung und zum Zeichnen
-  GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
-  GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
-  GWellenlaenge := Wellenlaenge;
-  GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1);
+  Zeichnen;
 
-  GDynZoom:=DynamicZoom(GMaximaAbstand);
-  GLineal:=true;
-  Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
-  Linealskala;
 
 end;
 
@@ -706,11 +703,18 @@ end;
 //    Linealskala;
 
 
-procedure TFrmProjektionsflaeche.Zeichnen(a: real);
+procedure TFrmProjektionsflaeche.Zeichnen;
 var posx: integer;                                                              //x-Position des Stiftes
     farbe: string;
+    a: real;
+    n: integer;
+    debug,debug2: real;
 begin
-  //if A>0.5 then
+  GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
+  GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
+  n:=0;
+  if GWellenlaenge>0 then
+
    begin
     //Leeren des Schirms
     Schirm.Picture := nil;
@@ -732,19 +736,37 @@ begin
     //Maxima >0. Ordnung zeichnen (Maxima rechts der Mitte)
     posx := Schirm.Width div 2;
     repeat
+      //Berechnen von a
+      n:=n+1;
+      if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
+      GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-5);
+      GDynZoom:=DynamicZoom(GMaximaAbstand);
+      A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
+      //Zeichnen;
       posx := round(posx + a);
       Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
       Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
     until posx > Schirm.Width;
-
-
+    n:=0;
     //Maxima <0. Ordnung zeichnen (Maxima links der Mitte)
     posx := Schirm.Width div 2;
     repeat
+      //Berechnen von a
+      n:=n+1;
+      if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
+      GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-5);
+      GDynZoom:=DynamicZoom(GMaximaAbstand);
+      A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
+      //Zeichnen
       posx := round(posx - a);
       Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
       Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
     until posx < 0;
+
+    //Lineal Zeichnen
+    GLineal:=true;
+    Lineal;
+    TBZoom.Visible:=true;
   end;
 end;
 
@@ -755,84 +777,48 @@ end;
 //Panel Blau
 procedure TFrmProjektionsflaeche.PnlBlauClick(Sender: TObject);
 begin
-  GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
-  GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
   GWellenlaenge := Konstantenbox.KBlau;
-  GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1);
-  GDynZoom:=DynamicZoom(GMaximaAbstand);
-  GLineal:=true;
-  Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
-  Linealskala;
+  Zeichnen;
   EditFuellerBeiPanelbedienung(GWellenlaenge);
 end;
 
 //Panel Gelb
 procedure TFrmProjektionsflaeche.PnlGelbClick(Sender: TObject);
 begin
-    GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
-    GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
     GWellenlaenge := Konstantenbox.KGelb;
-    GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1);
-    GDynZoom:=DynamicZoom(GMaximaAbstand);
-    GLineal:=true;
-    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
-    Linealskala;
+    Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
 end;
 
 //Panel Gruen
 procedure TFrmProjektionsflaeche.PnlGruenClick(Sender: TObject);
 begin
-    GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
-    GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
     GWellenlaenge := Konstantenbox.KGruen;
-    GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1);
-    GDynZoom:=DynamicZoom(GMaximaAbstand);
-    GLineal:=true;
-    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
-    Linealskala;
+    Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
 end;
 
 //Panel Orange
 procedure TFrmProjektionsflaeche.PnlOrangeClick(Sender: TObject);
 begin
-    GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
-    GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
     GWellenlaenge := Konstantenbox.KOrange;
-    GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1);
-    GDynZoom:=DynamicZoom(GMaximaAbstand);
-    GLineal:=true;
-    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
-    Linealskala;
+    Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
 end;
 
 //Panel Rot
 procedure TFrmProjektionsflaeche.PnlRotClick(Sender: TObject);
 begin
-    GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
-    GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
     GWellenlaenge := Konstantenbox.KRot;
-    GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1);
-    GDynZoom:=DynamicZoom(GMaximaAbstand);
-    GLineal:=true;
-    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
-    Linealskala;
+    Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
 end;
 
 //Panel Violett
 procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
 begin
-    GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
-    GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
     GWellenlaenge := Konstantenbox.KViolett;
-    GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1);
-    GDynZoom:=DynamicZoom(GMaximaAbstand);
-    GLineal:=true;
-    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
-    Linealskala;
+    Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
 end;
 
@@ -984,9 +970,8 @@ begin
   Canvaseinstellungen;
   EdtAusgabe.Text := '';
 
-  //Linela zurücksetzen
-  Linealbasis;
-  Linealskala;
+  //Lineal zurücksetzen
+  Lineal;
 
   //Eingabefelder zurücksetzten
   EdtEingabe.Text:='500';
