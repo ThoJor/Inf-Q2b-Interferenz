@@ -59,7 +59,8 @@ begin
 
   FrmHaupt.BorderStyle:= bsNone;
 
-  BtnBeenden.Top:=(FrmHaupt.ClientHeight div 6)*5;
+  BtnBeenden.Caption:= 'Beenden';
+  BtnBeenden.Top:=(FrmHaupt.ClientHeight div 6)*5+15;
   BtnBeenden.Left:=(FrmHaupt.ClientWidth div 5)*4;
 end;
 
