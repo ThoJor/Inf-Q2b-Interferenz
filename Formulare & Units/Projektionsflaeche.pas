@@ -84,7 +84,6 @@ type
     procedure Overlay_aus;
     procedure OverlayButton;
     procedure Schrifteinstellungen;
-    procedure EdtAusgabeKeyPress(Sender: TObject; var Key: Char);
     procedure EdtEingabeKeyPress(Sender: TObject; var Key: Char);
     function  dynamicZoom (Zahl: Real):Real;
     procedure Resetbutton;
