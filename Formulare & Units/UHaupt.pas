@@ -14,6 +14,7 @@ type
     BtnVersuchsaufbau: TButton;
     LInfo: TLabel;
     TimerProjektionsflaeche: TTimer;
+    BtnBeenden: TButton;
     procedure FormCreate(Sender: TObject);
     procedure HomeSettings();
     procedure HeadingSettings();
@@ -25,6 +26,7 @@ type
     procedure BtnVersuchsaufbauClick(Sender: TObject);
     procedure LInfoClick(Sender: TObject);
     procedure TimerProjektionsflaecheTimer(Sender: TObject);
+    procedure BtnBeendenClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -54,6 +56,11 @@ begin
   LInfoSettings;
 
   TimerProjektionsflaeche.Enabled:= false;
+
+  FrmHaupt.BorderStyle:= bsNone;
+
+  BtnBeenden.Top:=(FrmHaupt.ClientHeight div 6)*5;
+  BtnBeenden.Left:=(FrmHaupt.ClientWidth div 5)*4;
 end;
 
 //Eigenschaften des Hauptmenues
@@ -84,6 +91,11 @@ begin
 end;
 
 //Zeigen der Projektionsflaeche und Verstecken des Hauptmenues
+procedure TFrmHaupt.BtnBeendenClick(Sender: TObject);
+begin
+  Application.Terminate;
+end;
+
 procedure TFrmHaupt.BtnStartClick(Sender: TObject);
 begin
   FrmProjektionsflaeche.Show;
