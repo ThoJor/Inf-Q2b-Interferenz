@@ -710,7 +710,7 @@ procedure TFrmProjektionsflaeche.Zeichnen(a: real);
 var posx: integer;                                                              //x-Position des Stiftes
     farbe: string;
 begin
-  if A>0.5 then
+  //if A>0.5 then
    begin
     //Leeren des Schirms
     Schirm.Picture := nil;
