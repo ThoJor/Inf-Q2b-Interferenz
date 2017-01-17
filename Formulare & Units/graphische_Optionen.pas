@@ -14,10 +14,12 @@ type
     ChBBgWhite: TCheckBox;
     ChBBgVerlauf: TCheckBox;
     Image1: TImage;
+    BtnBeenden: TButton;
     procedure FormCreate(Sender: TObject);
     procedure ChBBgBlackClick(Sender: TObject);
     procedure ChBBgWhiteClick(Sender: TObject);
     procedure ChBBgVerlaufClick(Sender: TObject);
+    procedure BtnBeendenClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -38,6 +40,18 @@ implementation
 
 procedure TFrmGraphischeOptionen.FormCreate(Sender: TObject);
 begin
+  FrmGraphischeOptionen.BorderStyle:=bsNone;
+
+  BtnBeenden.font.size:=Konstantenbox.Schrift;
+  BtnBeenden.Font.Name:=Konstantenbox.Schriftart;
+  BtnBeenden.Font.Color:=Konstantenbox.Schriftfarbe;
+
+  BtnBeenden.Top:=FrmGraphischeOptionen.Height div 6*5 - 5;
+  BtnBeenden.Left:=FrmGraphischeOptionen.Width div 5*4;
+  BtnBeenden.Caption:='Beenden';
+  BtnBeenden.Height:=Konstantenbox.KLabelHoehe*2;
+  BtnBeenden.Width:=95;
+
   //Namensgebung
   FrmGraphischeOptionen.Caption:= 'Interferenzo - Optionen';
   CBLineal.Caption:= 'Lineal';
@@ -100,6 +114,11 @@ begin
   GBackgroundWhite := true;
   GBackgroundBlack := false;
   GBackgroundGradient := false;
+end;
+
+procedure TFrmGraphischeOptionen.BtnBeendenClick(Sender: TObject);
+begin
+  FrmGraphischeOptionen.close;
 end;
 
 procedure TFrmGraphischeOptionen.ChBBgBlackClick(Sender: TObject);

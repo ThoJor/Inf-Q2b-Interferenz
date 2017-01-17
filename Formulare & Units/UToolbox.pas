@@ -30,7 +30,8 @@ begin
 
 
   if ((lambda*n)/d <= 1) then
-    result:= e * tan(arcsin((lambda*n)/d))
+    result:= e * tan(arcsin((lambda*n)/d)) Else
+    result:= -1;
 end;
 
 

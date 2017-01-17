@@ -59,4 +59,19 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
     TabOrder = 3
     OnClick = ChBBgVerlaufClick
   end
+  object BtnBeenden: TButton
+    Left = 144
+    Top = 112
+    Width = 89
+    Height = 41
+    Caption = 'BtnBeenden'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -10
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+    OnClick = BtnBeendenClick
+  end
 end
