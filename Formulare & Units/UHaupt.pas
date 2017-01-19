@@ -101,6 +101,7 @@ procedure TFrmHaupt.BtnStartClick(Sender: TObject);
 begin
   FrmProjektionsflaeche.Show;
   TimerProjektionsflaeche.Enabled:= true;
+  FrmProjektionsflaeche.Reset;
 end;
 
 
@@ -114,7 +115,6 @@ begin
   BtnStart.Font.Size:= Konstantenbox.Schrift;
   BtnStart.Font.Color:= Konstantenbox.Schriftfarbe;
   BtnStart.Font.Name:= Konstantenbox.Schriftart;
-  FrmProjektionsflaeche.Reset;
 end;
 
 
