@@ -1051,12 +1051,16 @@ begin
 
   //Zoomleiste zurücksetzen
   TBZoom.Visible:=false;
+  TBZoom.Position:=100;
 
   //Eingabefelder zurücksetzten
   EdtEingabe.Text:='500';
   EdtAusgabe.Text:='';
   EdtAusgabeEinheit.Text:='10^13 Hz';
   CmbEinheit.ItemIndex:=0;
+
+  //Projektiosnflaeche uebermalen
+  Background;
 end;
 
 procedure TFrmProjektionsflaeche.Combobox;
