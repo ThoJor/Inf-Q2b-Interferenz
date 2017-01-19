@@ -229,13 +229,11 @@ end;
 procedure TFrmProjektionsflaeche.Option_Spaltabstand;
 begin
   //Option Spaltabstand
-  EdtSpaltabstand.Height:= Konstantenbox.KEditHoehe;
   EdtSpaltabstand.Top:= LblSpaltanzahl.Top - EdtSpaltabstand.Height - 5;
   EdtSpaltabstand.Left:= Konstantenbox.KEditLeft;
   EdtSpaltabstand.Width:= Schirm.Left - EdtSpaltabstand.Left;
   EdtSpaltabstand.Text:= '1';
 
-  LblSpaltabstand.Height:= Konstantenbox.KLabelHoehe;
   LblSpaltabstand.Top:= EdtSpaltabstand.Top - LblSpaltabstand.Height;
   LblSpaltabstand.Left:= Konstantenbox.KLabelLeft;
   LblSpaltabstand.Width:= Schirm.Left - LblSpaltabstand.Left;
@@ -245,13 +243,11 @@ end;
 procedure TFrmProjektionsflaeche.Option_Spaltanzahl;
 begin
   //Option Spaltanzahl
-  EdtSpaltanzahl.Height:= Konstantenbox.KEditHoehe;
   EdtSpaltanzahl.Top:= LblSchirmAbstand.Top - EdtSpaltanzahl.Height - 5;
   EdtSpaltanzahl.Left:= Konstantenbox.KEditLeft;
   EdtSpaltanzahl.Width:= Schirm.Left - EdtSpaltanzahl.Left;
   EdtSpaltanzahl.Text:= '2';
 
-  LblSpaltanzahl.Height:= Konstantenbox.KLabelHoehe;
   LblSpaltanzahl.Top:= EdtSpaltanzahl.Top - LblSpaltanzahl.Height;
   LblSpaltanzahl.Left:= Konstantenbox.KLabelLeft;
   LblSpaltanzahl.Width:= Schirm.Left - LblSpaltanzahl.Left;
@@ -261,13 +257,11 @@ end;
 procedure TFrmProjektionsflaeche.Option_Abstand_Blende_Schirm;
 begin
   //Option Abstand Blende-Schirm
-  EdtSchirmAbstand.Height:= Konstantenbox.KEditHoehe;
   EdtSchirmAbstand.Top:= FrmProjektionsflaeche.ClientHeight - (10 + EdtSchirmAbstand.Height);
   EdtSchirmAbstand.Left:= Konstantenbox.KEditLeft;
   EdtSchirmAbstand.Width:= Schirm.Left - EdtSchirmAbstand.Left;
   EdtSchirmAbstand.Text:= '10';
 
-  LblSchirmAbstand.Height:= Konstantenbox.KLabelHoehe;
   LblSchirmAbstand.Top:= EdtSchirmAbstand.Top - LblSchirmAbstand.Height;
   LblSchirmAbstand.Left:= Konstantenbox.KLabelLeft;
   LblSchirmAbstand.Width:= Schirm.Left - LblSchirmAbstand.Left;
@@ -280,13 +274,11 @@ begin
   LblFrequenz.Top:= 5 + EdtEingabe.Top + EdtEingabe.Height;
   LblFrequenz.Left:= Konstantenbox.KLabelLeft;
   LblFrequenz.Width:= Schirm.Left - LblFrequenz.Left;
-  LblFrequenz.Height:= Konstantenbox.KLabelHoehe;
   LblFrequenz.Caption:= 'Frequenz f';
 
   EdtAusgabe.Top:= LblFrequenz.Top + LblFrequenz.Height;
   EdtAusgabe.Left:= Konstantenbox.KEditLeft;
   EdtAusgabe.Width:= (Schirm.Left - EdtAusgabe.Left) div 3*2;
-  EdtAusgabe.Height:= Konstantenbox.KEditHoehe;
   EdtAusgabe.Text:= '';
   EdtAusgabe.ReadOnly:=false;
 end;
@@ -297,13 +289,11 @@ begin
   LblWellenlaenge.Top:= 5 + PnlOptionen.Top + PnlOptionen.Height;
   LblWellenlaenge.Left:= Konstantenbox.KLabelLeft;
   LblWellenlaenge.Width:= Schirm.Left - LblWellenlaenge.Left;
-  LblWellenlaenge.Height:= Konstantenbox.KLabelHoehe;
   LblWellenlaenge.Caption:= 'Wellenlänge λ';
 
   EdtEingabe.Top:= LblWellenlaenge.Top + LblWellenlaenge.Height;
   EdtEingabe.Left:= Konstantenbox.KEditLeft;
   EdtEingabe.Width:= (Schirm.Left - EdtEingabe.Left) div 3*2;
-  EdtEingabe.Height:= Konstantenbox.KEditHoehe;
   EdtEingabe.Text:= '500';
 end;
 
@@ -467,6 +457,7 @@ end;
 
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
 begin
+  Schrifteinstellungen;
   Fenstereinstellungen;
   Canvaseinstellungen;
   Optionen;
@@ -476,7 +467,7 @@ begin
   Resetbutton;
   Zoomleiste;
   OverlayButton;
-  Schrifteinstellungen;
+  //Schrifteinstellungen;
   Combobox;
   EdtAusgabeEinheiten;
 
@@ -1080,7 +1071,6 @@ begin
   EdtAusgabeEinheit.Top:= EdtAusgabe.Top;
   EdtAusgabeEinheit.Width:= EdtAusgabe.Width div 2;
   EdtAusgabeEinheit.Left:= CmbEinheit.Left;
-  EdtAusgabeEinheit.Height:= Konstantenbox.KEditHoehe div 2;
 
   EdtAusgabeEinheit.Text:='';
   EdtAusgabeEinheit.Enabled:=False;
