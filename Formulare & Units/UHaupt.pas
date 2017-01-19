@@ -114,6 +114,7 @@ begin
   BtnStart.Font.Size:= Konstantenbox.Schrift;
   BtnStart.Font.Color:= Konstantenbox.Schriftfarbe;
   BtnStart.Font.Name:= Konstantenbox.Schriftart;
+  FrmProjektionsflaeche.Reset;
 end;
 
 
