@@ -194,7 +194,7 @@ end;
 procedure TFrmProjektionsflaeche.Farbe_Panel;
 begin
   PnlFarbe.Top:= (EdtAusgabe.Top + EdtAusgabe.Height) + 60;
-  PnlFarbe.Height:= (BtnOptionen.Top - (EdtAusgabe.Top + EdtAusgabe.Height)) - 70;
+  PnlFarbe.Height:=Round(BtnOptionen.Top - (EdtAusgabe.Top + EdtAusgabe.Height));
   PnlFarbe.Left:= 0;
   PnlFarbe.Width:= Schirm.Left - PnlFarbe.Left;
   PnlFarbe.Caption:= '';
@@ -202,7 +202,7 @@ begin
   PnlFarbeCaption.Top:= 0;
   PnlFarbeCaption.Left:= 0;
   PnlFarbeCaption.Width:= PnlFarbe.Width;
-  PnlFarbeCaption.Height:= Round(PnlFarbe.Height * (1/4));
+  PnlFarbeCaption.Height:= Round(PnlFarbe.Height * (1/5));
   PnlFarbeCaption.Caption:= 'Farbe';
 end;
 
@@ -388,8 +388,10 @@ end;
 //Overlaybutton Einstellungen bestimmen
 procedure TFrmProjektionsflaeche.OverlayButton;
 begin
-  BtnOverlay.Top:= 50;
-  BtnOverlay.Left:= Schirm.Left;
+  BtnOverlay.Width:=Konstantenbox.Schrift*6;
+  BtnOverlay.Height:=Konstantenbox.Schrift+10;
+  BtnOverlay.Top:=(EdtAusgabe.Top + EdtAusgabe.Height) + 10;
+  BtnOverlay.Left:=BtnReset.Left+BtnReset.Width+5;
   BtnOverlay.Caption:= 'Hilfe';
 
   //Alle Labels unsichtbar machen
@@ -481,17 +483,17 @@ procedure TFrmProjektionsflaeche.Startbutton;
 begin
   BtnStart.Top:=(EdtAusgabe.Top + EdtAusgabe.Height) + 10;
   BtnStart.Left:=0;
-  BtnStart.Width:=60;
-  BtnStart.Height:=20;
+  BtnStart.Width:=Konstantenbox.Schrift*6;
+  BtnStart.Height:=Konstantenbox.Schrift+10;
   BtnStart.Caption:='Start';
 end;
 
 procedure TFrmProjektionsflaeche.Endbutton;
 begin
   BtnBeenden.Top:=(EdtAusgabe.Top + EdtAusgabe.Height) + 10;
-  BtnBeenden.Left:=80;
-  BtnBeenden.Width:=60;
-  BtnBeenden.Height:=20;
+  BtnBeenden.Left:=BtnStart.left+BtnStart.width+5;
+  BtnBeenden.Width:=Konstantenbox.Schrift*6;
+  BtnBeenden.Height:=Konstantenbox.Schrift+10;
   BtnBeenden.Caption:='Beenden';
 end;
 
@@ -1029,9 +1031,9 @@ end;
 procedure TFrmProjektionsflaeche.Resetbutton;
 begin
   BtnReset.Top := BtnStart.Top;
-  BtnReset.Left := 160;
-  BtnReset.Width := 60;
-  BtnReset.Height := 20;
+  BtnReset.Left := BtnBeenden.Left+BtnBeenden.width+5;
+  BtnReset.Width := Konstantenbox.Schrift*6;
+  BtnReset.Height := Konstantenbox.Schrift+10;
   BtnReset.Caption := 'Reset';
 end;
 
