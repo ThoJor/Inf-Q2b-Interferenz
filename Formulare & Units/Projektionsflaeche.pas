@@ -461,6 +461,8 @@ begin
   FrmGraphischeOptionen.close;
   //Hintergrund aktualisieren
   Background;
+  //Neu Zeichnen
+  BtnStart.Click;
 end;
 
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
