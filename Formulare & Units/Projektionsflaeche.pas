@@ -113,6 +113,7 @@ var
   GDynZoom : Real;
   GOverlay : Boolean;
   GLineal : Boolean;
+  GStartet : Boolean;    //haha WortWitz->GeStarted haha
 
 implementation
 
@@ -452,7 +453,7 @@ begin
   //Hintergrund aktualisieren
   Background;
   //Neu Zeichnen
-  BtnStart.Click;
+  if GStartet=true then BtnStart.Click;
 end;
 
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
@@ -470,7 +471,8 @@ begin
   //Schrifteinstellungen;
   Combobox;
   EdtAusgabeEinheiten;
-
+  //to be aufgeräumt
+  GStartet:=false;
   //nur vorrübergehend
   EdtSpaltanzahl.Enabled:= false;
 end;
@@ -669,6 +671,8 @@ end;
 procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
 var Frequenz: real;
 begin
+  //Programmstart
+  GStartet:=true;
   //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
   if STrToInt(EdtSpaltanzahl.Text)<=1 then
     begin
@@ -1040,7 +1044,7 @@ begin
   EdtAusgabe.Text := '';
 
   //Lineal zurücksetzen
-  Lineal;
+  if GStartet=true then Lineal;
 
   //Zoomleiste zurücksetzen
   TBZoom.Visible:=false;
