@@ -194,7 +194,7 @@ end;
 procedure TFrmProjektionsflaeche.Farbe_Panel;
 begin
   PnlFarbe.Top:= (EdtAusgabe.Top + EdtAusgabe.Height) + 60;
-  PnlFarbe.Height:=Round(BtnOptionen.Top - (EdtAusgabe.Top + EdtAusgabe.Height));
+  PnlFarbe.Height:=Round(BtnOptionen.Top - (EdtAusgabe.Top + EdtAusgabe.Height))-78;
   PnlFarbe.Left:= 0;
   PnlFarbe.Width:= Schirm.Left - PnlFarbe.Left;
   PnlFarbe.Caption:= '';
@@ -202,7 +202,7 @@ begin
   PnlFarbeCaption.Top:= 0;
   PnlFarbeCaption.Left:= 0;
   PnlFarbeCaption.Width:= PnlFarbe.Width;
-  PnlFarbeCaption.Height:= Round(PnlFarbe.Height * (1/5));
+  PnlFarbeCaption.Height:= Round(PnlFarbe.Height * (1/4));
   PnlFarbeCaption.Caption:= 'Farbe';
 end;
 
@@ -388,10 +388,10 @@ end;
 //Overlaybutton Einstellungen bestimmen
 procedure TFrmProjektionsflaeche.OverlayButton;
 begin
-  BtnOverlay.Width:=Konstantenbox.Schrift*6;
+  BtnOverlay.Width:=Round((PnlFarbe.Width-6)/5);
   BtnOverlay.Height:=Konstantenbox.Schrift+10;
   BtnOverlay.Top:=(EdtAusgabe.Top + EdtAusgabe.Height) + 10;
-  BtnOverlay.Left:=BtnReset.Left+BtnReset.Width+5;
+  BtnOverlay.Left:=BtnBeenden.Left+BtnReset.Width+5;
   BtnOverlay.Caption:= 'Hilfe';
 
   //Alle Labels unsichtbar machen
@@ -466,8 +466,8 @@ begin
   Optionen;
   Lineal;
   Startbutton;
-  Endbutton;
   Resetbutton;
+  Endbutton;
   Zoomleiste;
   OverlayButton;
   //Schrifteinstellungen;
@@ -482,17 +482,26 @@ end;
 procedure TFrmProjektionsflaeche.Startbutton;
 begin
   BtnStart.Top:=(EdtAusgabe.Top + EdtAusgabe.Height) + 10;
-  BtnStart.Left:=0;
-  BtnStart.Width:=Konstantenbox.Schrift*6;
+  BtnStart.Left:=Round((PnlFarbe.Width)/17);
+  BtnStart.Width:=Round((PnlFarbe.Width)/5);
   BtnStart.Height:=Konstantenbox.Schrift+10;
   BtnStart.Caption:='Start';
+end;
+
+procedure TFrmProjektionsflaeche.Resetbutton;
+begin
+  BtnReset.Top := BtnStart.Top;
+  BtnReset.Left := BtnStart.left+BtnStart.width+5;
+  BtnReset.Width :=Round((PnlFarbe.Width-6)/5);
+  BtnReset.Height := Konstantenbox.Schrift+10;
+  BtnReset.Caption := 'Reset';
 end;
 
 procedure TFrmProjektionsflaeche.Endbutton;
 begin
   BtnBeenden.Top:=(EdtAusgabe.Top + EdtAusgabe.Height) + 10;
-  BtnBeenden.Left:=BtnStart.left+BtnStart.width+5;
-  BtnBeenden.Width:=Konstantenbox.Schrift*6;
+  BtnBeenden.Left:=BtnReset.Left+BtnReset.width+5;
+  BtnBeenden.Width:=Round((PnlFarbe.Width-6)/5);
   BtnBeenden.Height:=Konstantenbox.Schrift+10;
   BtnBeenden.Caption:='Beenden';
 end;
@@ -1028,14 +1037,6 @@ begin
   EdtAusgabeEinheit.Font.Color:= Konstantenbox.Schriftfarbe;
 end;
 
-procedure TFrmProjektionsflaeche.Resetbutton;
-begin
-  BtnReset.Top := BtnStart.Top;
-  BtnReset.Left := BtnBeenden.Left+BtnBeenden.width+5;
-  BtnReset.Width := Konstantenbox.Schrift*6;
-  BtnReset.Height := Konstantenbox.Schrift+10;
-  BtnReset.Caption := 'Reset';
-end;
 
 procedure TFrmProjektionsflaeche.Reset;
 begin
