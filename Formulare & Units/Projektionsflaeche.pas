@@ -978,6 +978,7 @@ begin
   LblOverlayEinstellungen2.Font.Size:= Konstantenbox.Schrift;
   BtnReset.Font.Size := Konstantenbox.Schrift;
   CmbEinheit.Font.Size:= Konstantenbox.Schrift;
+  EdtAusgabeEinheit.Font.Size:=Konstantenbox.Schrift;
 
   //Schriftart
   PnlOptionen.Font.Name:= Konstantenbox.Schriftart;
@@ -1001,6 +1002,7 @@ begin
   LblOverlayEinstellungen2.Font.Name:= Konstantenbox.Schriftart;
   BtnReset.Font.Name:= Konstantenbox.Schriftart;
   CmbEinheit.Font.Name:= Konstantenbox.Schriftart;
+  EdtAusgabeEinheit.Font.Name:=Konstantenbox.Schriftart;
 
   //Schriftfarbe
   PnlOptionen.Font.Color:= Konstantenbox.Schriftfarbe;
@@ -1024,6 +1026,7 @@ begin
   LblOverlayEinstellungen2.Font.Color:= Konstantenbox.Schriftfarbe;
   BtnReset.Font.Color:= Konstantenbox.Schriftfarbe;
   CmbEinheit.Font.Color:= Konstantenbox.Schriftfarbe;
+  EdtAusgabeEinheit.Font.Color:= Konstantenbox.Schriftfarbe;
 end;
 
 procedure TFrmProjektionsflaeche.Resetbutton;
