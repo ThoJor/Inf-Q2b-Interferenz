@@ -97,6 +97,7 @@ type
     procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
+    procedure CmbEinheitChange(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -270,7 +271,7 @@ begin
   LblSchirmAbstand.Top:= EdtSchirmAbstand.Top - LblSchirmAbstand.Height;
   LblSchirmAbstand.Left:= Konstantenbox.KLabelLeft;
   LblSchirmAbstand.Width:= Schirm.Left - LblSchirmAbstand.Left;
-  LblSchirmAbstand.Caption:= 'Abstand Spalt-Schirm e in m';
+  LblSchirmAbstand.Caption:= 'Abstand Blende-Schirm e in m';
 end;
 
 procedure TFrmProjektionsflaeche.Option_Frequenz;
@@ -346,6 +347,19 @@ begin
   Schirm.Left:= FrmProjektionsflaeche.Width - Schirm.Width;
   Schirm.Top:= 0;
 
+end;
+
+procedure TFrmProjektionsflaeche.CmbEinheitChange(Sender: TObject);
+begin
+  if CMBEinheit.ItemIndex= 0
+    then begin
+      LblWellenlaenge.caption:='Wellenlänge λ';
+      LblFrequenz.caption:='Frequenz f';
+    end
+    else begin
+      LblWellenlaenge.Caption:='Frequenz f';
+      LblFrequenz.Caption:='Wellenlaenge λ';
+    end;
 end;
 
 procedure TFrmProjektionsflaeche.Fenstereinstellungen;
@@ -676,11 +690,19 @@ begin
       exit;
     end;
 
+    //Fehlerabfrage für Abstand Blende-Spalt
+    if StrToInt(EdtSchirmAbstand.Text)<= 0 then
+    begin
+      ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu niedrig.');
+      exit;
+    end;
+
 
   //Fehlerabfrage für fehlende Eingabe
   if (EdtEingabe.Text = '') {and (EdtAusgabe.Text = '')} then
     begin
-      Showmessage('Das Fehlen einer Angabe der Wellenlänge/Frequenz war doch ein Versehen, oder?')
+      Showmessage('Das Fehlen einer Angabe der Wellenlänge/Frequenz war doch ein Versehen, oder?');
+      exit;
     end;
 
   //Berechnung und Zeichnen über Wellenlaengen-Eingabe
@@ -702,6 +724,7 @@ begin
       //Frequenz ergaenzen
       Frequenz := UToolbox.WellenlaengeInFrequenz(GWellenlaenge);
       EdtAusgabe.Text := FloatToStrF((Frequenz/Power(10,(13))),ffNumber,20,5);
+
       //Label aktualisieren
       LblWellenlaenge.caption:='Wellenlänge λ';
       LblFrequenz.caption:='Frequenz f';
@@ -714,7 +737,7 @@ begin
       GWellenlaenge := FrequenzInWellenlaenge(StrToFloat(EdtEingabe.Text)*(Power(10,13)));
 
       //Fehlerabfrage für ungueltige Frequenz
-        if ((380.00/(Power(10,(9)))) > GWellenlaenge) or (GWellenlaenge > (780.00/(Power(10,(9))))) then
+        if ((379.47/(Power(10,(9)))) > GWellenlaenge) or (GWellenlaenge > (788.93/(Power(10,(9))))) then
           begin
             Showmessage('Bitte gib eine Frequenz aus dem Bereich des sichtbaren Lichts an.');
             GWellenlaenge := FrequenzInWellenlaenge(47 * (Power(10,(13))));                                     //hier wird Wert fuer falsche Eingaben eingesetzt
@@ -726,6 +749,7 @@ begin
 
       //Wellenlaenge ergaenzen
       EdtAusgabe.Text := FloatToStrF((GWellenlaenge * Power(10,9)),ffNumber,20,5);
+
       //Label aktualisieren
       LblWellenlaenge.Caption:='Frequenz f';
       LblFrequenz.Caption:='Wellenlaenge λ';
@@ -747,6 +771,7 @@ end;
 //    GLineal:=true;
 //    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
 //    Linealskala;
+
 
 
 procedure TFrmProjektionsflaeche.Zeichnen;
