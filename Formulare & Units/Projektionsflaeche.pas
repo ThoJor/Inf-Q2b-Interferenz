@@ -84,7 +84,6 @@ type
     procedure Overlay_aus;
     procedure OverlayButton;
     procedure Schrifteinstellungen;
-    procedure EdtAusgabeKeyPress(Sender: TObject; var Key: Char);
     procedure EdtEingabeKeyPress(Sender: TObject; var Key: Char);
     function  dynamicZoom (Zahl: Real):Real;
     procedure Resetbutton;
@@ -95,6 +94,9 @@ type
     procedure EdtEingabeChange(Sender: TObject);
     procedure EditFuellerBeiPanelbedienung(Wellenlaenge:Real);
     procedure FormActivate(Sender: TObject);
+    procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
   private
     { Private-Deklarationen }
   public
@@ -592,21 +594,6 @@ begin
   until Success= true;
 end;
 
-//Loeschen von ungewollten Eingaben aus EdtAusgabe (waehrend der Eingabe)
-procedure TFrmProjektionsflaeche.EdtAusgabeKeyPress(Sender: TObject;
-  var Key: Char);
-const
-  Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', Backspace];
-var
-  Text: string;
-begin
-  if not (Key in AllowKeys) then
-  begin
-    Key := #0;
-  end;
-end;
-
 //Loeschen von ungewollten Eingaben aus EdtEingabe (waehrend der Eingabe)
 procedure TFrmProjektionsflaeche.EdtEingabeChange(Sender: TObject);
 begin
@@ -627,16 +614,73 @@ begin
   end;
 end;
 
+procedure TFrmProjektionsflaeche.EdtSchirmAbstandKeyPress(Sender: TObject;
+  var Key: Char);
+const
+  Backspace = #8;
+  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+var
+  Text: string;
+begin
+  if not (Key in AllowKeys) then
+  begin
+    Key := #0;
+  end;
+end;
+
+procedure TFrmProjektionsflaeche.EdtSpaltabstandKeyPress(Sender: TObject;
+  var Key: Char);
+const
+  Backspace = #8;
+  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+var
+  Text: string;
+begin
+  if not (Key in AllowKeys) then
+  begin
+    Key := #0;
+  end;
+end;
+
+procedure TFrmProjektionsflaeche.EdtSpaltanzahlKeyPress(Sender: TObject;
+  var Key: Char);
+const
+  Backspace = #8;
+  AllowKeys: set of Char = ['0'..'9', Backspace];
+var
+  Text: string;
+begin
+  if not (Key in AllowKeys) then
+  begin
+    Key := #0;
+  end;
+end;
+
 //////////////////////////////////////////////////////////////////////////////////
 
 //Berechnung und Zeichnen über Startbutton
 procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
 var Frequenz: real;
 begin
+  //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
+  if STrToInt(EdtSpaltanzahl.Text)<=1 then
+    begin
+      ShowMessage('Die angegebene Spaltanzahl ist zu niedrig.');
+      exit;
+    end;
+
+    //Fehlerabfrage für Spaltabstand
+    if StrToInt(EdtSpaltabstand.Text)<=0 then
+    begin
+      ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
+      exit;
+    end;
+
+
   //Fehlerabfrage für fehlende Eingabe
   if (EdtEingabe.Text = '') {and (EdtAusgabe.Text = '')} then
     begin
-      Showmessage('Bitte gib eine Wellenlänge oder eine Frequenz an')
+      Showmessage('Das Fehlen einer Angabe der Wellenlänge/Frequenz war doch ein Versehen, oder?')
     end;
 
   //Berechnung und Zeichnen über Wellenlaengen-Eingabe
