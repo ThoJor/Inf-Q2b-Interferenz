@@ -57,8 +57,6 @@ begin
 
   TimerProjektionsflaeche.Enabled:= false;
 
-  FrmHaupt.BorderStyle:= bsNone;
-
   BtnBeenden.Caption:= 'Beenden';
   BtnBeenden.Top:=(FrmHaupt.ClientHeight div 6)*5+15;
   BtnBeenden.Left:=(FrmHaupt.ClientWidth div 5)*4;
@@ -69,7 +67,7 @@ procedure TFrmHaupt.HomeSettings();
 begin
   FrmHaupt.Width := 400;
   FrmHaupt.Height := 300;
-  FrmHaupt.BorderStyle := bsDialog;
+  FrmHaupt.BorderStyle:= bsNone;
   FrmHaupt.Caption := 'Interferenzo - Home';
   FrmHaupt.Position := poScreenCenter;
 end;

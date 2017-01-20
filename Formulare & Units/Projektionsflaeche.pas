@@ -41,6 +41,7 @@ type
     BtnReset: TButton;
     CmbEinheit: TComboBox;
     EdtAusgabeEinheit: TEdit;
+    LblLinealEinheit: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -534,10 +535,17 @@ begin
     //Umriss des Lineals
       Moveto(ImgLineal.Width,0);
       Lineto(0,0);
-      Moveto(Round(ImgLineal.Width*21/22),Round(imgLineal.Height*5/6));
-      Textout(penpos.x,penpos.y,'in m');
     end;
   Linealskala;
+  LblLinealEinheit.Top:=ImgLineal.Top+Round(ImgLineal.Height*5/6);
+  LblLinealEinheit.Left:=ImgLineal.Left+Round(ImgLineal.Width*21/22);
+  LblLinealEinheit.autosize:=true;
+  LblLinealEinheit.Font.Size:=Konstantenbox.Schrift;
+  LblLinealEinheit.Caption:='in m';
+  if Gstartet=true then
+    begin
+      //Dynamischer zoom auf caption anwenden
+    end;
 end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
@@ -788,8 +796,6 @@ begin
   if GWellenlaenge>0 then
 
    begin
-    //Leeren des Schirms
-
     //Hintergrund zeichnen
     Background;
 
