@@ -692,7 +692,7 @@ begin
     end;
 
     //Fehlerabfrage für Spaltabstand
-    if StrToInt(EdtSpaltabstand.Text)<=0 then
+    if StrToFloat(EdtSpaltabstand.Text)<=0 then
     begin
       ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
       exit;
