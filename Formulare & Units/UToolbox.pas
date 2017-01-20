@@ -5,6 +5,7 @@ interface
 function FrequenzInWellenlaenge (f:real):real;
 function AbstandMaxima (e,d,lambda,n:real) :real;
 function WellenlaengeInFrequenz (lambda: real):real;
+function Intensitaet(a,b,e,wellenlaenge,x:real):real;
 
 implementation
 
@@ -32,6 +33,11 @@ begin
   if ((lambda*n)/d <= 1) then
     result:= e * tan(arcsin((lambda*n)/d)) Else
     result:= -1;
+end;
+
+function Intensitaet(a,b,e,wellenlaenge,x:real):real;     //a = Spaltabstand    b = Spaltbreite   e = Abstand Blende Schrim
+begin
+  result:=Power(((sin(pi*(b/wellenlaenge)*sin(arctan(x/e))))/(pi*b/wellenlaenge*sin(arctan(x/e)))),(2))*Power(cos(pi*a/wellenlaenge*sin(arctan(x/e))),(2));
 end;
 
 
