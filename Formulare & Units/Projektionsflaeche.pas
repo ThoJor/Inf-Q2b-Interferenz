@@ -602,7 +602,7 @@ end;
 
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
-   GLineal:=true;
+  GLineal:=true;
   Zeichnen;
 end;
 
@@ -1123,21 +1123,31 @@ end;
 
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
 var
-  ymax,y,x:real;                     //x = realer Abstand auf Schirm von Mitte in METERN
-  posx,posy,yanteil:Integer;
+  a,b,e,ymax,y,x:real;
+  koordx, koordy,posx,posy:Integer;
 begin
-    {ymax:= UToolbox.Intensitaet_Doppelspalt(StrToFloat(EdtSpaltabstand.Text), 0.001 ,StrToFloat(EdtSchirmAbstand.Text),GWellenlaenge,0);
+    ImgIntensitaet.picture:=nil;
+    a:=0.01;        //StrToFloat(EdtSpaltabstand.Text)*0.001;
+    e:=7;           //StrToFloat(EdtSchirmAbstand.Text);
+    b:=0.001;
+    ymax:= UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(1/(GDynZoom*TBZoom.Position)));
+    ImgIntensitaet.Canvas.MoveTo(0,0);
     for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do
       begin
-        x:=1/(GDynZoom*TBZoom.Position);
-        y:= UToolbox.Intensitaet_Doppelspalt(StrToFloat(EdtSpaltabstand.Text), 0.001 ,StrToFloat(EdtSchirmAbstand.Text),GWellenlaenge,x);
+        if posx<>0 then
+          begin
+            x:=posx/(GDynZoom*TBZoom.Position);                                     //x = realer Abstand auf Schirm von Mitte in METERN
+            y:= UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,x);
 
+            posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);
+            koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;
+            koordx:=(ImgIntensitaet.Width div 2)+posx;
+            ImgIntensitaet.Canvas.pen.Color:=clblack;
+            ImgIntensitaet.Canvas.LineTo(koordx,koordy);
+          //  ImgIntensitaet.Canvas.Pixels[koordx,koordy]
 
-        posy:=Round(ImgIntensitaet.Height*y/ymax);
-
-
-        ImgIntensitaet.Canvas.Pixels[posx,posy]
-      end;        }
+          end;
+      end;
 end;
 
 

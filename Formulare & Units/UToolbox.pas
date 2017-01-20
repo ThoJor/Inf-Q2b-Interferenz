@@ -37,7 +37,7 @@ end;
 
 function Intensitaet_Doppelspalt(a,b,e,lambda,x:real):real;     //a = Spaltabstand    b = Spaltbreite   e = Abstand Blende Schrim
 begin
-  result:=Power(((sin(pi*(b/lambda)*sin(arctan(x/e))))/(pi*b/lambda*sin(arctan(x/e)))),(2))*Power(cos(pi*a/lambda*sin(arctan(x/e))),(2));
+  result:=Power(((sin(pi*(b/lambda)*sin(arctan(x/e))))/(pi*(b/lambda)*sin(arctan(x/e)))),(2))*Power(cos(pi*(a/lambda)*sin(arctan(x/e))),(2));
 end;
 
 
