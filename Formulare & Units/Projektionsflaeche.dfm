@@ -119,6 +119,8 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Bottom = 2
     Caption = 'LblOverlayEinstellungen2'
   end
+    Height = 12
+  end
   object PnlOptionen: TPanel
     Left = 19
     Top = 7

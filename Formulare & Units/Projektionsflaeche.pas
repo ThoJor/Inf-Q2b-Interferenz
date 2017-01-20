@@ -41,6 +41,7 @@ type
     BtnReset: TButton;
     CmbEinheit: TComboBox;
     EdtAusgabeEinheit: TEdit;
+    LblLinealEinheit: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -538,6 +539,15 @@ begin
       Textout(penpos.x,penpos.y,'in m');
     end;
   Linealskala;
+  //Einheit-Label
+  With LblLinealEinheit do
+  begin
+    Top:=Round(ImgLineal.Top+ImgLineal.Height*5/6);
+    Left:=Round(ImgLineal.Left+ImgLineal.Width*21/22);
+    Font.Size:=Konstantenbox.Schrift;
+    AutoSize:=true;
+    Caption:='in m';
+  end;
 end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
