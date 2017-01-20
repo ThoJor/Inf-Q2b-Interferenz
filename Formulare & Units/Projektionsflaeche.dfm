@@ -126,6 +126,12 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Height = 12
     Caption = 'LblLinealEinheit'
   end
+  object ImgIntensitaet: TImage
+    Left = 566
+    Top = 274
+    Width = 122
+    Height = 75
+  end
   object PnlOptionen: TPanel
     Left = 19
     Top = 7

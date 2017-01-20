@@ -42,6 +42,7 @@ type
     CmbEinheit: TComboBox;
     EdtAusgabeEinheit: TEdit;
     LblLinealEinheit: TLabel;
+    ImgIntensitaet: TImage;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -99,6 +100,7 @@ type
     procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
     procedure CmbEinheitChange(Sender: TObject);
+    procedure ImageIntensitaet();
   private
     { Private-Deklarationen }
   public
@@ -333,7 +335,7 @@ begin
 
   //Canvasgroeße
   Schirm.Width:= Round((4/5) * FrmProjektionsflaeche.Width);
-  Schirm.Height:= Round((4/5) * FrmProjektionsflaeche.Height);
+  Schirm.Height:= Round((3/5) * FrmProjektionsflaeche.Height);
 
   //Canvasposition
   Schirm.Left:= FrmProjektionsflaeche.Width - Schirm.Width;
@@ -473,6 +475,7 @@ begin
   Endbutton;
   Zoomleiste;
   OverlayButton;
+  ImageIntensitaet;
   //Schrifteinstellungen;
   Combobox;
   EdtAusgabeEinheiten;
@@ -525,10 +528,10 @@ end;
 procedure TFrmProjektionsflaeche.Lineal;
 begin
   //Groeße und Position des Image
-  ImgLineal.Height:=Round((1/5) * FrmProjektionsflaeche.Height);
+  ImgLineal.Height:=Round((1/15) * FrmProjektionsflaeche.Height);
   ImgLineal.Width:= Schirm.Width;
   ImgLineal.Left:=FrmProjektionsflaeche.Width-ImgLineal.Width;
-  ImgLineal.Top:=Round(FrmProjektionsflaeche.Height*4/5);
+  ImgLineal.Top:=Round(FrmProjektionsflaeche.Height*3/5);
   with ImgLineal.canvas do
     begin
       pen.Color:=ClBlack;
@@ -570,7 +573,7 @@ begin
           J:=J+1;
           if J = Strichabstand then begin
                                    moveto(I,1);
-                                   lineto(I,Round(ImgLineal.Height/3));
+                                   lineto(I,Round(ImgLineal.Height/3*2));
                                    J:=0;
                                    K:=K+1;
                                    Beschriftung:=K/LDynZoom/(TBZoom.position/100);
@@ -585,7 +588,7 @@ begin
           J:=J-1;
           if J = 0 then begin
                           moveto(I,1);
-                          lineto(I,Round(ImgLineal.Height/3));
+                          lineto(I,Round(ImgLineal.Height/3*2));
                           J:=Strichabstand;
                           K:=K-1;
                           Beschriftung:=K/LDynZoom/(TBZoom.position/100);
@@ -1104,6 +1107,15 @@ begin
       EdtAusgabe.Text:=FloatToStr(GWellenlaenge*(Power(10,(9))));
       EdtAusgabeEinheit.Text:='nm';
     end
+end;
+
+procedure TFrmProjektionsflaeche.ImageIntensitaet;
+begin
+      ImgIntensitaet.Width:=ImgLineal.Width;
+      ImgIntensitaet.top:=ImgLineal.Height+Schirm.Height;
+      ImgIntensitaet.Left:=ImgLineal.Left;
+      ImgIntensitaet.Height:=FrmProjektionsflaeche.Height-ImgLineal.Height-Schirm.Height;
+      ImgIntensitaet.Canvas;
 end;
 
 end.
