@@ -119,7 +119,12 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Bottom = 2
     Caption = 'LblOverlayEinstellungen2'
   end
+  object LblLinealEinheit: TLabel
+    Left = 620
+    Top = 440
+    Width = 68
     Height = 12
+    Caption = 'LblLinealEinheit'
   end
   object PnlOptionen: TPanel
     Left = 19
