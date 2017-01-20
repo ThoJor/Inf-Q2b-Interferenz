@@ -48,7 +48,7 @@ begin
 
   BtnBeenden.Top:=FrmGraphischeOptionen.Height div 6*5 - 5;
   BtnBeenden.Left:=FrmGraphischeOptionen.Width div 5*4;
-  BtnBeenden.Caption:='Beenden';
+  BtnBeenden.Caption:='Anwenden';
   BtnBeenden.Height:=Konstantenbox.KLabelHoehe*2;
   BtnBeenden.Width:=95;
 

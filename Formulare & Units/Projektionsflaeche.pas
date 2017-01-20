@@ -346,10 +346,12 @@ begin
     then begin
       LblWellenlaenge.caption:='Wellenlänge λ';
       LblFrequenz.caption:='Frequenz f';
+      EdtAusgabeEinheit.Text:='10^-13Hz';
     end
     else begin
       LblWellenlaenge.Caption:='Frequenz f';
       LblFrequenz.Caption:='Wellenlaenge λ';
+      EdtAusgabeEinheit.Text:='nm';
     end;
 end;
 
@@ -624,42 +626,37 @@ procedure TFrmProjektionsflaeche.EdtEingabeKeyPress(Sender: TObject;
   var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+  AllowKeys: set of Char = ['0'..'9', ',', '.', Backspace];
 var
   Text: string;
 begin
-  if not (Key in AllowKeys) then
-  begin
-    Key := #0;
-  end;
+  if Key=#13 then BtnStart.Click;
+  if not (Key in AllowKeys) then Key := #0;
 end;
 
 procedure TFrmProjektionsflaeche.EdtSchirmAbstandKeyPress(Sender: TObject;
   var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+  AllowKeys: set of Char = ['0'..'9', ',', '.', Backspace];
 var
   Text: string;
 begin
-  if not (Key in AllowKeys) then
-  begin
-    Key := #0;
-  end;
+  if Key=#13 then BtnStart.Click;
+  if not (Key in AllowKeys) then Key := #0;
 end;
 
 procedure TFrmProjektionsflaeche.EdtSpaltabstandKeyPress(Sender: TObject;
   var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+  Enter= #13;
+  AllowKeys: set of Char = ['0'..'9', ',', '.', Backspace, Enter];
 var
   Text: string;
 begin
-  if not (Key in AllowKeys) then
-  begin
-    Key := #0;
-  end;
+  if Key=#13 then BtnStart.Click;
+  if not (Key in AllowKeys) then Key := #0;
 end;
 
 procedure TFrmProjektionsflaeche.EdtSpaltanzahlKeyPress(Sender: TObject;
@@ -670,10 +667,8 @@ const
 var
   Text: string;
 begin
-  if not (Key in AllowKeys) then
-  begin
-    Key := #0;
-  end;
+  if Key=#13 then BtnStart.Click;
+  if not (Key in AllowKeys) then Key := #0;
 end;
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -699,7 +694,7 @@ begin
     end;
 
     //Fehlerabfrage für Abstand Blende-Spalt
-    if StrToInt(EdtSchirmAbstand.Text)<= 0 then
+    if StrToFloat(EdtSchirmAbstand.Text)<= 0 then
     begin
       ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu niedrig.');
       exit;
@@ -1058,6 +1053,9 @@ begin
   EdtAusgabe.Text:='';
   EdtAusgabeEinheit.Text:='10^13 Hz';
   CmbEinheit.ItemIndex:=0;
+
+  //Overlay
+  Overlay_aus;
 
   //Projektiosnflaeche uebermalen
   Background;
