@@ -523,7 +523,6 @@ end;
 
 procedure TFrmProjektionsflaeche.Lineal;
 begin
-  ImgLineal.Picture:=nil;
   //Groeße und Position des Image
   ImgLineal.Height:=Round((1/5) * FrmProjektionsflaeche.Height);
   ImgLineal.Width:= Schirm.Width;
@@ -790,7 +789,6 @@ begin
 
    begin
     //Leeren des Schirms
-    Schirm.Picture := nil;
 
     //Hintergrund zeichnen
     Background;
@@ -913,7 +911,6 @@ procedure TFrmProjektionsflaeche.DrawBackground(Flaeche: TImage);
 begin
   if GBackgroundBlack = true then
   begin
-    Flaeche.Picture := nil;
     Flaeche.Canvas.Brush.Color:=clblack;
     Flaeche.Canvas.Pen.Color:=clblack;
     Flaeche.Canvas.Rectangle(0,0,Flaeche.Width,Flaeche.Height);
@@ -921,7 +918,6 @@ begin
 
   if GBackgroundWhite = true then
   begin
-    Flaeche.Picture := nil;
     Flaeche.Canvas.Brush.Color:=clwhite;
     Flaeche.Canvas.Pen.Color:=clwhite;
     Flaeche.Canvas.Rectangle(0,0,Flaeche.Width,Flaeche.Height);
