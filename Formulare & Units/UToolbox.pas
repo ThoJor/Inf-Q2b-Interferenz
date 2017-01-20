@@ -5,7 +5,7 @@ interface
 function FrequenzInWellenlaenge (f:real):real;
 function AbstandMaxima (e,d,lambda,n:real) :real;
 function WellenlaengeInFrequenz (lambda: real):real;
-function Intensitaet(a,b,e,wellenlaenge,x:real):real;
+function Intensitaet_Doppelspalt(a,b,e,lambda,x:real):real;
 
 implementation
 
@@ -35,9 +35,9 @@ begin
     result:= -1;
 end;
 
-function Intensitaet(a,b,e,wellenlaenge,x:real):real;     //a = Spaltabstand    b = Spaltbreite   e = Abstand Blende Schrim
+function Intensitaet_Doppelspalt(a,b,e,lambda,x:real):real;     //a = Spaltabstand    b = Spaltbreite   e = Abstand Blende Schrim
 begin
-  result:=Power(((sin(pi*(b/wellenlaenge)*sin(arctan(x/e))))/(pi*b/wellenlaenge*sin(arctan(x/e)))),(2))*Power(cos(pi*a/wellenlaenge*sin(arctan(x/e))),(2));
+  result:=Power(((sin(pi*(b/lambda)*sin(arctan(x/e))))/(pi*b/lambda*sin(arctan(x/e)))),(2))*Power(cos(pi*a/lambda*sin(arctan(x/e))),(2));
 end;
 
 

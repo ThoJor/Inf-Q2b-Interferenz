@@ -101,6 +101,7 @@ type
     procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
     procedure CmbEinheitChange(Sender: TObject);
     procedure ImageIntensitaet();
+    procedure Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
   private
     { Private-Deklarationen }
   public
@@ -854,6 +855,8 @@ begin
     GLineal:=true;
     Lineal;
     TBZoom.Visible:=true;
+
+    Intensitaetsverlauf_Doppelspalt(Gwellenlaenge);
   end;
 end;
 
@@ -1117,5 +1120,25 @@ begin
       ImgIntensitaet.Height:=FrmProjektionsflaeche.Height-ImgLineal.Height-Schirm.Height;
       ImgIntensitaet.Canvas;
 end;
+
+procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
+var
+  ymax,y,x:real;                     //x = realer Abstand auf Schirm von Mitte in METERN
+  posx,posy,yanteil:Integer;
+begin
+    {ymax:= UToolbox.Intensitaet_Doppelspalt(StrToFloat(EdtSpaltabstand.Text), 0.001 ,StrToFloat(EdtSchirmAbstand.Text),GWellenlaenge,0);
+    for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do
+      begin
+        x:=1/(GDynZoom*TBZoom.Position);
+        y:= UToolbox.Intensitaet_Doppelspalt(StrToFloat(EdtSpaltabstand.Text), 0.001 ,StrToFloat(EdtSchirmAbstand.Text),GWellenlaenge,x);
+
+
+        posy:=Round(ImgIntensitaet.Height*y/ymax);
+
+
+        ImgIntensitaet.Canvas.Pixels[posx,posy]
+      end;        }
+end;
+
 
 end.
