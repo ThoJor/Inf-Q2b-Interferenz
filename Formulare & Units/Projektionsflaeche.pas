@@ -692,6 +692,7 @@ var Frequenz: real;
 begin
   //Programmstart
   GStartet:=true;
+
   //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
   if STrToInt(EdtSpaltanzahl.Text)<=1 then
     begin
@@ -773,21 +774,7 @@ begin
 
   //Aufruf zur Berechnung und zum Zeichnen
   Zeichnen;
-
-
 end;
-
-
-
-//    GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
-//    GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
-//    GWellenlaenge := Konstantenbox.KOrange;
-//    GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1);
-//    GDynZoom:=DynamicZoom(GMaximaAbstand);
-//    GLineal:=true;
-//    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
-//    Linealskala;
-
 
 
 procedure TFrmProjektionsflaeche.Zeichnen;
@@ -802,8 +789,6 @@ begin
   if GWellenlaenge>0 then
 
    begin
-    //Leeren des Schirms
-
     //Hintergrund zeichnen
     Background;
 
@@ -856,9 +841,11 @@ begin
     Lineal;
     TBZoom.Visible:=true;
 
-    Intensitaetsverlauf_Doppelspalt(Gwellenlaenge);
+    //Verlauf zeichnen
+    Intensitaetsverlauf_Doppelspalt(GWellenlaenge);
   end;
 end;
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -1053,6 +1040,10 @@ begin
   Canvaseinstellungen;
   EdtAusgabe.Text := '';
 
+  //Intensitätsverlauf zuruecksetzten
+  ImgIntensitaet.Picture:=nil;
+  ImgIntensitaet.Canvas;
+
   //Lineal zurücksetzen
   if GStartet=true then Lineal;
 
@@ -1118,6 +1109,7 @@ begin
       ImgIntensitaet.top:=ImgLineal.Height+Schirm.Height;
       ImgIntensitaet.Left:=ImgLineal.Left;
       ImgIntensitaet.Height:=FrmProjektionsflaeche.Height-ImgLineal.Height-Schirm.Height;
+      ImgIntensitaet.picture:=nil;
       ImgIntensitaet.Canvas;
 end;
 
@@ -1127,25 +1119,26 @@ var
   koordx, koordy,posx,posy:Integer;
 begin
     ImgIntensitaet.picture:=nil;
-    a:=0.01;        //StrToFloat(EdtSpaltabstand.Text)*0.001;
-    e:=7;           //StrToFloat(EdtSchirmAbstand.Text);
-    b:=0.001;
-    ymax:= UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(1/(GDynZoom*TBZoom.Position)));
-    ImgIntensitaet.Canvas.MoveTo(0,0);
-    for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do
+    a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
+    e:=StrToFloat(EdtSchirmAbstand.Text);
+    b:=0.0001;
+
+    ImgIntensitaet.Canvas.pen.Color:=clblack;
+    ymax:= UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(1/(GDynZoom*TBZoom.Position)));    // Berechnet y-Wert des 1. Pixels neben den 0. Maxima
+                                                                                                    // weil Funktion nicht fuer x = 0 definiert ist
+    for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do                    //  --> allerdings bei kleinem Zoom fehlerhaft!!
       begin
         if posx<>0 then
           begin
-            x:=posx/(GDynZoom*TBZoom.Position);                                     //x = realer Abstand auf Schirm von Mitte in METERN
-            y:= UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,x);
+            x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
+            y:=UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,x);
 
-            posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);
-            koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;
-            koordx:=(ImgIntensitaet.Width div 2)+posx;
-            ImgIntensitaet.Canvas.pen.Color:=clblack;
-            ImgIntensitaet.Canvas.LineTo(koordx,koordy);
-          //  ImgIntensitaet.Canvas.Pixels[koordx,koordy]
+            posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
+            koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
+            koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
 
+            if koordx=0 then ImgIntensitaet.Canvas.MoveTo(0,koordy)
+              else ImgIntensitaet.Canvas.LineTo(koordx,koordy);
           end;
       end;
 end;
