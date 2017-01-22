@@ -41,6 +41,8 @@ type
     BtnReset: TButton;
     CmbEinheit: TComboBox;
     EdtAusgabeEinheit: TEdit;
+    LblLinealEinheit: TLabel;
+    ImgIntensitaet: TImage;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -98,6 +100,8 @@ type
     procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
     procedure CmbEinheitChange(Sender: TObject);
+    procedure ImageIntensitaet();
+    procedure Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
   private
     { Private-Deklarationen }
   public
@@ -332,7 +336,7 @@ begin
 
   //Canvasgroeße
   Schirm.Width:= Round((4/5) * FrmProjektionsflaeche.Width);
-  Schirm.Height:= Round((4/5) * FrmProjektionsflaeche.Height);
+  Schirm.Height:= Round((3/5) * FrmProjektionsflaeche.Height);
 
   //Canvasposition
   Schirm.Left:= FrmProjektionsflaeche.Width - Schirm.Width;
@@ -346,10 +350,12 @@ begin
     then begin
       LblWellenlaenge.caption:='Wellenlänge λ';
       LblFrequenz.caption:='Frequenz f';
+      EdtAusgabeEinheit.Text:='10^-13Hz';
     end
     else begin
       LblWellenlaenge.Caption:='Frequenz f';
       LblFrequenz.Caption:='Wellenlaenge λ';
+      EdtAusgabeEinheit.Text:='nm';
     end;
 end;
 
@@ -470,6 +476,7 @@ begin
   Endbutton;
   Zoomleiste;
   OverlayButton;
+  ImageIntensitaet;
   //Schrifteinstellungen;
   Combobox;
   EdtAusgabeEinheiten;
@@ -521,12 +528,11 @@ end;
 
 procedure TFrmProjektionsflaeche.Lineal;
 begin
-  ImgLineal.Picture:=nil;
   //Groeße und Position des Image
-  ImgLineal.Height:=Round((1/5) * FrmProjektionsflaeche.Height);
+  ImgLineal.Height:=Round((1/15) * FrmProjektionsflaeche.Height);
   ImgLineal.Width:= Schirm.Width;
   ImgLineal.Left:=FrmProjektionsflaeche.Width-ImgLineal.Width;
-  ImgLineal.Top:=Round(FrmProjektionsflaeche.Height*4/5);
+  ImgLineal.Top:=Round(FrmProjektionsflaeche.Height*3/5);
   with ImgLineal.canvas do
     begin
       pen.Color:=ClBlack;
@@ -537,6 +543,15 @@ begin
       Textout(penpos.x,penpos.y,'in m');
     end;
   Linealskala;
+  //Einheit-Label
+  With LblLinealEinheit do
+  begin
+    Top:=Round(ImgLineal.Top+ImgLineal.Height*5/6);
+    Left:=Round(ImgLineal.Left+ImgLineal.Width*21/22);
+    Font.Size:=Konstantenbox.Schrift;
+    AutoSize:=true;
+    Caption:='in m';
+  end;
 end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
@@ -559,7 +574,7 @@ begin
           J:=J+1;
           if J = Strichabstand then begin
                                    moveto(I,1);
-                                   lineto(I,Round(ImgLineal.Height/3));
+                                   lineto(I,Round(ImgLineal.Height/3*2));
                                    J:=0;
                                    K:=K+1;
                                    Beschriftung:=K/LDynZoom/(TBZoom.position/100);
@@ -574,7 +589,7 @@ begin
           J:=J-1;
           if J = 0 then begin
                           moveto(I,1);
-                          lineto(I,Round(ImgLineal.Height/3));
+                          lineto(I,Round(ImgLineal.Height/3*2));
                           J:=Strichabstand;
                           K:=K-1;
                           Beschriftung:=K/LDynZoom/(TBZoom.position/100);
@@ -587,7 +602,7 @@ end;
 
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
-   GLineal:=true;
+  GLineal:=true;
   Zeichnen;
 end;
 
@@ -624,42 +639,37 @@ procedure TFrmProjektionsflaeche.EdtEingabeKeyPress(Sender: TObject;
   var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+  AllowKeys: set of Char = ['0'..'9', ',', '.', Backspace];
 var
   Text: string;
 begin
-  if not (Key in AllowKeys) then
-  begin
-    Key := #0;
-  end;
+  if Key=#13 then BtnStart.Click;
+  if not (Key in AllowKeys) then Key := #0;
 end;
 
 procedure TFrmProjektionsflaeche.EdtSchirmAbstandKeyPress(Sender: TObject;
   var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+  AllowKeys: set of Char = ['0'..'9', ',', '.', Backspace];
 var
   Text: string;
 begin
-  if not (Key in AllowKeys) then
-  begin
-    Key := #0;
-  end;
+  if Key=#13 then BtnStart.Click;
+  if not (Key in AllowKeys) then Key := #0;
 end;
 
 procedure TFrmProjektionsflaeche.EdtSpaltabstandKeyPress(Sender: TObject;
   var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+  Enter= #13;
+  AllowKeys: set of Char = ['0'..'9', ',', '.', Backspace, Enter];
 var
   Text: string;
 begin
-  if not (Key in AllowKeys) then
-  begin
-    Key := #0;
-  end;
+  if Key=#13 then BtnStart.Click;
+  if not (Key in AllowKeys) then Key := #0;
 end;
 
 procedure TFrmProjektionsflaeche.EdtSpaltanzahlKeyPress(Sender: TObject;
@@ -670,10 +680,8 @@ const
 var
   Text: string;
 begin
-  if not (Key in AllowKeys) then
-  begin
-    Key := #0;
-  end;
+  if Key=#13 then BtnStart.Click;
+  if not (Key in AllowKeys) then Key := #0;
 end;
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -684,6 +692,7 @@ var Frequenz: real;
 begin
   //Programmstart
   GStartet:=true;
+
   //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
   if STrToInt(EdtSpaltanzahl.Text)<=1 then
     begin
@@ -692,14 +701,14 @@ begin
     end;
 
     //Fehlerabfrage für Spaltabstand
-    if StrToInt(EdtSpaltabstand.Text)<=0 then
+    if StrToFloat(EdtSpaltabstand.Text)<=0 then
     begin
       ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
       exit;
     end;
 
     //Fehlerabfrage für Abstand Blende-Spalt
-    if StrToInt(EdtSchirmAbstand.Text)<= 0 then
+    if StrToFloat(EdtSchirmAbstand.Text)<= 0 then
     begin
       ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu niedrig.');
       exit;
@@ -765,21 +774,7 @@ begin
 
   //Aufruf zur Berechnung und zum Zeichnen
   Zeichnen;
-
-
 end;
-
-
-
-//    GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
-//    GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
-//    GWellenlaenge := Konstantenbox.KOrange;
-//    GMaximaAbstand := AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1);
-//    GDynZoom:=DynamicZoom(GMaximaAbstand);
-//    GLineal:=true;
-//    Zeichnen(GMaximaAbstand*(TBZoom.position)*GDynZoom);
-//    Linealskala;
-
 
 
 procedure TFrmProjektionsflaeche.Zeichnen;
@@ -794,9 +789,6 @@ begin
   if GWellenlaenge>0 then
 
    begin
-    //Leeren des Schirms
-    Schirm.Picture := nil;
-
     //Hintergrund zeichnen
     Background;
 
@@ -848,8 +840,12 @@ begin
     GLineal:=true;
     Lineal;
     TBZoom.Visible:=true;
+
+    //Verlauf zeichnen
+    Intensitaetsverlauf_Doppelspalt(GWellenlaenge);
   end;
 end;
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -918,7 +914,6 @@ procedure TFrmProjektionsflaeche.DrawBackground(Flaeche: TImage);
 begin
   if GBackgroundBlack = true then
   begin
-    Flaeche.Picture := nil;
     Flaeche.Canvas.Brush.Color:=clblack;
     Flaeche.Canvas.Pen.Color:=clblack;
     Flaeche.Canvas.Rectangle(0,0,Flaeche.Width,Flaeche.Height);
@@ -926,7 +921,6 @@ begin
 
   if GBackgroundWhite = true then
   begin
-    Flaeche.Picture := nil;
     Flaeche.Canvas.Brush.Color:=clwhite;
     Flaeche.Canvas.Pen.Color:=clwhite;
     Flaeche.Canvas.Rectangle(0,0,Flaeche.Width,Flaeche.Height);
@@ -1046,6 +1040,10 @@ begin
   Canvaseinstellungen;
   EdtAusgabe.Text := '';
 
+  //Intensitätsverlauf zuruecksetzten
+  ImgIntensitaet.Picture:=nil;
+  ImgIntensitaet.Canvas;
+
   //Lineal zurücksetzen
   if GStartet=true then Lineal;
 
@@ -1058,6 +1056,9 @@ begin
   EdtAusgabe.Text:='';
   EdtAusgabeEinheit.Text:='10^13 Hz';
   CmbEinheit.ItemIndex:=0;
+
+  //Overlay
+  Overlay_aus;
 
   //Projektiosnflaeche uebermalen
   Background;
@@ -1101,5 +1102,46 @@ begin
       EdtAusgabeEinheit.Text:='nm';
     end
 end;
+
+procedure TFrmProjektionsflaeche.ImageIntensitaet;
+begin
+      ImgIntensitaet.Width:=ImgLineal.Width;
+      ImgIntensitaet.top:=ImgLineal.Height+Schirm.Height;
+      ImgIntensitaet.Left:=ImgLineal.Left;
+      ImgIntensitaet.Height:=FrmProjektionsflaeche.Height-ImgLineal.Height-Schirm.Height;
+      ImgIntensitaet.picture:=nil;
+      ImgIntensitaet.Canvas;
+end;
+
+procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
+var
+  a,b,e,ymax,y,x:real;
+  koordx, koordy,posx,posy:Integer;
+begin
+    ImgIntensitaet.picture:=nil;
+    a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
+    e:=StrToFloat(EdtSchirmAbstand.Text);
+    b:=0.0001;
+
+    ImgIntensitaet.Canvas.pen.Color:=clblack;
+    ymax:= UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(1/(GDynZoom*TBZoom.Position)));    // Berechnet y-Wert des 1. Pixels neben den 0. Maxima
+                                                                                                    // weil Funktion nicht fuer x = 0 definiert ist
+    for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do                    //  --> allerdings bei kleinem Zoom fehlerhaft!!
+      begin
+        if posx<>0 then
+          begin
+            x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
+            y:=UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,x);
+
+            posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
+            koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
+            koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
+
+            if koordx=0 then ImgIntensitaet.Canvas.MoveTo(0,koordy)
+              else ImgIntensitaet.Canvas.LineTo(koordx,koordy);
+          end;
+      end;
+end;
+
 
 end.
