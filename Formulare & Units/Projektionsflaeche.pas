@@ -115,6 +115,7 @@ var
   GSpaltabstand : real;
   GMaximaAbstand : real;
   GDynZoom : Real;
+  GZoom : Integer;
   GOverlay : Boolean;
   GLineal : Boolean;
   GStartet : Boolean;    //haha WortWitz->GeStarted haha
@@ -527,7 +528,11 @@ begin
 end;
 
 procedure TFrmProjektionsflaeche.Lineal;
+var Exponent : Integer;
 begin
+  Exponent:=1;
+  if GDynZoom>0 then Exponent:=GZoom;
+
   //Groeße und Position des Image
   ImgLineal.Height:=Round((1/15) * FrmProjektionsflaeche.Height);
   ImgLineal.Width:= Schirm.Width;
@@ -539,31 +544,30 @@ begin
     //Umriss des Lineals
       Moveto(ImgLineal.Width,0);
       Lineto(0,0);
-      Moveto(Round(ImgLineal.Width*21/22),Round(imgLineal.Height*5/6));
-      Textout(penpos.x,penpos.y,'in m');
+      //Moveto(Round(ImgLineal.Width*21/22),Round(imgLineal.Height*5/6));
+      //Textout(penpos.x,penpos.y,'in m');
     end;
   Linealskala;
   //Einheit-Label
   With LblLinealEinheit do
   begin
-    Top:=Round(ImgLineal.Top+ImgLineal.Height*5/6);
-    Left:=Round(ImgLineal.Left+ImgLineal.Width*21/22);
-    Font.Size:=Konstantenbox.Schrift;
+    Top:=Round(ImgLineal.Top+ImgLineal.Height*8/10);
+    Left:=Round(ImgLineal.Left+ImgLineal.Width*95/100);
+    Font.Size:=10;
     AutoSize:=true;
-    Caption:='in m';
+    Caption:='x10^-' +IntToStr(Exponent)+ 'm';
   end;
 end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
   Strichabstand, I,J,K : Integer;
-  LDynZoom, Beschriftung: Real;
+  Beschriftung: Real;
 begin
   if GLineal=false then else
   //Graphische Optionen - CBLineal
   // if graphische_Optionen.CBLineal.checked:=true then
   Strichabstand:=100;
-  if GDynZoom>0 then LDynZoom:=GDynZoom;
   J:=0;
   K:=0;
   with ImgLineal.Canvas do
@@ -577,7 +581,8 @@ begin
                                    lineto(I,Round(ImgLineal.Height/3*2));
                                    J:=0;
                                    K:=K+1;
-                                   Beschriftung:=K/LDynZoom/(TBZoom.position/100);
+                                   //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
+                                   Beschriftung:=K/(TBZoom.position/100);
                                    textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
                                  end;
         end;
@@ -592,7 +597,8 @@ begin
                           lineto(I,Round(ImgLineal.Height/3*2));
                           J:=Strichabstand;
                           K:=K-1;
-                          Beschriftung:=K/LDynZoom/(TBZoom.position/100);
+                          //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
+                          Beschriftung:=K/(TBZoom.position/100);
                           textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
                         end;
 
@@ -610,21 +616,20 @@ function TFrmProjektionsflaeche.dynamicZoom (Zahl: Real):Real;
 var
   ZahlTest: Real;
   Success: Boolean;
-  Zoom:Integer;
 begin
   Success:= false;
-  Zoom:=0;
+  GZoom:=0;
   repeat
   //z.B. 1,234 zu 1 machen oder 5,461 zu 5
   ZahlTest:= StrToFloat(System.SysUtils.FormatFloat('0.', Zahl));
   //wenn ZahlTest 0 oder kleiner ist, dann soll das Komma von Zahl um 1 nach links verschoben werden
   if ZahlTest<= 0 then begin
                          Zahl:= Zahl * 10;
-                         Zoom:=Zoom+1;
+                         GZoom:=GZoom+1;
                        end
                   else begin
                          Success:= true;
-                         Result:=Power(10,Zoom);
+                         Result:=Power(10,GZoom);
                        end;
   until Success= true;
 end;
