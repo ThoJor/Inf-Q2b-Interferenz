@@ -86,38 +86,39 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Width = 122
     Height = 75
   end
-  object LblOverlaySchirm: TLabel
+  object LblHilfeSchirm: TLabel
     Left = 608
     Top = 376
-    Width = 80
+    Width = 63
     Height = 12
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
     Margins.Bottom = 2
-    Caption = 'LblOverlaySchirm'
+    Caption = 'LblHilfeSchirm'
+    Transparent = True
   end
-  object LblOverlayEinstellungen: TLabel
+  object LblHilfeEinstellungen: TLabel
     Left = 605
     Top = 392
-    Width = 108
+    Width = 91
     Height = 12
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
     Margins.Bottom = 2
-    Caption = 'LblOverlayEinstellungen'
+    Caption = 'LblHilfeEinstellungen'
   end
-  object LblOverlayEinstellungen2: TLabel
+  object LblHilfeEinstellungen2: TLabel
     Left = 605
     Top = 408
-    Width = 113
+    Width = 96
     Height = 12
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
     Margins.Bottom = 2
-    Caption = 'LblOverlayEinstellungen2'
+    Caption = 'LblHilfeEinstellungen2'
   end
   object LblLinealEinheit: TLabel
     Left = 620
@@ -357,7 +358,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     TabOrder = 5
     OnClick = BtnBeendenClick
   end
-  object BtnOverlay: TButton
+  object BtnHilfe: TButton
     Left = 266
     Top = 143
     Width = 57
@@ -366,9 +367,9 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Top = 2
     Margins.Right = 2
     Margins.Bottom = 2
-    Caption = 'BtnOverlay'
+    Caption = 'BtnHilfe'
     TabOrder = 6
-    OnClick = BtnOverlayClick
+    OnClick = BtnHilfeClick
   end
   object BtnReset: TButton
     Left = 105

@@ -157,7 +157,7 @@ procedure TFrmGraphischeOptionen.ChBBgVerlaufMouseUp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   ChBBgVerlauf.Checked:=true;
-  GBackground:=1;
+  GBackground:=3;
 end;
 
 procedure TFrmGraphischeOptionen.ChBBgWhiteMouseDown(Sender: TObject;
