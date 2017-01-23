@@ -32,7 +32,7 @@ type
 var
   FormVersuchsuebersicht: TFormVersuchsuebersicht;
   Path: String;
-  GVergroessert : Boolean;
+  Vergroessert : Boolean;
 
 implementation
 
@@ -69,7 +69,7 @@ end;
 //Einstellungen fuer das Image, das ein Bild von Thomas Young enthaelt
 procedure TFormVersuchsuebersicht.ImgTYoungClick(Sender: TObject);
 begin
-  if GVergroessert=false then ImgTYoungZoomed
+  if Vergroessert=false then ImgTYoungZoomed
   else ImgTYoungKlein;
 end;
 
@@ -82,7 +82,7 @@ begin
   ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
   ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
   ImgTYoung.Stretch:=True;
-  GVergroessert:=False;
+  Vergroessert:=False;
   LQuelle.Visible:=false;
 end;
 
@@ -93,14 +93,14 @@ begin
   ImgTYoung.Top := 0 + (FormVersuchsuebersicht.Width div 30);
   ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
   ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
-  GVergroessert:=True;
+  Vergroessert:=True;
   LquelleEinstellungen;
   LQuelle.Visible:=true;
 end;
 
 procedure TFormVersuchsuebersicht.LQuelleClick(Sender: TObject);
 begin
-  if GVergroessert=false then ImgTYoungZoomed
+  if Vergroessert=false then ImgTYoungZoomed
   else ImgTYoungKlein;
 end;
 

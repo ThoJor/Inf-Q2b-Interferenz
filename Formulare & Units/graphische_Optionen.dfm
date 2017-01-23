@@ -39,8 +39,7 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
     Height = 17
     Caption = 'ChBBgBlack'
     TabOrder = 1
-    OnMouseDown = ChBBgBlackMouseDown
-    OnMouseUp = ChBBgBlackMouseUp
+    OnClick = ChBBgBlackClick
   end
   object ChBBgWhite: TCheckBox
     Left = 8
@@ -49,8 +48,7 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
     Height = 17
     Caption = 'ChBBgWhite'
     TabOrder = 2
-    OnMouseDown = ChBBgWhiteMouseDown
-    OnMouseUp = ChBBgWhiteMouseUp
+    OnClick = ChBBgWhiteClick
   end
   object ChBBgVerlauf: TCheckBox
     Left = 8
@@ -59,8 +57,7 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
     Height = 17
     Caption = 'ChBBgVerlauf'
     TabOrder = 3
-    OnMouseDown = ChBBgVerlaufMouseDown
-    OnMouseUp = ChBBgVerlaufMouseUp
+    OnClick = ChBBgVerlaufClick
   end
   object BtnBeenden: TButton
     Left = 144

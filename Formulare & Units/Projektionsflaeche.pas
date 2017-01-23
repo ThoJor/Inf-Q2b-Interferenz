@@ -912,21 +912,21 @@ end;
 
 procedure TFrmProjektionsflaeche.DrawBackground(Flaeche: TImage);
 begin
-  if GBackground = 2 then
+  if GBackgroundBlack = true then
   begin
     Flaeche.Canvas.Brush.Color:=clblack;
     Flaeche.Canvas.Pen.Color:=clblack;
     Flaeche.Canvas.Rectangle(0,0,Flaeche.Width,Flaeche.Height);
   end;
 
-  if GBackground = 1 then
+  if GBackgroundWhite = true then
   begin
     Flaeche.Canvas.Brush.Color:=clwhite;
     Flaeche.Canvas.Pen.Color:=clwhite;
     Flaeche.Canvas.Rectangle(0,0,Flaeche.Width,Flaeche.Height);
   end;
 
-  if GBackground = 3 then
+  if GBackgroundGradient = true then
   begin
     //DrawGradientH(Flaeche.Canvas, $00A2AA77, $00FFFFE3, Rect(0, 0, Width, Height))
     DrawGradientH(Flaeche.Canvas, $00000000, $FFFFFFFF, Rect(0, 0, Width, Height))
