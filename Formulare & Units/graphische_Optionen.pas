@@ -16,20 +16,10 @@ type
     Image1: TImage;
     BtnBeenden: TButton;
     procedure FormCreate(Sender: TObject);
+    procedure ChBBgBlackClick(Sender: TObject);
+    procedure ChBBgWhiteClick(Sender: TObject);
+    procedure ChBBgVerlaufClick(Sender: TObject);
     procedure BtnBeendenClick(Sender: TObject);
-    procedure UncheckAll();
-    procedure ChBBgBlackMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    procedure ChBBgBlackMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    procedure ChBBgWhiteMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    procedure ChBBgWhiteMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    procedure ChBBgVerlaufMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    procedure ChBBgVerlaufMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
   private
     { Private-Deklarationen }
   public
@@ -39,7 +29,9 @@ type
 var
   FrmGraphischeOptionen: TFrmGraphischeOptionen;
 
-  GBackground: Integer;  //1=Weiß, 2=Schwarz, 3=Verlauf
+  GBackgroundBlack: boolean;
+  GBackgroundWhite: boolean;
+  GBackgroundGradient: boolean;
 
 
 implementation
@@ -119,7 +111,9 @@ begin
 
   //Default Hintergrundeinstellungen - weiß ist Hintergrundfarbe
   ChBBgWhite.Checked := true;
-  GBackground := 1;
+  GBackgroundWhite := true;
+  GBackgroundBlack := false;
+  GBackgroundGradient := false;
 end;
 
 procedure TFrmGraphischeOptionen.BtnBeendenClick(Sender: TObject);
@@ -127,50 +121,34 @@ begin
   FrmGraphischeOptionen.close;
 end;
 
-procedure TFrmGraphischeOptionen.UncheckAll();
+procedure TFrmGraphischeOptionen.ChBBgBlackClick(Sender: TObject);
 begin
-  if ChBBgBlack.Checked=true then ChBBgBlack.Checked:=false;
-  if ChBBgVerlauf.Checked=true then ChBBgVerlauf.Checked:=false;
-  if ChBBgWhite.Checked=true then ChBBgWhite.Checked:=false;
+  ChBBgWhite.Checked := false;
+  ChBBgVerlauf.Checked := false;
+
+  GBackgroundWhite := false;
+  GBackgroundBlack := true;
+  GBackgroundGradient := false;
 end;
 
-procedure TFrmGraphischeOptionen.ChBBgBlackMouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure TFrmGraphischeOptionen.ChBBgVerlaufClick(Sender: TObject);
 begin
-  UncheckAll;
+  ChBBgBlack.Checked := false;
+  ChBBgWhite.Checked := false;
+
+  GBackgroundWhite := false;
+  GBackgroundBlack := false;
+  GBackgroundGradient := true;
 end;
 
-procedure TFrmGraphischeOptionen.ChBBgBlackMouseUp(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure TFrmGraphischeOptionen.ChBBgWhiteClick(Sender: TObject);
 begin
-  ChBBgBlack.Checked:=true;
-  GBackGround:=2;
-end;
+  ChBBgBlack.Checked := false;
+  ChBBgVerlauf.Checked := false;
 
-procedure TFrmGraphischeOptionen.ChBBgVerlaufMouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-  UncheckAll;
-end;
-
-procedure TFrmGraphischeOptionen.ChBBgVerlaufMouseUp(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-  ChBBgVerlauf.Checked:=true;
-  GBackground:=1;
-end;
-
-procedure TFrmGraphischeOptionen.ChBBgWhiteMouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-  UncheckAll;
-end;
-
-procedure TFrmGraphischeOptionen.ChBBgWhiteMouseUp(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-  ChBBgWhite.Checked:=true;
-  GBackground:=1;
+  GBackgroundWhite := true;
+  GBackgroundBlack := false;
+  GBackgroundGradient := false;
 end;
 
 end.
