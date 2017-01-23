@@ -6,8 +6,8 @@ Experiment, mit dem er als erster nachweisen konnte, dass Licht eine Wellennatur
 nicht, wie bis dahin vermutet, ein reiner Teilchenstrom ist.
 Dazu ließ er monochromatisches Licht zunächst durch einen engen Spalt fallen, um den 
 Gangunterschied der einzelnen Lichtwellen auszugleichen. Das Licht ließ er dann auf einen 
-Doppelspalt fallen. An beiden Spalten entsteht nun, wie zuvor auch am Einzelspalt, eine 
-Kreiswelle. Die Kreiswellen am Doppelspalt überlagern sich. Auf dem Schirm, auf den das 
+Doppelspalt fallen. An beiden Spalten entstehen nun, wie zuvor auch am Einzelspalt, 
+Kreiswellen. Die Kreiswellen am Doppelspalt überlagern sich. Auf dem Schirm, auf den das 
 Licht fällt, ist durch diese Überlagerung also ein Interferenzmuster zu erkennen, wie man 
 es auch bei mechanischen Wellen erwarten würde.  
 
