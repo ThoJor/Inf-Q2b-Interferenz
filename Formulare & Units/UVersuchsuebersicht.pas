@@ -16,11 +16,13 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormEinstellungen();
     procedure ImgAufbauEinstellungen();
-    procedure ImgTYoungEinstellungen();
+    procedure ImgTYoungKlein();
+    procedure ImgTYoungZoomed();
     procedure LVersuchEinstellungen();
     procedure LQuelleEinstellungen();
     function Textimport(Filename: string):string;
     procedure ImgTYoungClick(Sender: TObject);
+    procedure LQuelleClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -30,7 +32,7 @@ type
 var
   FormVersuchsuebersicht: TFormVersuchsuebersicht;
   Path: String;
-  Vergroessert : Boolean;
+  GVergroessert : Boolean;
 
 implementation
 
@@ -41,7 +43,7 @@ begin
   Path:= GetCurrentDir;
   FormEinstellungen;
   ImgAufbauEinstellungen;
-  ImgTYoungEinstellungen;
+  ImgTYoungKlein;
   LQuelleEinstellungen;
   LVersuchEinstellungen;
 end;
@@ -67,29 +69,11 @@ end;
 //Einstellungen fuer das Image, das ein Bild von Thomas Young enthaelt
 procedure TFormVersuchsuebersicht.ImgTYoungClick(Sender: TObject);
 begin
-  if Vergroessert=false then begin
-                          ImgTYoung.Width :=400;
-                          ImgTYoung.Height :=507;
-                          ImgTYoung.Top := 0 + (FormVersuchsuebersicht.Width div 30);
-                          ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
-                          ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
-                          Vergroessert:=True;
-                          LquelleEinstellungen;
-                          LQuelle.Visible:=true;
-                        end
-  else begin
-    ImgTYoung.Stretch := true;
-    ImgTYoung.Width := FormVersuchsuebersicht.Width div 4;
-    ImgTYoung.Height := (FormVersuchsuebersicht.Height div 25)*10;
-    ImgTYoung.Top := 0 + (FormVersuchsuebersicht.Width div 30);
-    ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
-    ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
-    Vergroessert:=False;
-    LQuelle.Visible:=false;
-  end;
+  if GVergroessert=false then ImgTYoungZoomed
+  else ImgTYoungKlein;
 end;
 
-procedure TFormVersuchsuebersicht.ImgTYoungEinstellungen();
+procedure TFormVersuchsuebersicht.ImgTYoungKlein();
 begin
   ImgTYoung.Stretch := true;
   ImgTYoung.Width := FormVersuchsuebersicht.Width div 4;
@@ -98,7 +82,26 @@ begin
   ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
   ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
   ImgTYoung.Stretch:=True;
-  Vergroessert:=False;
+  GVergroessert:=False;
+  LQuelle.Visible:=false;
+end;
+
+procedure TFormVersuchsuebersicht.ImgTYoungZoomed();
+begin
+  ImgTYoung.Width :=400;
+  ImgTYoung.Height :=507;
+  ImgTYoung.Top := 0 + (FormVersuchsuebersicht.Width div 30);
+  ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
+  ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
+  GVergroessert:=True;
+  LquelleEinstellungen;
+  LQuelle.Visible:=true;
+end;
+
+procedure TFormVersuchsuebersicht.LQuelleClick(Sender: TObject);
+begin
+  if GVergroessert=false then ImgTYoungZoomed
+  else ImgTYoungKlein;
 end;
 
 procedure TFormVersuchsuebersicht.LQuelleEinstellungen();

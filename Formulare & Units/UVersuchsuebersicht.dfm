@@ -429,5 +429,6 @@ object FormVersuchsuebersicht: TFormVersuchsuebersicht
     Width = 35
     Height = 13
     Caption = 'LQuelle'
+    OnClick = LQuelleClick
   end
 end
