@@ -1168,6 +1168,7 @@ procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Doppelspalt(wellenlaenge:re
 var
   a,b,e,ymax,y,x:real;
   koordx, koordy,posx,posy:Integer;
+  I: Integer;
 begin
     ImgIntensitaet.picture:=nil;
     a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
@@ -1175,9 +1176,19 @@ begin
     b:=0.0001;
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
-    ymax:= UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(1/(GDynZoom*TBZoom.Position)));    // Berechnet y-Wert des 1. Pixels neben den 0. Maxima
-                                                                                                    // weil Funktion nicht fuer x = 0 definiert ist
-    for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do                    //  --> allerdings bei kleinem Zoom fehlerhaft!!
+    ymax:=0;
+
+
+    for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet y-Wert des 1. Pixels neben den 0. Maxima
+      begin
+       if I<>0 then
+          begin x:=I/(GDynZoom*TBZoom.Position);
+            y:= UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,x);
+            if y>ymax then ymax:=y;
+          end;
+
+      end;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
+    for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
       begin
         if posx<>0 then
           begin
@@ -1190,7 +1201,10 @@ begin
 
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(0,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx,koordy);
-          end;
+          end {else
+          begin
+            ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),koordy);
+          end};
       end;
 end;
 
