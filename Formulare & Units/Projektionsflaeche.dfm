@@ -71,7 +71,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
   end
   object LblSpaltabstand: TLabel
     Left = 19
-    Top = 489
+    Top = 478
     Width = 70
     Height = 12
     Margins.Left = 2
@@ -133,6 +133,13 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Width = 122
     Height = 75
   end
+  object LblSpaltbreite: TLabel
+    Left = 26
+    Top = 456
+    Width = 60
+    Height = 12
+    Caption = 'LblSpaltbreite'
+  end
   object PnlOptionen: TPanel
     Left = 19
     Top = 7
@@ -183,6 +190,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Bottom = 2
     TabOrder = 9
     Text = 'EdtSchirmAbstand'
+    OnKeyPress = EdtSchirmAbstandKeyPress
   end
   object EdtSpaltanzahl: TEdit
     Left = 98
@@ -196,6 +204,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     TabStop = False
     TabOrder = 11
     Text = 'EdtSpaltanzahl'
+    OnKeyPress = EdtSpaltanzahlKeyPress
   end
   object EdtSpaltabstand: TEdit
     Left = 93
@@ -208,10 +217,11 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Bottom = 2
     TabOrder = 8
     Text = 'EdtSpaltabstand'
+    OnKeyPress = EdtSpaltabstandKeyPress
   end
   object BtnOptionen: TButton
-    Left = 46
-    Top = 438
+    Left = 470
+    Top = 406
     Width = 57
     Height = 19
     Margins.Left = 2
@@ -397,5 +407,14 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     TabStop = False
     TabOrder = 14
     Text = 'EdtAusgabeEinheit'
+  end
+  object EdtSpaltbreite: TEdit
+    Left = 93
+    Top = 453
+    Width = 121
+    Height = 20
+    TabOrder = 15
+    Text = 'EdtSpaltbreite'
+    OnKeyPress = EdtSpaltbreiteKeyPress
   end
 end

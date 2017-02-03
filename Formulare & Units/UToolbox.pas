@@ -6,6 +6,7 @@ function FrequenzInWellenlaenge (f:real):real;
 function AbstandMaxima (e,d,lambda,n:real) :real;
 function WellenlaengeInFrequenz (lambda: real):real;
 function Intensitaet_Doppelspalt(a,b,e,lambda,x:real):real;
+function Intensitaet_Gitter(a,b,e,lambda,x:real):real;
 
 implementation
 
@@ -36,5 +37,9 @@ begin
   result:=Power(((sin(pi*(b/lambda)*sin(arctan(x/e))))/(pi*(b/lambda)*sin(arctan(x/e)))),(2))*Power(cos(pi*(a/lambda)*sin(arctan(x/e))),(2));
 end;
 
+function Intensitaet_Gitter(a,b,e,lambda,x:real):real;
+begin
+  result:=0;
+end;
 
 end.

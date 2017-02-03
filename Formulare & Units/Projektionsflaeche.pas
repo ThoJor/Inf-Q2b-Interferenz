@@ -43,6 +43,8 @@ type
     EdtAusgabeEinheit: TEdit;
     LblLinealEinheit: TLabel;
     ImgIntensitaet: TImage;
+    EdtSpaltbreite: TEdit;
+    LblSpaltbreite: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -54,6 +56,7 @@ type
     procedure Option_Abstand_Blende_Schirm;
     procedure Option_Spaltanzahl;
     procedure Option_Spaltabstand;
+    procedure Option_Spaltbreite;
     procedure graphische_Optionen;
     procedure Option_Farbe;
     procedure Farbe_Panel;
@@ -96,12 +99,14 @@ type
     procedure EdtEingabeChange(Sender: TObject);
     procedure EditFuellerBeiPanelbedienung(Wellenlaenge:Real);
     procedure FormActivate(Sender: TObject);
-    procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
-    procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
-    procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
     procedure CmbEinheitChange(Sender: TObject);
     procedure ImageIntensitaet();
     procedure Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
+    procedure Intensitaetsverlauf_Gitter(Wellenlaenge:real);
+    procedure EdtSpaltbreiteKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
   private
     { Private-Deklarationen }
   public
@@ -238,7 +243,7 @@ procedure TFrmProjektionsflaeche.graphische_Optionen;
 begin
   //Button graphische Optionen
   BtnOptionen.Height:= 30;
-  BtnOptionen.Top:= LblSpaltabstand.Top - BtnOptionen.Height - 15;
+  BtnOptionen.Top:= LblSpaltbreite.Top - BtnOptionen.Height - 15;
   BtnOptionen.Left:= 20;
   BtnOptionen.Width:= Schirm.Left - (BtnOptionen.Left * 2);
   BtnOptionen.Caption:= 'graphische Optionen';
@@ -275,6 +280,22 @@ begin
   LblSpaltanzahl.Left:= Konstantenbox.KLabelLeft;
   LblSpaltanzahl.Width:= Schirm.Left - LblSpaltanzahl.Left;
   LblSpaltanzahl.Caption:= 'Spaltanzahl n';
+end;
+
+procedure TFrmProjektionsflaeche.Option_Spaltbreite;
+begin
+  //Option Spaltbreite
+  EdtSpaltbreite.Top:= LblSpaltabstand.Top - EdtSpaltbreite.Height - 5;
+  EdtSpaltbreite.Left:= Konstantenbox.KEditLeft;
+  EdtSpaltbreite.Width:= Schirm.Left - EdtSpaltbreite.Left;
+  EdtSpaltbreite.Text:= '0,01';
+  EdtSpaltbreite.Hint:='Spaltbreite von X bis Y mm eingeben';
+  EdtSpaltbreite.ShowHint:=true;
+
+  LblSpaltbreite.Top:= EdtSpaltbreite.Top - LblSpaltbreite.Height;
+  LblSpaltbreite.Left:= Konstantenbox.KLabelLeft;
+  LblSpaltbreite.Width:= Schirm.Left - LblSpaltbreite.Left;
+  LblSpaltbreite.Caption:= 'Spaltbreite b in mm';
 end;
 
 procedure TFrmProjektionsflaeche.Option_Abstand_Blende_Schirm;
@@ -343,6 +364,7 @@ begin
   Option_Abstand_Blende_Schirm;
   Option_Spaltanzahl;
   Option_Spaltabstand;
+  Option_Spaltbreite;
   graphische_Optionen;
   Option_Farbe;
 end;
@@ -519,8 +541,6 @@ begin
   EdtAusgabeEinheiten;
   //to be aufgeräumt
   GStartet:=false;
-  //nur vorrübergehend
-  EdtSpaltanzahl.Enabled:= false;
 end;
 
 procedure TFrmProjektionsflaeche.Startbutton;
@@ -697,10 +717,10 @@ begin
 end;
 
 procedure TFrmProjektionsflaeche.EdtSchirmAbstandKeyPress(Sender: TObject;
-  var Key: Char);
+var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', ',', '.', Backspace];
+  AllowKeys: set of Char = ['0'..'9', ',' , Backspace];
 var
   Text: string;
 begin
@@ -709,20 +729,7 @@ begin
 end;
 
 procedure TFrmProjektionsflaeche.EdtSpaltabstandKeyPress(Sender: TObject;
-  var Key: Char);
-const
-  Backspace = #8;
-  Enter= #13;
-  AllowKeys: set of Char = ['0'..'9', ',', '.', Backspace, Enter];
-var
-  Text: string;
-begin
-  if Key=#13 then BtnStart.Click;
-  if not (Key in AllowKeys) then Key := #0;
-end;
-
-procedure TFrmProjektionsflaeche.EdtSpaltanzahlKeyPress(Sender: TObject;
-  var Key: Char);
+var Key: Char);
 const
   Backspace = #8;
   AllowKeys: set of Char = ['0'..'9', Backspace];
@@ -733,7 +740,31 @@ begin
   if not (Key in AllowKeys) then Key := #0;
 end;
 
-//////////////////////////////////////////////////////////////////////////////////
+procedure TFrmProjektionsflaeche.EdtSpaltanzahlKeyPress(Sender: TObject;
+var Key: Char);
+const
+  Backspace = #8;
+  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+var
+  Text: string;
+begin
+  if Key=#13 then BtnStart.Click;
+  if not (Key in AllowKeys) then Key := #0;
+end;
+
+procedure TFrmProjektionsflaeche.EdtSpaltbreiteKeyPress(Sender: TObject;
+ var Key: Char);
+const
+  Backspace = #8;
+  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+var
+  Text: string;
+begin
+  if Key=#13 then BtnStart.Click;
+  if not (Key in AllowKeys) then Key := #0;
+end;
+
+/////////////////////////////////////////////////////////////////////////////////
 
 //Berechnung und Zeichnen über Startbutton
 procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
@@ -891,7 +922,9 @@ begin
     TBZoom.Visible:=true;
 
     //Verlauf zeichnen
-    Intensitaetsverlauf_Doppelspalt(GWellenlaenge);
+    if StrToInt(EdtSpaltanzahl.Text)=2 then
+      Intensitaetsverlauf_Doppelspalt(GWellenlaenge) Else
+      Intensitaetsverlauf_Gitter(GWellenlaenge);
   end;
 end;
 
@@ -1030,6 +1063,8 @@ begin
   BtnReset.Font.Size := Konstantenbox.Schrift;
   CmbEinheit.Font.Size:= Konstantenbox.Schrift;
   EdtAusgabeEinheit.Font.Size:=Konstantenbox.Schrift;
+  EdtSpaltbreite.Font.Size:=Konstantenbox.Schrift;
+  LblSpaltbreite.Font.Size:=Konstantenbox.Schrift;
 
   //Schriftart
   PnlOptionen.Font.Name:= Konstantenbox.Schriftart;
@@ -1054,6 +1089,8 @@ begin
   BtnReset.Font.Name:= Konstantenbox.Schriftart;
   CmbEinheit.Font.Name:= Konstantenbox.Schriftart;
   EdtAusgabeEinheit.Font.Name:=Konstantenbox.Schriftart;
+  EdtSpaltbreite.Font.Name:=Konstantenbox.Schriftart;
+  LblSpaltbreite.Font.Name:=Konstantenbox.Schriftart;
 
   //Schriftfarbe
   PnlOptionen.Font.Color:= Konstantenbox.Schriftfarbe;
@@ -1078,6 +1115,8 @@ begin
   BtnReset.Font.Color:= Konstantenbox.Schriftfarbe;
   CmbEinheit.Font.Color:= Konstantenbox.Schriftfarbe;
   EdtAusgabeEinheit.Font.Color:= Konstantenbox.Schriftfarbe;
+  EdtSpaltbreite.Font.color:=Konstantenbox.Schriftfarbe;
+  LblSpaltbreite.Font.color:=Konstantenbox.Schriftfarbe;
 end;
 
 
@@ -1173,7 +1212,7 @@ begin
     ImgIntensitaet.picture:=nil;
     a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
     e:=StrToFloat(EdtSchirmAbstand.Text);
-    b:=0.0001;
+    b:=StrToFloat(EdtSpaltbreite.Text)*0.001; //0.0001;
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
     ymax:=0;
@@ -1201,12 +1240,27 @@ begin
 
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(0,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx,koordy);
-          end {else
+          end else
           begin
-            ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),koordy);
-          end};
+            ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
+          end;
       end;
 end;
 
+procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Gitter(Wellenlaenge:real);
+var
+  a,b,e,ymax,y,x:real;
+  koordx, koordy,posx,posy:Integer;
+  I: Integer;
+begin
+    ImgIntensitaet.picture:=nil;
+    a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
+    e:=StrToFloat(EdtSchirmAbstand.Text);
+    b:=StrToFloat(EdtSpaltbreite.Text)*0.001; //0.0001;
+
+    ImgIntensitaet.Canvas.pen.Color:=clblack;
+    ymax:=0;
+
+end;
 
 end.
