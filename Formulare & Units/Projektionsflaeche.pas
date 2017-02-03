@@ -923,7 +923,8 @@ begin
 
     //Verlauf zeichnen
     if StrToInt(EdtSpaltanzahl.Text)=2 then
-      Intensitaetsverlauf_Doppelspalt(GWellenlaenge) Else
+      Intensitaetsverlauf_Doppelspalt(GWellenlaenge);
+    if StrToInt(EdtSpaltanzahl.Text)>2 then
       Intensitaetsverlauf_Gitter(GWellenlaenge);
   end;
 end;
@@ -1218,7 +1219,7 @@ begin
     ymax:=0;
 
 
-    for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet y-Wert des 1. Pixels neben den 0. Maxima
+    for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
       begin
        if I<>0 then
           begin x:=I/(GDynZoom*TBZoom.Position);
@@ -1249,7 +1250,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Gitter(Wellenlaenge:real);
 var
-  a,b,e,ymax,y,x:real;
+  a,b,e,n,ymax,y,x:real;
   koordx, koordy,posx,posy:Integer;
   I: Integer;
 begin
@@ -1257,10 +1258,38 @@ begin
     a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
     e:=StrToFloat(EdtSchirmAbstand.Text);
     b:=StrToFloat(EdtSpaltbreite.Text)*0.001; //0.0001;
+    n:=StrToFloat(EdtSpaltanzahl.Text);
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
     ymax:=0;
 
+    for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
+      begin
+       if I<>0 then
+          begin x:=I/(GDynZoom*TBZoom.Position);
+            y:= UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
+            if y>ymax then ymax:=y;
+          end;
+
+      end;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
+    for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
+      begin
+        if posx<>0 then
+          begin
+            x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
+            y:=UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
+
+            posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
+            koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
+            koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
+
+            if koordx=0 then ImgIntensitaet.Canvas.MoveTo(0,koordy)
+              else ImgIntensitaet.Canvas.LineTo(koordx,koordy);
+          end else
+          begin
+            ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
+          end;
+      end;
 end;
 
 end.
