@@ -25,28 +25,6 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Right = 2
     Margins.Bottom = 2
   end
-  object LblWellenlaenge: TLabel
-    Left = 31
-    Top = 60
-    Width = 72
-    Height = 12
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'LblWellenlaenge'
-  end
-  object LblFrequenz: TLabel
-    Left = 31
-    Top = 76
-    Width = 55
-    Height = 12
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'LblFrequenz'
-  end
   object LblSchirmAbstand: TLabel
     Left = 13
     Top = 526
@@ -140,6 +118,20 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Height = 12
     Caption = 'LblSpaltbreite'
   end
+  object LblEingabe: TLabel
+    Left = 40
+    Top = 64
+    Width = 49
+    Height = 12
+    Caption = 'LblEingabe'
+  end
+  object LblAusgabe: TLabel
+    Left = 64
+    Top = 96
+    Width = 52
+    Height = 12
+    Caption = 'LblAusgabe'
+  end
   object PnlOptionen: TPanel
     Left = 19
     Top = 7
@@ -153,8 +145,8 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     TabOrder = 0
   end
   object EdtEingabe: TEdit
-    Left = 126
-    Top = 57
+    Left = 119
+    Top = 73
     Width = 91
     Height = 20
     Margins.Left = 2
@@ -167,8 +159,8 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     OnKeyPress = EdtEingabeKeyPress
   end
   object EdtAusgabe: TEdit
-    Left = 126
-    Top = 81
+    Left = 119
+    Top = 97
     Width = 91
     Height = 20
     Margins.Left = 2
@@ -391,8 +383,8 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     OnClick = BtnResetClick
   end
   object CmbEinheit: TComboBox
-    Left = 222
-    Top = 57
+    Left = 116
+    Top = 48
     Width = 145
     Height = 20
     TabOrder = 2
@@ -400,8 +392,8 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     OnChange = CmbEinheitChange
   end
   object EdtAusgabeEinheit: TEdit
-    Left = 222
-    Top = 83
+    Left = 215
+    Top = 99
     Width = 121
     Height = 20
     TabStop = False
@@ -416,5 +408,13 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     TabOrder = 15
     Text = 'EdtSpaltbreite'
     OnKeyPress = EdtSpaltbreiteKeyPress
+  end
+  object EdtEingabeEinheit: TEdit
+    Left = 215
+    Top = 73
+    Width = 121
+    Height = 20
+    TabOrder = 16
+    Text = 'EdtEingabeEinheit'
   end
 end

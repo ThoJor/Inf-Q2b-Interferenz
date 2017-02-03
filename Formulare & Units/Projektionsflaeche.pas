@@ -12,8 +12,6 @@ type
     Schirm: TImage;
     PnlOptionen: TPanel;
     EdtEingabe: TEdit;
-    LblWellenlaenge: TLabel;
-    LblFrequenz: TLabel;
     EdtAusgabe: TEdit;
     EdtSchirmAbstand: TEdit;
     LblSchirmAbstand: TLabel;
@@ -45,14 +43,17 @@ type
     ImgIntensitaet: TImage;
     EdtSpaltbreite: TEdit;
     LblSpaltbreite: TLabel;
+    EdtEingabeEinheit: TEdit;
+    LblEingabe: TLabel;
+    LblAusgabe: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
     procedure Canvaseinstellungen;
     procedure Optionen;
     procedure Optionspanel;
-    procedure Option_Wellenlaenge;
-    procedure Option_Frequenz;
+    procedure Option_Eingabe;
+    procedure Option_Ausgabe;
     procedure Option_Abstand_Blende_Schirm;
     procedure Option_Spaltanzahl;
     procedure Option_Spaltabstand;
@@ -95,6 +96,7 @@ type
     procedure Reset;
     procedure BtnResetClick(Sender: TObject);
     procedure Combobox;
+    procedure EdtEingabeEinheiten;
     procedure EdtAusgabeEinheiten;
     procedure EdtEingabeChange(Sender: TObject);
     procedure EditFuellerBeiPanelbedienung(Wellenlaenge:Real);
@@ -288,7 +290,7 @@ begin
   EdtSpaltbreite.Top:= LblSpaltabstand.Top - EdtSpaltbreite.Height - 5;
   EdtSpaltbreite.Left:= Konstantenbox.KEditLeft;
   EdtSpaltbreite.Width:= Schirm.Left - EdtSpaltbreite.Left;
-  EdtSpaltbreite.Text:= '0,01';
+  EdtSpaltbreite.Text:= '0,1';
   EdtSpaltbreite.Hint:='Spaltbreite von X bis Y mm eingeben';
   EdtSpaltbreite.ShowHint:=true;
 
@@ -314,30 +316,30 @@ begin
   LblSchirmAbstand.Caption:= 'Abstand Blende-Schirm e in m';
 end;
 
-procedure TFrmProjektionsflaeche.Option_Frequenz;
+procedure TFrmProjektionsflaeche.Option_Ausgabe;
 begin
   //Option Frequenz
-  LblFrequenz.Top:= 5 + EdtEingabe.Top + EdtEingabe.Height;
-  LblFrequenz.Left:= Konstantenbox.KLabelLeft;
-  LblFrequenz.Width:= Schirm.Left - LblFrequenz.Left;
-  LblFrequenz.Caption:= 'Frequenz f';
+  LblAusgabe.Top:= 5 + EdtEingabe.Top + EdtEingabe.Height;
+  LblAusgabe.Left:= Konstantenbox.KLabelLeft;
+  LblAusgabe.Width:= Schirm.Left - LblAusgabe.Left;
+  LblAusgabe.Caption:= 'Frequenz f';
 
-  EdtAusgabe.Top:= LblFrequenz.Top + LblFrequenz.Height;
+  EdtAusgabe.Top:= LblAusgabe.Top + LblAusgabe.Height;
   EdtAusgabe.Left:= Konstantenbox.KEditLeft;
   EdtAusgabe.Width:= (Schirm.Left - EdtAusgabe.Left) div 3*2;
   EdtAusgabe.Text:= '';
   EdtAusgabe.ReadOnly:=false;
 end;
 
-procedure TFrmProjektionsflaeche.Option_Wellenlaenge;
+procedure TFrmProjektionsflaeche.Option_Eingabe;
 begin
   //Option Wellenlänge
-  LblWellenlaenge.Top:= 5 + PnlOptionen.Top + PnlOptionen.Height;
-  LblWellenlaenge.Left:= Konstantenbox.KLabelLeft;
-  LblWellenlaenge.Width:= Schirm.Left - LblWellenlaenge.Left;
-  LblWellenlaenge.Caption:= 'Wellenlänge λ';
+  LblEingabe.Top:= 5 + CmbEinheit.Top + CmbEinheit.Height;
+  LblEingabe.Left:= Konstantenbox.KLabelLeft;
+  LblEingabe.Width:= Schirm.Left - LblEingabe.Left;
+  LblEingabe.Caption:= 'Wellenlänge λ';
 
-  EdtEingabe.Top:= LblWellenlaenge.Top + LblWellenlaenge.Height;
+  EdtEingabe.Top:= LblEingabe.Top + LblEingabe.Height;
   EdtEingabe.Left:= Konstantenbox.KEditLeft;
   EdtEingabe.Width:= (Schirm.Left - EdtEingabe.Left) div 3*2;
   EdtEingabe.Text:= '500';
@@ -359,8 +361,8 @@ end;
 procedure TFrmProjektionsflaeche.Optionen;
 begin
   Optionspanel;
-  Option_Wellenlaenge;
-  Option_Frequenz;
+  Option_Eingabe;
+  Option_Ausgabe;
   Option_Abstand_Blende_Schirm;
   Option_Spaltanzahl;
   Option_Spaltabstand;
@@ -390,16 +392,18 @@ end;
 
 procedure TFrmProjektionsflaeche.CmbEinheitChange(Sender: TObject);
 begin
-  if CMBEinheit.ItemIndex= 0
+  if CmbEinheit.ItemIndex= 0
     then begin
-      LblWellenlaenge.caption:='Wellenlänge λ';
-      LblFrequenz.caption:='Frequenz f';
+      LblEingabe.caption:='Wellenlänge λ';
+      LblAusgabe.caption:='Frequenz f';
+      EdtEingabeEinheit.Text:='nm';
       EdtAusgabeEinheit.Text:='10^13Hz';
       EdtEingabe.Hint:='Wellenlänge von 380 bis 780 nm eingeben';
     end
     else begin
-      LblWellenlaenge.Caption:='Frequenz f';
-      LblFrequenz.Caption:='Wellenlaenge λ';
+      LblEingabe.Caption:='Frequenz f';
+      LblAusgabe.Caption:='Wellenlaenge λ';
+      EdtEingabeEinheit.Text:='10^13Hz';
       EdtAusgabeEinheit.Text:='nm';
       EdtEingabe.Hint:='Frequenz von 38 bis 79 x10^13Hz eingeben';
     end;
@@ -538,6 +542,7 @@ begin
   ImageIntensitaet;
   //Schrifteinstellungen;
   Combobox;
+  EdtEingabeEinheiten;
   EdtAusgabeEinheiten;
   //to be aufgeräumt
   GStartet:=false;
@@ -816,6 +821,7 @@ begin
           end;
 
       //Einheit ergänzen
+      EdtEingabeEinheit.Text:= 'nm';
       EdtAusgabeEinheit.Text:= '10^13 Hz';
 
       //Frequenz ergaenzen
@@ -823,8 +829,8 @@ begin
       EdtAusgabe.Text := FloatToStrF((Frequenz/Power(10,(13))),ffNumber,20,5);
 
       //Label aktualisieren
-      LblWellenlaenge.caption:='Wellenlänge λ';
-      LblFrequenz.caption:='Frequenz f';
+      LblEingabe.caption:='Wellenlänge λ';
+      LblAusgabe.caption:='Frequenz f';
     end;
 
 
@@ -842,14 +848,15 @@ begin
           end;
 
       //Einheit ergänzen
+       EdtEingabeEinheit.Text:= '10^13 Hz';
        EdtAusgabeEinheit.Text:= 'nm';
 
       //Wellenlaenge ergaenzen
       EdtAusgabe.Text := FloatToStrF((GWellenlaenge * Power(10,9)),ffNumber,20,5);
 
       //Label aktualisieren
-      LblWellenlaenge.Caption:='Frequenz f';
-      LblFrequenz.Caption:='Wellenlaenge λ';
+      LblEingabe.Caption:='Frequenz f';
+      LblAusgabe.Caption:='Wellenlaenge λ';
     end;
 
   //Aufruf zur Berechnung und zum Zeichnen
@@ -1044,8 +1051,8 @@ begin
   //Schriftgroesse
   PnlOptionen.Font.Size:= Konstantenbox.Ueberschrift;
   EdtEingabe.Font.Size:= Konstantenbox.Schrift;
-  LblWellenlaenge.Font.Size:= Konstantenbox.Schrift;
-  LblFrequenz.Font.Size:= Konstantenbox.Schrift;
+  LblEingabe.Font.Size:= Konstantenbox.Schrift;
+  LblAusgabe.Font.Size:= Konstantenbox.Schrift;
   EdtAusgabe.Font.Size:= Konstantenbox.Schrift;
   EdtSchirmAbstand.Font.Size:= Konstantenbox.Schrift;
   LblSchirmAbstand.Font.Size:= Konstantenbox.Schrift;
@@ -1063,6 +1070,7 @@ begin
   LblHilfeEinstellungen2.Font.Size:= Konstantenbox.Schrift;
   BtnReset.Font.Size := Konstantenbox.Schrift;
   CmbEinheit.Font.Size:= Konstantenbox.Schrift;
+  EdtEingabeEinheit.Font.Size:=Konstantenbox.Schrift;
   EdtAusgabeEinheit.Font.Size:=Konstantenbox.Schrift;
   EdtSpaltbreite.Font.Size:=Konstantenbox.Schrift;
   LblSpaltbreite.Font.Size:=Konstantenbox.Schrift;
@@ -1070,8 +1078,8 @@ begin
   //Schriftart
   PnlOptionen.Font.Name:= Konstantenbox.Schriftart;
   EdtEingabe.Font.Name:= Konstantenbox.Schriftart;
-  LblWellenlaenge.Font.Name:= Konstantenbox.Schriftart;
-  LblFrequenz.Font.Name:= Konstantenbox.Schriftart;
+  LblEingabe.Font.Name:= Konstantenbox.Schriftart;
+  LblAusgabe.Font.Name:= Konstantenbox.Schriftart;
   EdtAusgabe.Font.Name:= Konstantenbox.Schriftart;
   EdtSchirmAbstand.Font.Name:= Konstantenbox.Schriftart;
   LblSchirmAbstand.Font.Name:= Konstantenbox.Schriftart;
@@ -1090,14 +1098,15 @@ begin
   BtnReset.Font.Name:= Konstantenbox.Schriftart;
   CmbEinheit.Font.Name:= Konstantenbox.Schriftart;
   EdtAusgabeEinheit.Font.Name:=Konstantenbox.Schriftart;
+  EdtEingabeEinheit.Font.Name:=Konstantenbox.Schriftart;
   EdtSpaltbreite.Font.Name:=Konstantenbox.Schriftart;
   LblSpaltbreite.Font.Name:=Konstantenbox.Schriftart;
 
   //Schriftfarbe
   PnlOptionen.Font.Color:= Konstantenbox.Schriftfarbe;
   EdtEingabe.Font.Color:= Konstantenbox.Schriftfarbe;
-  LblWellenlaenge.Font.Color:= Konstantenbox.Schriftfarbe;
-  LblFrequenz.Font.Color:= Konstantenbox.Schriftfarbe;
+  LblEingabe.Font.Color:= Konstantenbox.Schriftfarbe;
+  LblAusgabe.Font.Color:= Konstantenbox.Schriftfarbe;
   EdtAusgabe.Font.Color:= Konstantenbox.Schriftfarbe;
   EdtSchirmAbstand.Font.Color:= Konstantenbox.Schriftfarbe;
   LblSchirmAbstand.Font.Color:= Konstantenbox.Schriftfarbe;
@@ -1115,6 +1124,7 @@ begin
   LblHilfeEinstellungen2.Font.Color:= Konstantenbox.Schriftfarbe;
   BtnReset.Font.Color:= Konstantenbox.Schriftfarbe;
   CmbEinheit.Font.Color:= Konstantenbox.Schriftfarbe;
+  EdtEingabeEinheit.Font.Color:= Konstantenbox.Schriftfarbe;
   EdtAusgabeEinheit.Font.Color:= Konstantenbox.Schriftfarbe;
   EdtSpaltbreite.Font.color:=Konstantenbox.Schriftfarbe;
   LblSpaltbreite.Font.color:=Konstantenbox.Schriftfarbe;
@@ -1155,27 +1165,37 @@ end;
 
 procedure TFrmProjektionsflaeche.Combobox;
 begin
-  CmbEinheit.Top:= EdtEingabe.Top;
+  CmbEinheit.Top:= PnlOptionen.Height + PnlOptionen.Top + 5;
   CmbEinheit.Width:= EdtEingabe.Width div 2;
-  CmbEinheit.Left:= EdtEingabe.Width;
+  CmbEinheit.Left:= Konstantenbox.KEditLeft;
   CmbEinheit.Height:= Konstantenbox.KEditHoehe;
   CmbEinheit.Hint:='Frequenz bzw. Wellenlänge einstellen';
   CmbEinheit.ShowHint:=true;
 
-  CmbEinheit.AddItem('nm', nil);
-  CmbEinheit.AddItem('10^13 Hz', nil);
+  CmbEinheit.AddItem('Wellenlänge', nil);
+  CmbEinheit.AddItem('Frequenz', nil);
   CmbEInheit.ItemIndex := 0;
 
   EdtAusgabe.Enabled:=False;
+end;
+
+procedure TFrmProjektionsflaeche.EdtEingabeEinheiten;
+begin
+  EdtEingabeEinheit.Top:= EdtEingabe.Top;
+  EdtEingabeEinheit.Width:= EdtEingabe.Width div 2;
+  EdtEingabeEinheit.Left:= EdtEingabe.Width;
+
+  EdtEingabeEinheit.Text:='nm';
+  EdtEingabeEinheit.Enabled:=False;
 end;
 
 procedure TFrmProjektionsflaeche.EdtAusgabeEinheiten;
 begin
   EdtAusgabeEinheit.Top:= EdtAusgabe.Top;
   EdtAusgabeEinheit.Width:= EdtAusgabe.Width div 2;
-  EdtAusgabeEinheit.Left:= CmbEinheit.Left;
+  EdtAusgabeEinheit.Left:= EdtAusgabe.Width;
 
-  EdtAusgabeEinheit.Text:='';
+  EdtAusgabeEinheit.Text:='10^13 Hz';
   EdtAusgabeEinheit.Enabled:=False;
 end;
 
@@ -1185,11 +1205,13 @@ begin
     begin
       EdtEingabe.Text:=FloatToStr(GWellenlaenge*(Power(10,(9))));
       EdtAusgabe.Text:=FloatToStrF(WellenlaengeInFrequenz(Wellenlaenge)/(Power(10,(13))),ffNumber,20,5);
+      EdtEingabeEinheit.Text:='nm';
       EdtAusgabeEinheit.Text:='10^13 Hz';
     end  ELSE
     begin
       EdtEingabe.Text:=FloatToStrF(WellenlaengeInFrequenz(Wellenlaenge)/(Power(10,(13))),ffNumber,20,5);
       EdtAusgabe.Text:=FloatToStr(GWellenlaenge*(Power(10,(9))));
+      EdtEingabeEinheit.Text:='10^13 Hz';
       EdtAusgabeEinheit.Text:='nm';
     end
 end;
