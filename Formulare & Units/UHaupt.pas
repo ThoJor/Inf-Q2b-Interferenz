@@ -15,10 +15,12 @@ type
     LInfo: TLabel;
     TimerProjektionsflaeche: TTimer;
     BtnBeenden: TButton;
+    ImgLogo: TImage;
     procedure FormCreate(Sender: TObject);
     procedure HomeSettings();
     procedure HeadingSettings();
     procedure BtnStartSettings();
+    procedure LogoSettings();
     procedure BtnVersuchsaufbauSettings();
     procedure LInfoSettings();
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -52,6 +54,7 @@ begin
   HomeSettings;
   HeadingSettings;
   BtnStartSettings;
+  LogoSettings;
   BtnVersuchsaufbauSettings;
   LInfoSettings;
 
@@ -68,7 +71,7 @@ end;
 procedure TFrmHaupt.HomeSettings();
 begin
   FrmHaupt.Width := 400;
-  FrmHaupt.Height := 300;
+  FrmHaupt.Height := 400;
   FrmHaupt.BorderStyle := bsDialog;
   FrmHaupt.Caption := 'Interferenzo - Home';
   FrmHaupt.Position := poScreenCenter;
@@ -108,13 +111,26 @@ end;
 //Eigenschaften des Start-Buttons
 procedure TFrmHaupt.BtnStartSettings;
 begin
-  BtnStart.Top := LProgrammname.Top + (FrmHaupt.Height div 5);
+  BtnStart.Top := LProgrammname.Top + Round(2.5*(FrmHaupt.Height div 5));
   BtnStart.Left := FrmHaupt.Width div 10;
   BtnStart.Width := FrmHaupt.Width - (FrmHaupt.Width div 5);
   BtnStart.Caption := 'Start';
   BtnStart.Font.Size:= Konstantenbox.Schrift;
   BtnStart.Font.Color:= Konstantenbox.Schriftfarbe;
   BtnStart.Font.Name:= Konstantenbox.Schriftart;
+end;
+
+procedure TFrmHaupt.LogoSettings;
+var Path: String;
+begin
+  Path:= GetCurrentDir;
+
+  ImgLogo.Stretch:= true;
+  ImgLogo.Top:= LProgrammname.Top + LProgrammname.Height + FrmHaupt.Height div 20;
+  ImgLogo.Height:= BtnStart.Top - ImgLogo.Top - FrmHaupt.Height div 20;
+  ImgLogo.Width:= ImgLogo.Height;
+  ImgLogo.Left:= FrmHaupt.Width div 2 - ImgLogo.Width div 2;
+  ImgLogo.Picture.LoadFromFile(Path+'\Interferenzo_Logo.png');
 end;
 
 

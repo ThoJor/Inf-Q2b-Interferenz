@@ -38,6 +38,12 @@ object FrmHaupt: TFrmHaupt
     Caption = 'LInfo'
     OnClick = LInfoClick
   end
+  object ImgLogo: TImage
+    Left = 280
+    Top = 128
+    Width = 105
+    Height = 105
+  end
   object BtnStart: TButton
     Left = 10
     Top = 35
