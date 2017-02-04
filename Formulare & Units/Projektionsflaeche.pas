@@ -815,7 +815,7 @@ begin
       GWellenlaenge := StrToFloat(EdtEingabe.Text)/(Power(10,(9)));
         if ((380/(Power(10,(9)))) >GWellenlaenge) or (GWellenlaenge >=(781/(power(10,(9))))) then
           begin
-            Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an.');
+            Showmessage('Bitte gib eine Wellenlänge aus dem Bereich des sichtbaren Lichts an. Das sichtbare Licht reicht von 390nm bis 770nm.');
             EdtEingabe.Text := '380';
             GWellenlaenge := 380 /(Power(10,(9)));
           end;
@@ -842,7 +842,7 @@ begin
       //Fehlerabfrage für ungueltige Frequenz
         if ((379.47/(Power(10,(9)))) > GWellenlaenge) or (GWellenlaenge > (788.93/(Power(10,(9))))) then
           begin
-            Showmessage('Bitte gib eine Frequenz aus dem Bereich des sichtbaren Lichts an.');
+            Showmessage('Bitte gib eine Frequenz aus dem Bereich des sichtbaren Lichts an. Das sichtbare Licht reicht von 77 bis 39 10^13Hz.');
             GWellenlaenge := FrequenzInWellenlaenge(47 * (Power(10,(13))));                                     //hier wird Wert fuer falsche Eingaben eingesetzt
             EdtEingabe.Text:= FloatToStr(WellenlaengeInFrequenz(GWellenlaenge)/(Power(10,(13))));
           end;
