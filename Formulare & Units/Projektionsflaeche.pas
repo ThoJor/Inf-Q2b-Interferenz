@@ -290,7 +290,7 @@ begin
   EdtSpaltbreite.Top:= LblSpaltabstand.Top - EdtSpaltbreite.Height - 5;
   EdtSpaltbreite.Left:= Konstantenbox.KEditLeft;
   EdtSpaltbreite.Width:= Schirm.Left - EdtSpaltbreite.Left;
-  EdtSpaltbreite.Text:= '0,1';
+  EdtSpaltbreite.Text:= '0.1';
   EdtSpaltbreite.Hint:='Spaltbreite von X bis Y mm eingeben';
   EdtSpaltbreite.ShowHint:=true;
 
@@ -620,7 +620,7 @@ begin
   //Einheit-Label
   With LblLinealEinheit do
   begin
-    Top:=Round(ImgLineal.Top+ImgLineal.Height*8/10);
+    Top:=Round(ImgLineal.Top+ImgLineal.Height*95/115);
     Left:=Round(ImgLineal.Left+ImgLineal.Width*95/100);
     Font.Size:=10;
     AutoSize:=true;
@@ -657,7 +657,7 @@ begin
         end;
       //Striche von Mitte->Rechts mit Beschriftung
       J:=Strichabstand;
-      K:=1;
+      K:=-1;
       for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
         begin
           J:=J-1;
@@ -665,7 +665,7 @@ begin
                           moveto(I,1);
                           lineto(I,Round(ImgLineal.Height/3*2));
                           J:=Strichabstand;
-                          K:=K-1;
+                          K:=K+1;
                           //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
                           Beschriftung:=K/(TBZoom.position/100);
                           textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
