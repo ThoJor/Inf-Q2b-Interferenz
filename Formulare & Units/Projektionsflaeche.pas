@@ -784,18 +784,46 @@ begin
       ShowMessage('Die angegebene Spaltanzahl ist zu niedrig.');
       exit;
     end;
+  if STrToInt(EdtSpaltanzahl.Text)>=1001 then
+    begin
+      ShowMessage('Die angegebene Spaltanzahl ist zu hoch.');
+      exit;
+    end;
 
     //Fehlerabfrage für Spaltabstand
-    if StrToFloat(EdtSpaltabstand.Text)<=0 then
+  if StrToFloat(EdtSpaltabstand.Text)<=0 then
     begin
       ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
       exit;
     end;
+  if StrToFloat(EdtSpaltabstand.Text)>=1001 then
+    begin
+      ShowMessage('Der angegebene Spaltabstand ist zu hoch.');
+      exit;
+    end;
+
+    //Fehlerabfrage für Spaltbreite
+  if StrToFloat(EdtSpaltbreite.Text)<=0 then
+    begin
+      ShowMessage('Die angegebene Spaltbreite ist zu niedrig.');
+      exit;
+    end;
+  if StrToFloat(EdtSpaltbreite.Text)>=1001 then
+    begin
+      ShowMessage('Die angegebene Spaltbreite ist zu hoch.');
+      exit;
+    end;
+
 
     //Fehlerabfrage für Abstand Blende-Spalt
-    if StrToFloat(EdtSchirmAbstand.Text)<= 0 then
+  if StrToFloat(EdtSchirmAbstand.Text)<= 0 then
     begin
       ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu niedrig.');
+      exit;
+    end;
+  if StrToFloat(EdtSchirmAbstand.Text)>= 1001 then
+    begin
+      ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu hoch.');
       exit;
     end;
 
