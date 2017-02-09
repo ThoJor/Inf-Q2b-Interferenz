@@ -290,7 +290,7 @@ begin
   EdtSpaltbreite.Top:= LblSpaltabstand.Top - EdtSpaltbreite.Height - 5;
   EdtSpaltbreite.Left:= Konstantenbox.KEditLeft;
   EdtSpaltbreite.Width:= Schirm.Left - EdtSpaltbreite.Left;
-  EdtSpaltbreite.Text:= '0.1';
+  EdtSpaltbreite.Text:= '0,1';
   EdtSpaltbreite.Hint:='Spaltbreite von X bis Y mm eingeben';
   EdtSpaltbreite.ShowHint:=true;
 
@@ -737,7 +737,7 @@ procedure TFrmProjektionsflaeche.EdtSpaltabstandKeyPress(Sender: TObject;
 var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', Backspace];
+  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
 var
   Text: string;
 begin
@@ -749,7 +749,7 @@ procedure TFrmProjektionsflaeche.EdtSpaltanzahlKeyPress(Sender: TObject;
 var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+  AllowKeys: set of Char = ['0'..'9', Backspace];
 var
   Text: string;
 begin
