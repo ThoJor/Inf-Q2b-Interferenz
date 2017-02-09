@@ -480,6 +480,7 @@ begin
   LblHilfeSchirm.Top:= 50;
   LblHilfeSchirm.Left:= Round(Schirm.Width / 2);
   LblHilfeSchirm.Transparent:=false;
+  LblHilfeSchirm.Color:=clwhite;
   LblHilfeSchirm.Caption:= 'Hier werden die simulierten Maxima angezeigt (siehe Versuchsübersicht).';
 
   //Hilfe Einstellungen
@@ -487,6 +488,7 @@ begin
   LblHilfeEinstellungen.Top:=Round(Schirm.Height / 2);
   LblHilfeEinstellungen.Left:= Schirm.Left + 20;
   LblHilfeEinstellungen.Transparent:=false;
+  LblHilfeEinstellungen.Color:=clwhite;
   LblHilfeEinstellungen.Caption:= '<-- Einstellungen - Veränderbare Werte des Versuchs sind:';
 
   //Hilfe Einstellungen Details
@@ -494,6 +496,7 @@ begin
   LblHilfeEinstellungen2.Top:= LblHilfeEinstellungen.Top + LblHilfeEinstellungen.Height;
   LblHilfeEinstellungen2.Left:= LblHilfeEinstellungen.Left;
   LblHilfeEinstellungen2.Transparent:=false;
+  LblHilfeEinstellungen2.Color:=clwhite;
   LblHilfeEinstellungen2.Caption:= 'Wellenlänge, Frequenz oder Farbe (zum Auswählen der Farbe auf diese klicken)';
 
   //experimento v5
