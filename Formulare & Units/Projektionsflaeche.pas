@@ -791,16 +791,16 @@ begin
     end;
 
     //Fehlerabfrage für Spaltabstand
-  if StrToFloat(EdtSpaltabstand.Text)<=0 then
-    begin
-      ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
-      exit;
-    end;
-  if StrToFloat(EdtSpaltabstand.Text)>=1001 then
-    begin
-      ShowMessage('Der angegebene Spaltabstand ist zu hoch.');
-      exit;
-    end;
+    if StrToFloat(EdtSpaltabstand.Text)<=0 then
+      begin
+        ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
+        exit;
+      end;
+    if StrToFloat(EdtSpaltabstand.Text)>=1001 then
+      begin
+        ShowMessage('Der angegebene Spaltabstand ist zu hoch.');
+        exit;
+      end;
 
     //Fehlerabfrage für Spaltbreite
   if StrToFloat(EdtSpaltbreite.Text)<=0 then
@@ -816,16 +816,16 @@ begin
 
 
     //Fehlerabfrage für Abstand Blende-Spalt
-  if StrToFloat(EdtSchirmAbstand.Text)<= 0 then
-    begin
-      ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu niedrig.');
-      exit;
-    end;
-  if StrToFloat(EdtSchirmAbstand.Text)>= 1001 then
-    begin
-      ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu hoch.');
-      exit;
-    end;
+    if StrToFloat(EdtSchirmAbstand.Text)<= 0 then
+      begin
+        ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu niedrig.');
+        exit;
+      end;
+    if StrToFloat(EdtSchirmAbstand.Text)>= 1001 then
+      begin
+        ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu hoch.');
+        exit;
+      end;
 
 
   //Fehlerabfrage für fehlende Eingabe
