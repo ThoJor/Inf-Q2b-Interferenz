@@ -109,7 +109,7 @@ type
     procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
-    procedure Maxima(y,x: Integer);
+    procedure Maxima(y: Integer);
   private
     { Private-Deklarationen }
   public
@@ -861,7 +861,7 @@ begin
     end;
 
   //Aufruf zur Berechnung und zum Zeichnen
-  if GMaxima=true then Zeichnen;
+  if GMaxima=true then Zeichnen else Schirm.Picture:=nil;
 
   //Lineal Zeichnen
   GLineal:=true;
@@ -1272,7 +1272,7 @@ begin
             koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
 
             //Werte für Maxima
-            Maxima(koordy,koordx);
+            Maxima(koordy);
 
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(0,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx,koordy);
@@ -1283,7 +1283,7 @@ begin
       end;
 end;
 
-procedure TFrmProjektionsflaeche.Maxima(y,x: Integer);
+procedure TFrmProjektionsflaeche.Maxima(y: Integer);
 var
   y0,y1,y2 : Integer;
 begin
@@ -1296,16 +1296,8 @@ begin
   y1:=y2;
   y2:=y;
   //Prüfen ob mittlerer Wert ein Maximum ist
-  if (y1>y0) and (y1>y2) and (GMaxima=false) then
   //Malen des Maximums
-  Begin
-    Background;
-    With Schirm.Canvas do
-      begin
-        MoveTo(x, Schirm.Height div 30);
-        LineTo(x, Schirm.Height-(Schirm.Height div 30));
-      end;
-  End;
+
 end;
 
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Gitter(Wellenlaenge:real);
