@@ -31,6 +31,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure ChBBgVerlaufMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure CBMaximaClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -41,6 +42,7 @@ var
   FrmGraphischeOptionen: TFrmGraphischeOptionen;
 
   GBackground: Integer;  //1=Weiß, 2=Schwarz, 3=Verlauf
+  GMaxima: Boolean;
 
 
 implementation
@@ -128,6 +130,7 @@ begin
 
   //An
   CBMaxima.Checked:=true;
+  GMaxima:=true;
 
   //Default Hintergrundeinstellungen - weiß ist Hintergrundfarbe
   ChBBgWhite.Checked := true;
@@ -144,6 +147,12 @@ begin
   if ChBBgBlack.Checked=true then ChBBgBlack.Checked:=false;
   if ChBBgVerlauf.Checked=true then ChBBgVerlauf.Checked:=false;
   if ChBBgWhite.Checked=true then ChBBgWhite.Checked:=false;
+end;
+
+procedure TFrmGraphischeOptionen.CBMaximaClick(Sender: TObject);
+begin
+  if GMaxima=true then GMaxima:=false
+  else GMaxima:=true;
 end;
 
 procedure TFrmGraphischeOptionen.ChBBgBlackMouseDown(Sender: TObject;
