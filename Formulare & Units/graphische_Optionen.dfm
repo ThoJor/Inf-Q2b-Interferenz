@@ -84,6 +84,5 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
     Height = 17
     Caption = 'CBMaxima'
     TabOrder = 5
-    OnClick = CBMaximaClick
   end
 end

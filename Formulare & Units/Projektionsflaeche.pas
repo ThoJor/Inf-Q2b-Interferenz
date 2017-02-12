@@ -678,7 +678,7 @@ end;
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
   GLineal:=true;
-  if GStartet=true then BtnStart.Click;
+  Zeichnen;
 end;
 
 function TFrmProjektionsflaeche.dynamicZoom (Zahl: Real):Real;
@@ -860,18 +860,7 @@ begin
     end;
 
   //Aufruf zur Berechnung und zum Zeichnen
-  if GMaxima=true then Zeichnen else Schirm.Picture:=nil;
-
-  //Lineal Zeichnen
-  GLineal:=true;
-  Lineal;
-  TBZoom.Visible:=true;
-
-  //Verlauf zeichnen
-  if StrToInt(EdtSpaltanzahl.Text)=2 then
-    Intensitaetsverlauf_Doppelspalt(GWellenlaenge);
-  if StrToInt(EdtSpaltanzahl.Text)>2 then
-    Intensitaetsverlauf_Gitter(GWellenlaenge);
+  Zeichnen;
 end;
 
 
@@ -933,6 +922,17 @@ begin
       Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
       Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
     until posx < 0;
+
+    //Lineal Zeichnen
+    GLineal:=true;
+    Lineal;
+    TBZoom.Visible:=true;
+
+    //Verlauf zeichnen
+    if StrToInt(EdtSpaltanzahl.Text)=2 then
+      Intensitaetsverlauf_Doppelspalt(GWellenlaenge);
+    if StrToInt(EdtSpaltanzahl.Text)>2 then
+      Intensitaetsverlauf_Gitter(GWellenlaenge);
   end;
 end;
 
@@ -948,7 +948,7 @@ begin
     GWellenlaenge := Konstantenbox.KBlau;
     Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
-    if GStartet=true then BtnStart.Click;
+    TBZoom.Position:=100;
 end;
 
 //Panel Gelb
@@ -958,7 +958,7 @@ begin
     GWellenlaenge := Konstantenbox.KGelb;
     Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
-    if GStartet=true then BtnStart.Click;
+    TBZoom.Position:=100;
 end;
 
 //Panel Gruen
@@ -968,7 +968,7 @@ begin
     GWellenlaenge := Konstantenbox.KGruen;
     Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
-    if GStartet=true then BtnStart.Click;
+    TBZoom.Position:=100;
 end;
 
 //Panel Orange
@@ -976,8 +976,8 @@ procedure TFrmProjektionsflaeche.PnlOrangeClick(Sender: TObject);
 begin
     TBZoom.Position:=100;
     GWellenlaenge := Konstantenbox.KOrange;
+    Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
-    if GStartet=true then BtnStart.Click;
 end;
 
 //Panel Rot
@@ -985,17 +985,17 @@ procedure TFrmProjektionsflaeche.PnlRotClick(Sender: TObject);
 begin
     TBZoom.Position:=100;
     GWellenlaenge := Konstantenbox.KRot;
+    Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
-    if GStartet=true then BtnStart.Click;
 end;
 
 //Panel Violett
 procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
 begin
-    TBZoom.Position:=100;
     GWellenlaenge := Konstantenbox.KViolett;
+    Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
-    if GStartet=true then BtnStart.Click;
+    TBZoom.Position:=100;
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
