@@ -1,0 +1,3 @@
+Um die Auswertung zu erleichtern, wird heute eine Linse statt eines Einzelspalts
+ verwendet, damit die Lichtwellen fokussiert und parallel auf den Doppelspalt 
+treffen. Somit sieht der Versuchsaufbau wie folgt aus: 

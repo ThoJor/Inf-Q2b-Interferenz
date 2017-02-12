@@ -13,12 +13,15 @@ type
     ImgTYoung: TImage;
     LVersuch: TLabel;
     LQuelle: TLabel;
+    LWellen: TLabel;
+    LWellenHeader: TLabel;
+    LVersuchHeader: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormEinstellungen();
     procedure ImgAufbauEinstellungen();
     procedure ImgTYoungKlein();
     procedure ImgTYoungZoomed();
-    procedure LVersuchEinstellungen();
+    procedure LEinstellungen();
     procedure LQuelleEinstellungen();
     function Textimport(Filename: string):string;
     procedure ImgTYoungClick(Sender: TObject);
@@ -45,7 +48,7 @@ begin
   ImgAufbauEinstellungen;
   ImgTYoungKlein;
   LQuelleEinstellungen;
-  LVersuchEinstellungen;
+  LEinstellungen;
 end;
 
 //Einstellungen bezueglich des Formulars an sich
@@ -115,20 +118,53 @@ begin
   Lquelle.Font.Color:=clred;
 end;
 
-//Einstellungen fuer das Label, das den Versuchsaufbau und den historischen Hintergrund in Textform darstellt
-procedure TFormVersuchsuebersicht.LVersuchEinstellungen();
+//Einstellungen fuer die Label, die den Versuchsaufbau und den historischen Hintergrund in Textform darstellt
+procedure TFormVersuchsuebersicht.LEinstellungen();
 begin
-  LVersuch.Top := ImgTYoung.Top;
+  //Ueberschrift Wellennatur
+  LWellenHeader.Top:=ImgTYoung.Top;
+  LWellenHeader.Left:=ImgTYoung.Left+ImgTYoung.Width+ (FormVersuchsuebersicht.Width div 30);
+  LWellenHeader.Width := FormVersuchsuebersicht.Width - ImgTYoung.Width - (FormVersuchsuebersicht.Width div 15);
+  LWellenHeader.Height := FormVersuchsuebersicht.Height div 35;
+  LWellenHeader.Caption := 'Die Wellennatur des Lichts';
+  LWellenHeader.Font.Size := 12;
+  LWellenHeader.Font.Color:= Konstantenbox.Schriftfarbe;
+  LWellenHeader.Font.Name:= Konstantenbox.Schriftart;
+  //Wellennatur Body
+  LWellen.Top:=ImgTYoung.Top+LWellenHeader.Height+(FormVersuchsuebersicht.Height div 200);
+  LWellen.Left:=ImgTYoung.Left+ImgTYoung.Width+ (FormVersuchsuebersicht.Width div 30);
+  LWellen.Width:= FormVersuchsuebersicht.Width - ImgTYoung.Width - (FormVersuchsuebersicht.Width div 15);
+  LWellen.Height:= FormVersuchsuebersicht.Height div 35-LWellenHeader.Height;
+  LWellen.AutoSize:=true;
+  LWellen.WordWrap:=false;
+  LWellen.Caption:= Textimport(Path+'\Wellen.txt');
+  LWellen.Font.Size:= 10;
+  LWellen.Font.Color:= Konstantenbox.Schriftfarbe;
+  Lwellen.Font.Name:= Konstantenbox.Schriftart;
+  //Überschrift Versuchsaufbau
+  LVersuchHeader.Top:= ImgTYoung.Top+LWellenHeader.Height+LWellen.Height;
+  LVersuchHeader.Left:= ImgTYoung.Left+ImgTYoung.Width+ (FormVersuchsuebersicht.Width div 30);
+  LVersuchHeader.Width:= FormVersuchsuebersicht.Width - ImgTYoung.Width - (FormVersuchsuebersicht.Width div 15);
+  LVersuchHeader.Height:= FormVersuchsuebersicht.Height div 35;
+  LVersuchHeader.Caption:= 'Versuchsaufbau';
+  LVersuchHeader.Font.Size:=12;
+  LVersuchHeader.Font.Color:=Konstantenbox.Schriftfarbe;
+  LVersuchHeader.Font.Name:=Konstantenbox.Schriftart;
+  //Versuchsaufbau
+  //LVersuch.AutoSize:=false;
+  LVersuch.Top := ImgTYoung.Top+LWellenHeader.Height+LWellen.Height+LVersuchheader.Height+(FormVersuchsuebersicht.Height div 200);
   LVersuch.Left := ImgTYoung.Left + ImgTYoung.Width + (FormVersuchsuebersicht.Width div 30);
   LVersuch.Width := FormVersuchsuebersicht.Width - ImgTYoung.Width - (FormVersuchsuebersicht.Width div 15);
   LVersuch.Height := ImgTYoung.Height;
-  LVersuch.Caption := Textimport(Path+'\Versuchsuebersicht.txt');
-  LVersuch.Font.Size:= 8;
+  LVersuch.AutoSize:=true;
+  LVersuch.WordWrap:=false;
+  LVersuch.Caption := Textimport(Path+'\Versuch.txt');
+  LVersuch.Font.Size:= 10;
   LVersuch.Font.Color:= Konstantenbox.Schriftfarbe;
   LVersuch.Font.Name:= Konstantenbox.Schriftart;
 end;
 
-//experimento  v4
+//Textimport
 function TFormVersuchsuebersicht.Textimport(Filename: string):string;
 var
   txt: TStringList;
