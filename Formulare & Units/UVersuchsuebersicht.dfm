@@ -431,4 +431,25 @@ object FormVersuchsuebersicht: TFormVersuchsuebersicht
     Caption = 'LQuelle'
     OnClick = LQuelleClick
   end
+  object LWellen: TLabel
+    Left = 344
+    Top = 56
+    Width = 37
+    Height = 13
+    Caption = 'LWellen'
+  end
+  object LWellenHeader: TLabel
+    Left = 296
+    Top = 96
+    Width = 72
+    Height = 13
+    Caption = 'LWellenHeader'
+  end
+  object LVersuchHeader: TLabel
+    Left = 296
+    Top = 176
+    Width = 78
+    Height = 13
+    Caption = 'LVersuchHeader'
+  end
 end
