@@ -1230,16 +1230,16 @@ begin
               else ImgIntensitaet.Canvas.LineTo(koordx,koordy);
 
 
-            ynach:=Round(ImgIntensitaet.Height*4 div 5*(Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position)))/ymax);
+            ynach:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
 
-            if (yvor<posy) and (ynach<posy) then
-                Strich_Zeichnen(posx+(Schirm.Width div 2));
+            if (yvor<y) and (ynach<y) and (posy<>0) then
+                Strich_Zeichnen(posx+1+(Schirm.Width div 2));
 
-                yvor:=posy;
+                yvor:=y;
           end else
           begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
-         //   Strich_Zeichnen(ImgIntensitaet.Width div 2);
+            Strich_Zeichnen(ImgIntensitaet.Width div 2);
           end;
       end;
 
