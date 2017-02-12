@@ -109,7 +109,6 @@ type
     procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
-    procedure Maxima(y: Integer);
   private
     { Private-Deklarationen }
   public
@@ -1271,9 +1270,6 @@ begin
             koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
             koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
 
-            //Werte für Maxima
-            Maxima(koordy);
-
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(0,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx,koordy);
           end else
@@ -1281,23 +1277,6 @@ begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
           end;
       end;
-end;
-
-procedure TFrmProjektionsflaeche.Maxima(y: Integer);
-var
-  y0,y1,y2 : Integer;
-begin
-  //Initialisierung
-  y0:=0;
-  y1:=0;
-  y2:=0;
-  //Übergebenen Wert in Puffer speichern
-  y0:=y1;
-  y1:=y2;
-  y2:=y;
-  //Prüfen ob mittlerer Wert ein Maximum ist
-  //Malen des Maximums
-
 end;
 
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Gitter(Wellenlaenge:real);
