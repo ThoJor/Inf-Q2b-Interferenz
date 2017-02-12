@@ -1239,7 +1239,6 @@ begin
           end else
           begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
-            Strich_Zeichnen(ImgIntensitaet.Width div 2);
           end;
       end;
 
@@ -1248,7 +1247,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Gitter(Wellenlaenge:real);
 var
-  a,b,e,n,ymax,y,x:real;
+  a,b,e,n,ymax,y,x,yvor,ynach:real;
   koordx, koordy,posx,posy:Integer;
   I: Integer;
 begin
@@ -1283,6 +1282,14 @@ begin
 
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(0,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx,koordy);
+
+
+          ynach:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
+
+            if (yvor<y) and (ynach<y) and (posy<>0) then
+                Strich_Zeichnen(posx+1+(Schirm.Width div 2));
+
+                yvor:=y;
           end else
           begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
