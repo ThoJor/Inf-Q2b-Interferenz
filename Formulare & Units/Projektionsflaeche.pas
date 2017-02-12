@@ -1233,7 +1233,7 @@ begin
             ynach:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
 
             if (yvor<y) and (ynach<y) and (posy<>0) then
-                Strich_Zeichnen(posx+1+(Schirm.Width div 2));
+                Strich_Zeichnen(posx+(Schirm.Width div 2));
 
                 yvor:=y;
           end else
@@ -1287,7 +1287,7 @@ begin
           ynach:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
 
             if (yvor<y) and (ynach<y) and (posy<>0) then
-                Strich_Zeichnen(posx+1+(Schirm.Width div 2));
+                Strich_Zeichnen(posx+(Schirm.Width div 2));
 
                 yvor:=y;
           end else
@@ -1299,8 +1299,8 @@ end;
 
 procedure TFrmProjektionsflaeche.Strich_Zeichnen(x:Integer);
 begin
-  Schirm.Canvas.MoveTo(x, Schirm.Height div 30);
-  Schirm.Canvas.LineTo(x, Schirm.Height-(Schirm.Height div 30));
+  Schirm.Canvas.MoveTo(x+1, Schirm.Height div 30);
+  Schirm.Canvas.LineTo(x+1, Schirm.Height-(Schirm.Height div 30));
 end;
 
 procedure TFrmProjektionsflaeche.Zeichnen(wellenlaenge:real);
