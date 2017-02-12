@@ -864,7 +864,7 @@ begin
 end;
 
 
-procedure TFrmProjektionsflaeche.Zeichnen; //Strich-Maxima
+procedure TFrmProjektionsflaeche.Zeichnen;
 var posx: integer;                                                              //x-Position des Stiftes
     farbe: string;
     a: real;
@@ -944,37 +944,30 @@ end;
 //Panel Blau
 procedure TFrmProjektionsflaeche.PnlBlauClick(Sender: TObject);
 begin
-    TBZoom.Position:=100;
-    GWellenlaenge := Konstantenbox.KBlau;
-    Zeichnen;
-    EditFuellerBeiPanelbedienung(GWellenlaenge);
-    TBZoom.Position:=100;
+  GWellenlaenge := Konstantenbox.KBlau;
+  Zeichnen;
+  EditFuellerBeiPanelbedienung(GWellenlaenge);
 end;
 
 //Panel Gelb
 procedure TFrmProjektionsflaeche.PnlGelbClick(Sender: TObject);
 begin
-    TBZoom.Position:=100;
     GWellenlaenge := Konstantenbox.KGelb;
     Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
-    TBZoom.Position:=100;
 end;
 
 //Panel Gruen
 procedure TFrmProjektionsflaeche.PnlGruenClick(Sender: TObject);
 begin
-    TBZoom.Position:=100;
     GWellenlaenge := Konstantenbox.KGruen;
     Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
-    TBZoom.Position:=100;
 end;
 
 //Panel Orange
 procedure TFrmProjektionsflaeche.PnlOrangeClick(Sender: TObject);
 begin
-    TBZoom.Position:=100;
     GWellenlaenge := Konstantenbox.KOrange;
     Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
@@ -983,7 +976,6 @@ end;
 //Panel Rot
 procedure TFrmProjektionsflaeche.PnlRotClick(Sender: TObject);
 begin
-    TBZoom.Position:=100;
     GWellenlaenge := Konstantenbox.KRot;
     Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
@@ -995,7 +987,6 @@ begin
     GWellenlaenge := Konstantenbox.KViolett;
     Zeichnen;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
-    TBZoom.Position:=100;
 end;
 
 ////////////////////////////////////////////////////////////////////////////////

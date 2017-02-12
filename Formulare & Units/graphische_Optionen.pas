@@ -15,7 +15,6 @@ type
     ChBBgVerlauf: TCheckBox;
     Image1: TImage;
     BtnBeenden: TButton;
-    CBMaxima: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure BtnBeendenClick(Sender: TObject);
     procedure UncheckAll();
@@ -67,7 +66,6 @@ begin
   ChBBgBlack.Caption:= 'Schwarz';
   ChBBgWhite.Caption:= 'Weiß';
   ChBBgVerlauf.Caption:= 'Verlauf';
-  CBMaxima.Caption:='Maximaumschaltdingens';
 
 
   //Fenstergroeße
@@ -82,52 +80,42 @@ begin
   ChBBgBlack.Top:= 15*2+Konstantenbox.KCheckBoxHoehe;
   ChBBgWhite.Top:= 15*3+Konstantenbox.KCheckBoxHoehe*2;
   ChBBgVerlauf.Top:= 15*4+Konstantenbox.KCheckBoxHoehe*3;
-  CBMaxima.Top:=15*5+Konstantenbox.KCheckBoxHoehe*4;
   CBLineal.Left:= 20;
   ChBBgBlack.Left:= 20;
   ChBBgWhite.Left:= 20;
   ChBBgVerlauf.Left:= 20;
-  CBMaxima.Left:=20;
 
   //Groeße CheckBox
   CBLineal.Height:= Konstantenbox.KCheckBoxHoehe;
   ChBBgBlack.Height := Konstantenbox.KCheckBoxHoehe;
   ChBBgWhite.Height := Konstantenbox.KCheckBoxHoehe;
   ChBBgVerlauf.Height := Konstantenbox.KCheckBoxHoehe;
-  CBMaxima.Height:=Konstantenbox.KCheckBoxHoehe;
   CBLineal.Width:= Konstantenbox.KCheckBoxWidth;
   ChBBgBlack.Width := Konstantenbox.KCheckBoxWidth;
   ChBBgWhite.Width := Konstantenbox.KCheckBoxWidth;
   ChBBgVerlauf.Width := Konstantenbox.KCheckBoxWidth;
-  CBMaxima.Width:=Konstantenbox.KCheckBoxWidth;
 
   //Schriftgroesse Checkbox
   CBLineal.Font.Size:= Konstantenbox.Schrift;
   ChBBgBlack.Font.Size:= Konstantenbox.Schrift;
   ChBBgWhite.Font.Size:= Konstantenbox.Schrift;
   ChBBgVerlauf.Font.Size:= Konstantenbox.Schrift;
-  CBMaxima.Font.Size:=Konstantenbox.Schrift;
 
   //Schriftart Checkbox
   CBLineal.Font.Name:= Konstantenbox.Schriftart;
   ChBBgBlack.Font.Name:= Konstantenbox.Schriftart;
   ChBBgWhite.Font.Name:= Konstantenbox.Schriftart;
   ChBBgVerlauf.Font.Name:= Konstantenbox.Schriftart;
-  CBMaxima.Font.Name:=Konstantenbox.Schriftart;
 
   //Schriftfarbe Checkbox;
   CBLineal.Font.Color:= Konstantenbox.Schriftfarbe;
   ChBBgBlack.Font.Color:= Konstantenbox.Schriftfarbe;
   ChBBgWhite.Font.Color:= Konstantenbox.Schriftfarbe;
   ChBBgVerlauf.Font.Color:= Konstantenbox.Schriftfarbe;
-  CBMaxima.Font.Color:= Konstantenbox.Schriftfarbe;
 
   //Lineal per default an und deaktiviert
   CBLineal.Checked:= true;
   CBLineal.Enabled:= false;
-
-  //An
-  CBMaxima.Checked:=true;
 
   //Default Hintergrundeinstellungen - weiß ist Hintergrundfarbe
   ChBBgWhite.Checked := true;

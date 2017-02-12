@@ -77,12 +77,4 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
     TabOrder = 4
     OnClick = BtnBeendenClick
   end
-  object CBMaxima: TCheckBox
-    Left = 8
-    Top = 95
-    Width = 97
-    Height = 17
-    Caption = 'CBMaxima'
-    TabOrder = 5
-  end
 end
