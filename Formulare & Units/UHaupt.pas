@@ -168,7 +168,8 @@ begin
   LInfo.Height := LInfo.Font.Size + 10;
   LInfo.Alignment := tacenter;
   LInfo.Layout := tlcenter;
-  LInfo.Caption := 'Nutzungsbedingungen & Kontaktinformationen';
+  LInfo.Caption := 'Nutzungsbedingungen und Kontaktinformationen';
+  LInfo.Font.Style:=[fsUnderline];
   LInfo.Font.Color := Konstantenbox.Schriftfarbe;
   LInfo.Font.Name:= Konstantenbox.Schriftart;
 end;

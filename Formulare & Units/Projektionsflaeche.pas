@@ -71,7 +71,7 @@ type
     procedure Lineal;
     procedure Zoomleiste;
     procedure TBZoomChange(Sender: TObject);
-    procedure Zeichnen;
+    procedure Zeichnen(wellenlaenge:Real);
     procedure PnlViolettClick(Sender: TObject);
     procedure BtnStartClick(Sender: TObject);
     procedure Startbutton;
@@ -109,6 +109,7 @@ type
     procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
+    procedure Strich_Zeichnen(x:Integer);
   private
     { Private-Deklarationen }
   public
@@ -290,7 +291,7 @@ begin
   EdtSpaltbreite.Top:= LblSpaltabstand.Top - EdtSpaltbreite.Height - 5;
   EdtSpaltbreite.Left:= Konstantenbox.KEditLeft;
   EdtSpaltbreite.Width:= Schirm.Left - EdtSpaltbreite.Left;
-  EdtSpaltbreite.Text:= '0.1';
+  EdtSpaltbreite.Text:= '0,1';
   EdtSpaltbreite.Hint:='Spaltbreite von X bis Y mm eingeben';
   EdtSpaltbreite.ShowHint:=true;
 
@@ -480,6 +481,7 @@ begin
   LblHilfeSchirm.Top:= 50;
   LblHilfeSchirm.Left:= Round(Schirm.Width / 2);
   LblHilfeSchirm.Transparent:=false;
+  LblHilfeSchirm.Color:=clwhite;
   LblHilfeSchirm.Caption:= 'Hier werden die simulierten Maxima angezeigt (siehe Versuchsübersicht).';
 
   //Hilfe Einstellungen
@@ -487,6 +489,7 @@ begin
   LblHilfeEinstellungen.Top:=Round(Schirm.Height / 2);
   LblHilfeEinstellungen.Left:= Schirm.Left + 20;
   LblHilfeEinstellungen.Transparent:=false;
+  LblHilfeEinstellungen.Color:=clwhite;
   LblHilfeEinstellungen.Caption:= '<-- Einstellungen - Veränderbare Werte des Versuchs sind:';
 
   //Hilfe Einstellungen Details
@@ -494,6 +497,7 @@ begin
   LblHilfeEinstellungen2.Top:= LblHilfeEinstellungen.Top + LblHilfeEinstellungen.Height;
   LblHilfeEinstellungen2.Left:= LblHilfeEinstellungen.Left;
   LblHilfeEinstellungen2.Transparent:=false;
+  LblHilfeEinstellungen2.Color:=clwhite;
   LblHilfeEinstellungen2.Caption:= 'Wellenlänge, Frequenz oder Farbe (zum Auswählen der Farbe auf diese klicken)';
 
   //experimento v5
@@ -678,7 +682,7 @@ end;
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
   GLineal:=true;
-  Zeichnen;
+  Zeichnen(GWellenlaenge);
 end;
 
 function TFrmProjektionsflaeche.dynamicZoom (Zahl: Real):Real;
@@ -737,7 +741,7 @@ procedure TFrmProjektionsflaeche.EdtSpaltabstandKeyPress(Sender: TObject;
 var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', Backspace];
+  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
 var
   Text: string;
 begin
@@ -749,7 +753,7 @@ procedure TFrmProjektionsflaeche.EdtSpaltanzahlKeyPress(Sender: TObject;
 var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+  AllowKeys: set of Char = ['0'..'9', Backspace];
 var
   Text: string;
 begin
@@ -784,20 +788,48 @@ begin
       ShowMessage('Die angegebene Spaltanzahl ist zu niedrig.');
       exit;
     end;
+  if STrToInt(EdtSpaltanzahl.Text)>=1001 then
+    begin
+      ShowMessage('Die angegebene Spaltanzahl ist zu hoch.');
+      exit;
+    end;
 
     //Fehlerabfrage für Spaltabstand
     if StrToFloat(EdtSpaltabstand.Text)<=0 then
+      begin
+        ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
+        exit;
+      end;
+    if StrToFloat(EdtSpaltabstand.Text)>=1001 then
+      begin
+        ShowMessage('Der angegebene Spaltabstand ist zu hoch.');
+        exit;
+      end;
+
+    //Fehlerabfrage für Spaltbreite
+  if StrToFloat(EdtSpaltbreite.Text)<=0 then
     begin
-      ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
+      ShowMessage('Die angegebene Spaltbreite ist zu niedrig.');
+      exit;
+    end;
+  if StrToFloat(EdtSpaltbreite.Text)>=1001 then
+    begin
+      ShowMessage('Die angegebene Spaltbreite ist zu hoch.');
       exit;
     end;
 
+
     //Fehlerabfrage für Abstand Blende-Spalt
     if StrToFloat(EdtSchirmAbstand.Text)<= 0 then
-    begin
-      ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu niedrig.');
-      exit;
-    end;
+      begin
+        ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu niedrig.');
+        exit;
+      end;
+    if StrToFloat(EdtSchirmAbstand.Text)>= 1001 then
+      begin
+        ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu hoch.');
+        exit;
+      end;
 
 
   //Fehlerabfrage für fehlende Eingabe
@@ -860,82 +892,8 @@ begin
     end;
 
   //Aufruf zur Berechnung und zum Zeichnen
-  Zeichnen;
+  Zeichnen(FrequenzInWellenlaenge(Frequenz));
 end;
-
-
-procedure TFrmProjektionsflaeche.Zeichnen;
-var posx: integer;                                                              //x-Position des Stiftes
-    farbe: string;
-    a: real;
-    n: integer;
-    debug,debug2: real;
-begin
-  GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
-  GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
-  if GWellenlaenge>0 then
-
-   begin
-    //Hintergrund zeichnen
-    Background;
-
-    //Zuweisung der Stiftfarbe
-    farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
-    Schirm.Canvas.Pen.Color := Stringtocolor(farbe);
-
-    //Stift in Schirmmitte positionieren
-    posx := Schirm.Width div 2;
-
-    //Maximum 0. Ordnung zeichnen
-    Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
-    Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
-
-    //Maxima >0. Ordnung zeichnen (Maxima rechts der Mitte)
-    n:=0;
-    posx := Schirm.Width div 2;
-
-    GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1),-10);
-    GDynZoom:=DynamicZoom(GMaximaAbstand);
-
-    repeat
-      //Berechnen von a
-      n:=n+1;
-      if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
-      GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-10);
-      A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
-      //Zeichnen;
-      posx := round(posx + a);
-      Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
-      Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
-    until posx > Schirm.Width;
-    //Maxima <0. Ordnung zeichnen (Maxima links der Mitte)
-    n:=0;
-    posx := Schirm.Width div 2;
-    repeat
-      //Berechnen von a
-      n:=n+1;
-      if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
-      GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-10);
-      A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
-      //Zeichnen
-      posx := round(posx - a);
-      Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
-      Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
-    until posx < 0;
-
-    //Lineal Zeichnen
-    GLineal:=true;
-    Lineal;
-    TBZoom.Visible:=true;
-
-    //Verlauf zeichnen
-    if StrToInt(EdtSpaltanzahl.Text)=2 then
-      Intensitaetsverlauf_Doppelspalt(GWellenlaenge);
-    if StrToInt(EdtSpaltanzahl.Text)>2 then
-      Intensitaetsverlauf_Gitter(GWellenlaenge);
-  end;
-end;
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -945,31 +903,31 @@ end;
 procedure TFrmProjektionsflaeche.PnlBlauClick(Sender: TObject);
 begin
   GWellenlaenge := Konstantenbox.KBlau;
-  Zeichnen;
-  EditFuellerBeiPanelbedienung(GWellenlaenge);
+  Zeichnen(Konstantenbox.KBlau);
+  EditFuellerBeiPanelbedienung(Konstantenbox.KBlau);
 end;
 
 //Panel Gelb
 procedure TFrmProjektionsflaeche.PnlGelbClick(Sender: TObject);
 begin
     GWellenlaenge := Konstantenbox.KGelb;
-    Zeichnen;
-    EditFuellerBeiPanelbedienung(GWellenlaenge);
+    Zeichnen(Konstantenbox.KGelb);
+    EditFuellerBeiPanelbedienung(Konstantenbox.KGelb);
 end;
 
 //Panel Gruen
 procedure TFrmProjektionsflaeche.PnlGruenClick(Sender: TObject);
 begin
     GWellenlaenge := Konstantenbox.KGruen;
-    Zeichnen;
-    EditFuellerBeiPanelbedienung(GWellenlaenge);
+    Zeichnen(Konstantenbox.KGruen);
+    EditFuellerBeiPanelbedienung(Konstantenbox.KGruen);
 end;
 
 //Panel Orange
 procedure TFrmProjektionsflaeche.PnlOrangeClick(Sender: TObject);
 begin
     GWellenlaenge := Konstantenbox.KOrange;
-    Zeichnen;
+    Zeichnen(Konstantenbox.KOrange);
     EditFuellerBeiPanelbedienung(GWellenlaenge);
 end;
 
@@ -977,16 +935,16 @@ end;
 procedure TFrmProjektionsflaeche.PnlRotClick(Sender: TObject);
 begin
     GWellenlaenge := Konstantenbox.KRot;
-    Zeichnen;
-    EditFuellerBeiPanelbedienung(GWellenlaenge);
+    Zeichnen(Konstantenbox.KRot);
+    EditFuellerBeiPanelbedienung(Konstantenbox.KRot);
 end;
 
 //Panel Violett
 procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
 begin
     GWellenlaenge := Konstantenbox.KViolett;
-    Zeichnen;
-    EditFuellerBeiPanelbedienung(GWellenlaenge);
+    Zeichnen(Konstantenbox.KViolett);
+    EditFuellerBeiPanelbedienung(Konstantenbox.KViolett);
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1228,7 +1186,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
 var
-  a,b,e,ymax,y,x:real;
+  a,b,e,ymax,y,x,yvor,ynach:real;
   koordx, koordy,posx,posy:Integer;
   I: Integer;
 begin
@@ -1236,6 +1194,12 @@ begin
     a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
     e:=StrToFloat(EdtSchirmAbstand.Text);
     b:=StrToFloat(EdtSpaltbreite.Text)*0.001; //0.0001;
+
+    //Hintergrund zeichnen
+    Background;
+
+    //Zuweisung der Stiftfarbe
+    Schirm.Canvas.Pen.Color := Stringtocolor('$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9)))));
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
     ymax:=0;
@@ -1248,14 +1212,15 @@ begin
             y:= UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,x);
             if y>ymax then ymax:=y;
           end;
+      end;
 
-      end;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
+    yvor:=0;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
     for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
       begin
         if posx<>0 then
           begin
             x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
-            y:=UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,x);
+            y:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,x);
 
             posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
             koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
@@ -1263,16 +1228,26 @@ begin
 
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(0,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx,koordy);
+
+
+            ynach:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
+
+            if (yvor<y) and (ynach<y) and (posy<>0) then
+                Strich_Zeichnen(posx+(Schirm.Width div 2));
+
+                yvor:=y;
           end else
           begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
           end;
       end;
+
+
 end;
 
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Gitter(Wellenlaenge:real);
 var
-  a,b,e,n,ymax,y,x:real;
+  a,b,e,n,ymax,y,x,yvor,ynach:real;
   koordx, koordy,posx,posy:Integer;
   I: Integer;
 begin
@@ -1307,11 +1282,88 @@ begin
 
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(0,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx,koordy);
+
+
+          ynach:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
+
+            if (yvor<y) and (ynach<y) and (posy<>0) then
+                Strich_Zeichnen(posx+(Schirm.Width div 2));
+
+                yvor:=y;
           end else
           begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
           end;
       end;
+end;
+
+procedure TFrmProjektionsflaeche.Strich_Zeichnen(x:Integer);
+begin
+  Schirm.Canvas.MoveTo(x+1, Schirm.Height div 30);
+  Schirm.Canvas.LineTo(x+1, Schirm.Height-(Schirm.Height div 30));
+end;
+
+procedure TFrmProjektionsflaeche.Zeichnen(wellenlaenge:real);
+var posx: integer;                                                              //x-Position des Stiftes
+    farbe: string;
+    a: real;
+    n: integer;
+    debug,debug2: real;
+begin
+  GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
+  GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
+  if GWellenlaenge>0 then
+
+   begin
+    GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,1),-10);
+    GDynZoom:=DynamicZoom(GMaximaAbstand);
+    
+    //Hintergrund zeichnen
+    Background;
+
+    //Zuweisung der Stiftfarbe
+    farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
+    Schirm.Canvas.Pen.Color := Stringtocolor(farbe);
+
+    //Verlauf zeichnen
+    if StrToInt(EdtSpaltanzahl.Text)=2 then
+      Intensitaetsverlauf_Doppelspalt(GWellenlaenge);
+    if StrToInt(EdtSpaltanzahl.Text)>2 then
+      Intensitaetsverlauf_Gitter(GWellenlaenge);
+
+    
+    {
+    repeat
+      //Berechnen von a
+      n:=n+1;
+      if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
+      GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-10);
+      A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
+      //Zeichnen;
+      posx := round(posx + a);
+      Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
+      Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
+    until posx > Schirm.Width;
+    //Maxima <0. Ordnung zeichnen (Maxima links der Mitte)
+    n:=0;
+    posx := Schirm.Width div 2;
+    repeat
+      //Berechnen von a
+      n:=n+1;
+      if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
+      GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-10);
+      A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
+      //Zeichnen
+      posx := round(posx - a);
+      Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
+      Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
+    until posx < 0;
+                                   }
+    //Lineal Zeichnen
+    GLineal:=true;
+    Lineal;
+    TBZoom.Visible:=true;
+   end;
 end;
 
 end.
