@@ -587,13 +587,14 @@ end;
 
 procedure TFrmProjektionsflaeche.Zoomleiste;
 begin
+  TBzoom.TickStyle:=tsAuto;
   TBZoom.Height:=20;
   TBZoom.Width:=120;
   TBZoom.Top:=ImgLineal.Top-TBZoom.Height;
   TBZoom.Left:=FrmProjektionsflaeche.Width-TBZoom.Width;
   TBzoom.Max:=200;
-  TBZoom.Min:=1;
-  TBZoom.Frequency:=1;
+  TBZoom.Min:=2;
+  TBZoom.Frequency:=2;
   TBZoom.Position:=100;
   TBZoom.Visible:=False;
   TBZoom.Hint:='Verschieben, um die Vergrößerung in Prozent einzustellen';
@@ -682,7 +683,12 @@ end;
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
   GLineal:=true;
-  Zeichnen(GWellenlaenge);
+  if tbzoom.Position mod 2 = 0 then
+  Zeichnen(GWellenlaenge)
+  else begin
+        tbzoom.Position:=tbzoom.Position+1;
+        zeichnen(Gwellenlaenge);
+       end;
 end;
 
 function TFrmProjektionsflaeche.dynamicZoom (Zahl: Real):Real;
