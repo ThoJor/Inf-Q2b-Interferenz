@@ -7,6 +7,7 @@ function AbstandMaxima (e,d,lambda,n:real) :real;
 function WellenlaengeInFrequenz (lambda: real):real;
 function Intensitaet_Doppelspalt(a,b,e,lambda,x:real):real;
 function Intensitaet_Gitter(a,b,e,n,lambda,x:real):real;
+function MaximaCheck_Gitter(a,e,wellenlaenge,x:real):boolean;
 
 implementation
 
@@ -44,6 +45,14 @@ begin
   if x<>0 then
     result:=Power((((sin(pi*(b/lambda)*sin(arctan(x/e))))/(pi*(b/lambda)*sin(arctan(x/e))))*((sin(n*pi*(a/lambda)*sin(arctan(x/e))))/sin((pi*(a/lambda)*sin(arctan(x/e)))))),(2)) else
     result:=0;
+end;
+
+function MaximaCheck_Gitter(a,e,wellenlaenge,x:real):boolean;
+begin
+  {if (wellenlaenge = a*sin(arctan(x/e))/n) then
+    Result:=true else
+    result:=false;    }
+    result := true;
 end;
 
 end.

@@ -1286,7 +1286,7 @@ begin
 
           ynach:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
 
-            if (yvor<y) and (ynach<y) and (posy<>0) then
+            if (yvor<y) and (ynach<y) and (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) then
                 Strich_Zeichnen(posx+(Schirm.Width div 2));
 
                 yvor:=y;
