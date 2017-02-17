@@ -110,6 +110,7 @@ type
     procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
     procedure Strich_Zeichnen(x:Integer);
+    function Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
   private
     { Private-Deklarationen }
   public
@@ -1299,7 +1300,7 @@ begin
             koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
 
             // 0.Maximum zeichnen
-            Strich_Zeichnen(Schirm.Width div 2);
+            if (GReal=false) then Strich_Zeichnen(Schirm.Width div 2);
 
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(+1,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
@@ -1350,6 +1351,16 @@ begin
     Lineal;
     TBZoom.Visible:=true;
    end;
+end;
+
+function TFrmProjektionsflaeche.Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
+var r, g, b: integer;
+begin
+  R := Round(GetRValue(Farbe) + ((GetRValue(Hintergrundfarbe) - GetRValue(Farbe)) * Intensitaet));
+  G := Round(GetGValue(Farbe) + ((GetGValue(Hintergrundfarbe) - GetGValue(Farbe)) * Intensitaet));
+  B := Round(GetBValue(Farbe) + ((GetBValue(Hintergrundfarbe) - GetBValue(Farbe)) * Intensitaet));
+
+  result:=RGB(R, G, B);
 end;
 
 end.
