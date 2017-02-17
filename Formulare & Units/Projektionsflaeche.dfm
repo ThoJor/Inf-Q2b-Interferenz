@@ -341,6 +341,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     TabStop = False
     Visible = False
     OnChange = TBZoomChange
+    OnKeyDown = TBZoomKeyDown
   end
   object BtnStart: TButton
     Left = 24

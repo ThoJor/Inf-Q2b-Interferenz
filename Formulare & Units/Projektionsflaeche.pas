@@ -111,6 +111,7 @@ type
     procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
     procedure Strich_Zeichnen(x:Integer;farbe:TColor);
     function Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
+    procedure TBZoomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private-Deklarationen }
   public
@@ -276,7 +277,7 @@ begin
   EdtSpaltanzahl.Top:= LblSchirmAbstand.Top - EdtSpaltanzahl.Height - 5;
   EdtSpaltanzahl.Left:= Konstantenbox.KEditLeft;
   EdtSpaltanzahl.Width:= Schirm.Left - EdtSpaltanzahl.Left;
-  EdtSpaltanzahl.Text:= '4';
+  EdtSpaltanzahl.Text:= '2';
   EdtSpaltanzahl.Hint:='Spaltanzahl von 1 bis X eingeben';
   EdtSpaltanzahl.ShowHint:=true;
 
@@ -692,6 +693,12 @@ begin
          // if key = rightarrow then
          // position:=position+1
        end;
+end;
+
+procedure TFrmProjektionsflaeche.TBZoomKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key=vk_left then tbzoom.Position:=tbzoom.Position-2;
 end;
 
 function TFrmProjektionsflaeche.dynamicZoom (Zahl: Real):Real;
@@ -1148,6 +1155,7 @@ begin
   CmbEinheit.Height:= Konstantenbox.KEditHoehe;
   CmbEinheit.Hint:='Frequenz bzw. Wellenlänge einstellen';
   CmbEinheit.ShowHint:=true;
+  CmbEinheit.Style:=csDropDownList;
 
   CmbEinheit.AddItem('Wellenlänge', nil);
   CmbEinheit.AddItem('Frequenz', nil);
