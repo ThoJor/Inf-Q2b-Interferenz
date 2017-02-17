@@ -109,7 +109,7 @@ type
     procedure EdtSpaltanzahlKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
-    procedure Strich_Zeichnen(x:Integer);
+    procedure Strich_Zeichnen(x:Integer;farbe:TColor);
     function Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
   private
     { Private-Deklarationen }
@@ -1208,6 +1208,7 @@ var
   a,b,e,ymax,y,x,yvor,ynach:real;
   koordx, koordy,posx,posy:Integer;
   I: Integer;
+  farbe:string;
 begin
     ImgIntensitaet.picture:=nil;
     a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
@@ -1223,6 +1224,8 @@ begin
     ImgIntensitaet.Canvas.pen.Color:=clblack;
     ymax:=0;
 
+    //Zuweisung der Stiftfarbe
+    farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
 
     for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
       begin
@@ -1252,7 +1255,7 @@ begin
             ynach:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
 
             if (yvor<y) and (ynach<y) and (posy<>0) and (GReal=false) then
-                Strich_Zeichnen(posx+(Schirm.Width div 2));
+                Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
 
                 yvor:=y;
           end else
@@ -1269,6 +1272,7 @@ var
   a,b,e,n,ymax,y,x:real;
   koordx, koordy,posx,posy:Integer;
   I: Integer;
+  farbe,hintergrundfarbe:string;
 begin
     ImgIntensitaet.picture:=nil;
     a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
@@ -1278,6 +1282,9 @@ begin
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
     ymax:=0;
+
+    //Zuweisung der Stiftfarbe
+    farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
 
     for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
       begin
@@ -1299,15 +1306,27 @@ begin
             koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
             koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
 
+
+
             // 0.Maximum zeichnen
-            if (GReal=false) then Strich_Zeichnen(Schirm.Width div 2);
+            Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
+
+            if (GReal=true) then
+              begin
+                case GBackground of
+                    1:hintergrundfarbe:='$00000000';
+                    2:hintergrundfarbe:='$00ffffff';
+                  end;
+
+                Strich_Zeichnen(koordx,Intensitaet_Farbe(stringtocolor(farbe),stringtocolor(hintergrundfarbe),y/ymax));
+              end;
 
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(+1,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
 
 
            if (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) and (GReal=false) then
-                Strich_Zeichnen(posx+(Schirm.Width div 2));
+                Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
 
           end else
           begin
@@ -1316,8 +1335,9 @@ begin
       end;
 end;
 
-procedure TFrmProjektionsflaeche.Strich_Zeichnen(x:Integer);
+procedure TFrmProjektionsflaeche.Strich_Zeichnen(x:Integer;farbe:TColor);
 begin
+  Schirm.Canvas.Pen.Color := farbe;
   Schirm.Canvas.MoveTo(x+1, Schirm.Height div 30);
   Schirm.Canvas.LineTo(x+1, Schirm.Height-(Schirm.Height div 30));
 end;
@@ -1336,9 +1356,6 @@ begin
     //Hintergrund zeichnen
     Background;
 
-    //Zuweisung der Stiftfarbe
-    farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
-    Schirm.Canvas.Pen.Color := Stringtocolor(farbe);
 
     //Verlauf zeichnen
     if StrToInt(EdtSpaltanzahl.Text)=2 then
@@ -1356,9 +1373,9 @@ end;
 function TFrmProjektionsflaeche.Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
 var r, g, b: integer;
 begin
-  R := Round(GetRValue(Farbe) + ((GetRValue(Hintergrundfarbe) - GetRValue(Farbe)) * Intensitaet));
-  G := Round(GetGValue(Farbe) + ((GetGValue(Hintergrundfarbe) - GetGValue(Farbe)) * Intensitaet));
-  B := Round(GetBValue(Farbe) + ((GetBValue(Hintergrundfarbe) - GetBValue(Farbe)) * Intensitaet));
+  R := Round(GetRValue(Hintergrundfarbe) + ((GetRValue(Farbe) - GetRValue(Hintergrundfarbe)) * Intensitaet));
+  G := Round(GetGValue(Hintergrundfarbe) + ((GetGValue(Farbe) - GetGValue(Hintergrundfarbe)) * Intensitaet));
+  B := Round(GetBValue(Hintergrundfarbe) + ((GetBValue(Farbe) - GetBValue(Hintergrundfarbe)) * Intensitaet));
 
   result:=RGB(R, G, B);
 end;
