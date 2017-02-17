@@ -1208,7 +1208,7 @@ var
   a,b,e,ymax,y,x,yvor,ynach:real;
   koordx, koordy,posx,posy:Integer;
   I: Integer;
-  farbe:string;
+  farbe, hintergrundfarbe:string;
 begin
     ImgIntensitaet.picture:=nil;
     a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
@@ -1236,6 +1236,7 @@ begin
           end;
       end;
 
+    Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
     yvor:=0;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
     for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
       begin
@@ -1253,6 +1254,16 @@ begin
 
 
             ynach:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
+
+            if (GReal=true) then
+              begin
+                case GBackground of
+                    2:hintergrundfarbe:='$00000000';
+                    1:hintergrundfarbe:='$00ffffff';
+                  end;
+
+                Strich_Zeichnen(koordx,Intensitaet_Farbe(stringtocolor(farbe),stringtocolor(hintergrundfarbe),y/ymax));
+              end;
 
             if (yvor<y) and (ynach<y) and (posy<>0) and (GReal=false) then
                 Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
@@ -1355,7 +1366,6 @@ begin
     
     //Hintergrund zeichnen
     Background;
-
 
     //Verlauf zeichnen
     if StrToInt(EdtSpaltanzahl.Text)=2 then
