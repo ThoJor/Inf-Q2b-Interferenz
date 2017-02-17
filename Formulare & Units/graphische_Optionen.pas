@@ -129,6 +129,7 @@ begin
   //Default Hintergrundeinstellungen - weiß ist Hintergrundfarbe
   ChBBgWhite.Checked := true;
   GBackground := 1;
+  GReal:=false;
 end;
 
 procedure TFrmGraphischeOptionen.BtnBeendenClick(Sender: TObject);

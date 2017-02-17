@@ -1250,7 +1250,7 @@ begin
 
             ynach:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
 
-            if (yvor<y) and (ynach<y) and (posy<>0) then
+            if (yvor<y) and (ynach<y) and (posy<>0) and (GReal=false) then
                 Strich_Zeichnen(posx+(Schirm.Width div 2));
 
                 yvor:=y;
@@ -1305,7 +1305,7 @@ begin
               else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
 
 
-           if (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) then
+           if (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) and (GReal=false) then
                 Strich_Zeichnen(posx+(Schirm.Width div 2));
 
           end else
