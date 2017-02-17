@@ -1286,7 +1286,7 @@ begin
 
           ynach:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
 
-            if (yvor<y) and (ynach<y) and (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) then
+            if {(yvor<y) and (ynach<y) and} (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) then
                 Strich_Zeichnen(posx+(Schirm.Width div 2));
 
                 yvor:=y;
@@ -1331,34 +1331,6 @@ begin
     if StrToInt(EdtSpaltanzahl.Text)>2 then
       Intensitaetsverlauf_Gitter(GWellenlaenge);
 
-    
-    {
-    repeat
-      //Berechnen von a
-      n:=n+1;
-      if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
-      GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-10);
-      A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
-      //Zeichnen;
-      posx := round(posx + a);
-      Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
-      Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
-    until posx > Schirm.Width;
-    //Maxima <0. Ordnung zeichnen (Maxima links der Mitte)
-    n:=0;
-    posx := Schirm.Width div 2;
-    repeat
-      //Berechnen von a
-      n:=n+1;
-      if (AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n))=-1 then break;
-      GMaximaAbstand := RoundTo(AbstandMaxima(GSchirmAbstand,GSpaltAbstand,GWellenlaenge,n),-10);
-      A:=GMaximaAbstand*GDynZoom*TBZoom.Position;
-      //Zeichnen
-      posx := round(posx - a);
-      Schirm.Canvas.MoveTo(posx, Schirm.Height div 30);
-      Schirm.Canvas.LineTo(posx, Schirm.Height-(Schirm.Height div 30));
-    until posx < 0;
-                                   }
     //Lineal Zeichnen
     GLineal:=true;
     Lineal;
