@@ -735,7 +735,7 @@ procedure TFrmProjektionsflaeche.EdtSchirmAbstandKeyPress(Sender: TObject;
 var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', ',' , Backspace];
+  AllowKeys: set of Char = ['0'..'9', ',','.' , Backspace];
 begin
   if Key=#13 then BtnStart.Click;
   if not (Key in AllowKeys) then Key := #0;
@@ -745,7 +745,7 @@ procedure TFrmProjektionsflaeche.EdtSpaltabstandKeyPress(Sender: TObject;
 var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
+  AllowKeys: set of Char = ['0'..'9', ',','.', Backspace];
 begin
   if Key=#13 then BtnStart.Click;
   if not (Key in AllowKeys) then Key := #0;
@@ -1265,7 +1265,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Gitter(Wellenlaenge:real);
 var
-  a,b,e,n,ymax,y,x,yvor,ynach:real;
+  a,b,e,n,ymax,y,x:real;
   koordx, koordy,posx,posy:Integer;
   I: Integer;
 begin
@@ -1322,11 +1322,7 @@ begin
 end;
 
 procedure TFrmProjektionsflaeche.Zeichnen(wellenlaenge:real);
-var posx: integer;                                                              //x-Position des Stiftes
-    farbe: string;
-    a: real;
-    n: integer;
-    debug,debug2: real;
+var farbe: string;
 begin
   GSchirmAbstand:=StrToFloat(EdtSchirmAbstand.text);
   GSpaltAbstand:=StrToFloat(EdtSpaltabstand.Text)/Power(10,(3));
