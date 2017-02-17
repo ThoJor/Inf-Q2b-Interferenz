@@ -1314,8 +1314,8 @@ begin
             if (GReal=true) then
               begin
                 case GBackground of
-                    1:hintergrundfarbe:='$00000000';
-                    2:hintergrundfarbe:='$00ffffff';
+                    2:hintergrundfarbe:='$00000000';
+                    1:hintergrundfarbe:='$00ffffff';
                   end;
 
                 Strich_Zeichnen(koordx,Intensitaet_Farbe(stringtocolor(farbe),stringtocolor(hintergrundfarbe),y/ymax));
