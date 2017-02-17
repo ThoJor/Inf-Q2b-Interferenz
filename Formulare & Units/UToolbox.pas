@@ -8,6 +8,7 @@ function WellenlaengeInFrequenz (lambda: real):real;
 function Intensitaet_Doppelspalt(a,b,e,lambda,x:real):real;
 function Intensitaet_Gitter(a,b,e,n,lambda,x:real):real;
 function MaximaCheck_Gitter(a,e,wellenlaenge,x:real):boolean;
+function RundeAufStelle(zahl: real; stellen: integer): real;
 
 implementation
 
@@ -48,11 +49,20 @@ begin
 end;
 
 function MaximaCheck_Gitter(a,e,wellenlaenge,x:real):boolean;
+var n:real;
 begin
-  {if (wellenlaenge = a*sin(arctan(x/e))/n) then
+  n:= Rundeaufstelle((a*sin(arctan(x/e))/wellenlaenge),1);
+  if (frac(n)=0) then     // wellenlaenge = a*sin(arctan(x/e))/n
     Result:=true else
-    result:=false;    }
-    result := true;
+    result:=false;
+end;
+
+function RundeAufStelle(zahl: real; stellen: integer): real;
+var multi: double;
+begin
+  multi:=IntPower(10, stellen);
+  zahl:=round(zahl*multi);
+  result:=zahl/multi;
 end;
 
 end.
