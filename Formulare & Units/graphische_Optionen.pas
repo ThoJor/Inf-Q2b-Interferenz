@@ -147,6 +147,10 @@ end;
 procedure TFrmGraphischeOptionen.CBRealClick(Sender: TObject);
 begin
   if GReal=true then GReal:=false else GReal:=true;
+  if ChBBgVerlauf.Enabled=true then ChBBgVerlauf.Enabled:=false else ChBBgVerlauf.enabled:=true;
+  UncheckAll;
+  ChBBgWhite.Checked:=true;
+  GBackGround:=1;
 end;
 
 procedure TFrmGraphischeOptionen.ChBBgBlackMouseDown(Sender: TObject;
