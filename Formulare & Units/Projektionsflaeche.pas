@@ -1280,16 +1280,16 @@ begin
             koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
             koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
 
-            if koordx=0 then ImgIntensitaet.Canvas.MoveTo(0,koordy)
-              else ImgIntensitaet.Canvas.LineTo(koordx,koordy);
+            // 0.Maximum zeichnen
+            Strich_Zeichnen(Schirm.Width div 2);
+
+            if koordx=0 then ImgIntensitaet.Canvas.MoveTo(+1,koordy)
+              else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
 
 
-          ynach:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
-
-            if {(yvor<y) and (ynach<y) and} (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) then
+           if (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) then
                 Strich_Zeichnen(posx+(Schirm.Width div 2));
 
-                yvor:=y;
           end else
           begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
