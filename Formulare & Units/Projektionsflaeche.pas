@@ -275,7 +275,7 @@ begin
   EdtSpaltanzahl.Top:= LblSchirmAbstand.Top - EdtSpaltanzahl.Height - 5;
   EdtSpaltanzahl.Left:= Konstantenbox.KEditLeft;
   EdtSpaltanzahl.Width:= Schirm.Left - EdtSpaltanzahl.Left;
-  EdtSpaltanzahl.Text:= '2';
+  EdtSpaltanzahl.Text:= '4';
   EdtSpaltanzahl.Hint:='Spaltanzahl von 1 bis X eingeben';
   EdtSpaltanzahl.ShowHint:=true;
 
@@ -291,7 +291,7 @@ begin
   EdtSpaltbreite.Top:= LblSpaltabstand.Top - EdtSpaltbreite.Height - 5;
   EdtSpaltbreite.Left:= Konstantenbox.KEditLeft;
   EdtSpaltbreite.Width:= Schirm.Left - EdtSpaltbreite.Left;
-  EdtSpaltbreite.Text:= '0,1';
+  EdtSpaltbreite.Text:= '0.1';
   EdtSpaltbreite.Hint:='Spaltbreite von X bis Y mm eingeben';
   EdtSpaltbreite.ShowHint:=true;
 
@@ -726,8 +726,6 @@ procedure TFrmProjektionsflaeche.EdtEingabeKeyPress(Sender: TObject;
 const
   Backspace = #8;
   AllowKeys: set of Char = ['0'..'9', ',', '.', Backspace];
-var
-  Text: string;
 begin
   if Key=#13 then BtnStart.Click;
   if not (Key in AllowKeys) then Key := #0;
@@ -738,8 +736,6 @@ var Key: Char);
 const
   Backspace = #8;
   AllowKeys: set of Char = ['0'..'9', ',' , Backspace];
-var
-  Text: string;
 begin
   if Key=#13 then BtnStart.Click;
   if not (Key in AllowKeys) then Key := #0;
@@ -750,8 +746,6 @@ var Key: Char);
 const
   Backspace = #8;
   AllowKeys: set of Char = ['0'..'9', ',', Backspace];
-var
-  Text: string;
 begin
   if Key=#13 then BtnStart.Click;
   if not (Key in AllowKeys) then Key := #0;
@@ -762,8 +756,6 @@ var Key: Char);
 const
   Backspace = #8;
   AllowKeys: set of Char = ['0'..'9', Backspace];
-var
-  Text: string;
 begin
   if Key=#13 then BtnStart.Click;
   if not (Key in AllowKeys) then Key := #0;
@@ -773,9 +765,7 @@ procedure TFrmProjektionsflaeche.EdtSpaltbreiteKeyPress(Sender: TObject;
  var Key: Char);
 const
   Backspace = #8;
-  AllowKeys: set of Char = ['0'..'9', ',', Backspace];
-var
-  Text: string;
+  AllowKeys: set of Char = ['0'..'9', ',','.', Backspace];
 begin
   if Key=#13 then BtnStart.Click;
   if not (Key in AllowKeys) then Key := #0;
@@ -786,10 +776,12 @@ end;
 //Berechnung und Zeichnen über Startbutton
 procedure TFrmProjektionsflaeche.BtnStartClick(Sender: TObject);
 var Frequenz: real;
+    myFormatSettings : TFormatSettings;
 begin
   //Programmstart
   GStartet:=true;
   TbZoom.Position:=100;
+  GetLocaleFormatSettings(GetThreadLocale, myFormatSettings);
   //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
   if STrToInt(EdtSpaltanzahl.Text)<=1 then
     begin
@@ -803,6 +795,10 @@ begin
     end;
 
     //Fehlerabfrage für Spaltabstand
+
+  EdtSpaltAbstand.Text:=StringReplace(EdtSpaltAbstand.Text,',',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
+  EdtSpaltAbstand.Text:=StringReplace(EdtSpaltAbstand.Text,'.',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
+
     if StrToFloat(EdtSpaltabstand.Text)<=0 then
       begin
         ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
@@ -815,6 +811,10 @@ begin
       end;
 
     //Fehlerabfrage für Spaltbreite
+
+  EdtSpaltBreite.Text:=StringReplace(EdtSpaltbreite.Text,',',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
+  EdtSpaltBreite.Text:=StringReplace(EdtSpaltbreite.Text,'.',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
+
   if StrToFloat(EdtSpaltbreite.Text)<=0 then
     begin
       ShowMessage('Die angegebene Spaltbreite ist zu niedrig.');
@@ -828,6 +828,10 @@ begin
 
 
     //Fehlerabfrage für Abstand Blende-Spalt
+
+  EdtSchirmAbstand.Text:=StringReplace(EdtSchirmAbstand.Text,',',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
+  EdtSchirmAbstand.Text:=StringReplace(EdtSchirmAbstand.Text,'.',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
+
     if StrToFloat(EdtSchirmAbstand.Text)<= 0 then
       begin
         ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu niedrig.');
