@@ -77,4 +77,13 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
     TabOrder = 4
     OnClick = BtnBeendenClick
   end
+  object CBReal: TCheckBox
+    Left = 8
+    Top = 95
+    Width = 97
+    Height = 17
+    Caption = 'CBReal'
+    TabOrder = 5
+    OnClick = CBRealClick
+  end
 end

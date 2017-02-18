@@ -15,6 +15,7 @@ type
     ChBBgVerlauf: TCheckBox;
     Image1: TImage;
     BtnBeenden: TButton;
+    CBReal: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure BtnBeendenClick(Sender: TObject);
     procedure UncheckAll();
@@ -30,6 +31,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure ChBBgVerlaufMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure CBRealClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -40,6 +42,7 @@ var
   FrmGraphischeOptionen: TFrmGraphischeOptionen;
 
   GBackground: Integer;  //1=Weiß, 2=Schwarz, 3=Verlauf
+  GReal : Boolean; //Geh Real, einmal hin alles drin diggah!
 
 
 implementation
@@ -66,6 +69,7 @@ begin
   ChBBgBlack.Caption:= 'Schwarz';
   ChBBgWhite.Caption:= 'Weiß';
   ChBBgVerlauf.Caption:= 'Verlauf';
+  CBReal.Caption:= 'Realistische Ansicht';  //Einmal hin, alles drin
 
 
   //Fenstergroeße
@@ -80,10 +84,12 @@ begin
   ChBBgBlack.Top:= 15*2+Konstantenbox.KCheckBoxHoehe;
   ChBBgWhite.Top:= 15*3+Konstantenbox.KCheckBoxHoehe*2;
   ChBBgVerlauf.Top:= 15*4+Konstantenbox.KCheckBoxHoehe*3;
+  CBReal.Top:=15*5+Konstantenbox.KCheckBoxHoehe*4;
   CBLineal.Left:= 20;
   ChBBgBlack.Left:= 20;
   ChBBgWhite.Left:= 20;
   ChBBgVerlauf.Left:= 20;
+  CBReal.Left:=20;
 
   //Groeße CheckBox
   CBLineal.Height:= Konstantenbox.KCheckBoxHoehe;
@@ -94,24 +100,27 @@ begin
   ChBBgBlack.Width := Konstantenbox.KCheckBoxWidth;
   ChBBgWhite.Width := Konstantenbox.KCheckBoxWidth;
   ChBBgVerlauf.Width := Konstantenbox.KCheckBoxWidth;
+  CBReal.Width:= Konstantenbox.KCheckBoxWidth;
 
   //Schriftgroesse Checkbox
   CBLineal.Font.Size:= Konstantenbox.Schrift;
   ChBBgBlack.Font.Size:= Konstantenbox.Schrift;
   ChBBgWhite.Font.Size:= Konstantenbox.Schrift;
   ChBBgVerlauf.Font.Size:= Konstantenbox.Schrift;
-
+  CBReal.Font.Size:= Konstantenbox.Schrift;
   //Schriftart Checkbox
   CBLineal.Font.Name:= Konstantenbox.Schriftart;
   ChBBgBlack.Font.Name:= Konstantenbox.Schriftart;
   ChBBgWhite.Font.Name:= Konstantenbox.Schriftart;
   ChBBgVerlauf.Font.Name:= Konstantenbox.Schriftart;
+  CBReal.Font.Name:=Konstantenbox.Schriftart;
 
   //Schriftfarbe Checkbox;
   CBLineal.Font.Color:= Konstantenbox.Schriftfarbe;
   ChBBgBlack.Font.Color:= Konstantenbox.Schriftfarbe;
   ChBBgWhite.Font.Color:= Konstantenbox.Schriftfarbe;
   ChBBgVerlauf.Font.Color:= Konstantenbox.Schriftfarbe;
+  CBReal.Font.Color:=KOnstantenbox.Schriftfarbe;
 
   //Lineal per default an und deaktiviert
   CBLineal.Checked:= true;
@@ -120,6 +129,7 @@ begin
   //Default Hintergrundeinstellungen - weiß ist Hintergrundfarbe
   ChBBgWhite.Checked := true;
   GBackground := 1;
+  GReal:=false;
 end;
 
 procedure TFrmGraphischeOptionen.BtnBeendenClick(Sender: TObject);
@@ -132,6 +142,15 @@ begin
   if ChBBgBlack.Checked=true then ChBBgBlack.Checked:=false;
   if ChBBgVerlauf.Checked=true then ChBBgVerlauf.Checked:=false;
   if ChBBgWhite.Checked=true then ChBBgWhite.Checked:=false;
+end;
+
+procedure TFrmGraphischeOptionen.CBRealClick(Sender: TObject);
+begin
+  if GReal=true then GReal:=false else GReal:=true;
+  if ChBBgVerlauf.Enabled=true then ChBBgVerlauf.Enabled:=false else ChBBgVerlauf.enabled:=true;
+  UncheckAll;
+  ChBBgWhite.Checked:=true;
+  GBackGround:=1;
 end;
 
 procedure TFrmGraphischeOptionen.ChBBgBlackMouseDown(Sender: TObject;

@@ -333,14 +333,15 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Top = 472
     Width = 150
     Height = 45
-    Min = 1
-    Frequency = 10
-    Position = 1
+    Min = 2
+    Frequency = 2
+    Position = 2
     PositionToolTip = ptTop
     TabOrder = 13
     TabStop = False
     Visible = False
     OnChange = TBZoomChange
+    OnKeyDown = TBZoomKeyDown
   end
   object BtnStart: TButton
     Left = 24
