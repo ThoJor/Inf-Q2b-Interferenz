@@ -1244,7 +1244,7 @@ begin
           end;
       end;
 
-    Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
+    if Greal=true then Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
     yvor:=0;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
     for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
       begin
