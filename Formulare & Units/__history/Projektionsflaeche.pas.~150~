@@ -103,6 +103,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure CmbEinheitChange(Sender: TObject);
     procedure ImageIntensitaet();
+    procedure Intensitaetsverlauf_Einzelspalt(wellenlaenge:real);
     procedure Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
     procedure Intensitaetsverlauf_Gitter(Wellenlaenge:real);
     procedure EdtSpaltbreiteKeyPress(Sender: TObject; var Key: Char);
@@ -111,6 +112,7 @@ type
     procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
     procedure Strich_Zeichnen(x:Integer;farbe:TColor);
     function Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
+    procedure TBZoomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private-Deklarationen }
   public
@@ -276,7 +278,7 @@ begin
   EdtSpaltanzahl.Top:= LblSchirmAbstand.Top - EdtSpaltanzahl.Height - 5;
   EdtSpaltanzahl.Left:= Konstantenbox.KEditLeft;
   EdtSpaltanzahl.Width:= Schirm.Left - EdtSpaltanzahl.Left;
-  EdtSpaltanzahl.Text:= '4';
+  EdtSpaltanzahl.Text:= '2';
   EdtSpaltanzahl.Hint:='Spaltanzahl von 1 bis X eingeben';
   EdtSpaltanzahl.ShowHint:=true;
 
@@ -694,6 +696,12 @@ begin
        end;
 end;
 
+procedure TFrmProjektionsflaeche.TBZoomKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key=vk_left then tbzoom.Position:=tbzoom.Position-2;
+end;
+
 function TFrmProjektionsflaeche.dynamicZoom (Zahl: Real):Real;
 var
   ZahlTest: Real;
@@ -784,7 +792,7 @@ begin
   TbZoom.Position:=100;
   GetLocaleFormatSettings(GetThreadLocale, myFormatSettings);
   //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
-  if STrToInt(EdtSpaltanzahl.Text)<=1 then
+  if STrToInt(EdtSpaltanzahl.Text)<1 then
     begin
       ShowMessage('Die angegebene Spaltanzahl ist zu niedrig.');
       exit;
@@ -882,7 +890,8 @@ begin
   //Berechnung und Zeichnen ueber Frequenz-Eingabe
   if (CmbEinheit.ItemIndex=1) then
     begin
-      GWellenlaenge := FrequenzInWellenlaenge(StrToFloat(EdtEingabe.Text)*(Power(10,13)));
+      Frequenz:=StrToFloat(EdtEingabe.text)*(Power(10,13));
+      GWellenlaenge := FrequenzInWellenlaenge(Frequenz);
 
       //Fehlerabfrage für ungueltige Frequenz
         if ((379.47/(Power(10,(9)))) > GWellenlaenge) or (GWellenlaenge > (788.93/(Power(10,(9))))) then
@@ -1148,6 +1157,7 @@ begin
   CmbEinheit.Height:= Konstantenbox.KEditHoehe;
   CmbEinheit.Hint:='Frequenz bzw. Wellenlänge einstellen';
   CmbEinheit.ShowHint:=true;
+  CmbEinheit.Style:=csDropDownList;
 
   CmbEinheit.AddItem('Wellenlänge', nil);
   CmbEinheit.AddItem('Frequenz', nil);
@@ -1203,6 +1213,77 @@ begin
       ImgIntensitaet.Canvas;
 end;
 
+procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Einzelspalt(Wellenlaenge:real);
+var
+  a,b,e,n,ymax,yvor,ynach,y,x:real;
+  koordx, koordy,posx,posy:Integer;
+  I: Integer;
+  farbe,hintergrundfarbe:string;
+begin
+    ImgIntensitaet.picture:=nil;
+    a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
+    e:=StrToFloat(EdtSchirmAbstand.Text);
+    b:=StrToFloat(EdtSpaltbreite.Text)*0.001;
+    n:=StrToFloat(EdtSpaltanzahl.Text);
+
+    ImgIntensitaet.Canvas.pen.Color:=clblack;
+    ymax:=0;
+
+    //Zuweisung der Stiftfarbe
+    farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
+
+    for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
+      begin
+       if I<>0 then
+          begin x:=I/(GDynZoom*TBZoom.Position);
+            y:= UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
+            if y>ymax then ymax:=y;
+          end;
+
+      end;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
+    for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
+      begin
+        if posx<>0 then
+          begin
+            x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
+            y:=UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
+
+            posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
+            koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
+            koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
+
+
+
+            // 0.Maximum zeichnen
+            Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
+
+            if (GReal=true) then
+              begin
+                case GBackground of
+                    2:hintergrundfarbe:='$00000000';
+                    1:hintergrundfarbe:='$00ffffff';
+                  end;
+
+                Strich_Zeichnen(koordx,Intensitaet_Farbe(stringtocolor(farbe),stringtocolor(hintergrundfarbe),y/ymax));
+              end;
+
+            if koordx=0 then ImgIntensitaet.Canvas.MoveTo(+1,koordy)
+              else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
+
+           ynach:=Intensitaet_Einzelspalt(b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
+              
+           if (yvor<y) and (ynach<y) and (posy<>0) and (GReal=false) then
+                Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
+
+           yvor:=y;
+
+          end else
+          begin
+            ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
+          end;
+      end;
+end;
+
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
 var
   a,b,e,ymax,y,x,yvor,ynach:real;
@@ -1236,7 +1317,7 @@ begin
           end;
       end;
 
-    Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
+    if Greal=true then Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
     yvor:=0;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
     for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
       begin
@@ -1367,8 +1448,9 @@ begin
     //Hintergrund zeichnen
     Background;
 
-
     //Verlauf zeichnen
+    if StrToInt(EdtSpaltanzahl.Text)=1 then
+      Intensitaetsverlauf_Einzelspalt(GWellenlaenge);
     if StrToInt(EdtSpaltanzahl.Text)=2 then
       Intensitaetsverlauf_Doppelspalt(GWellenlaenge);
     if StrToInt(EdtSpaltanzahl.Text)>2 then
