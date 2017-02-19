@@ -926,8 +926,8 @@ procedure TFrmProjektionsflaeche.PnlBlauClick(Sender: TObject);
 begin
     TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KBlau;
-    Zeichnen(Konstantenbox.KBlau);
     EditFuellerBeiPanelbedienung(Konstantenbox.KBlau);
+    BtnStart.Click;
 end;
 
 //Panel Gelb
@@ -935,8 +935,8 @@ procedure TFrmProjektionsflaeche.PnlGelbClick(Sender: TObject);
 begin
     TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KGelb;
-    Zeichnen(Konstantenbox.KGelb);
     EditFuellerBeiPanelbedienung(Konstantenbox.KGelb);
+    BtnStart.Click;
 end;
 
 //Panel Gruen
@@ -944,8 +944,8 @@ procedure TFrmProjektionsflaeche.PnlGruenClick(Sender: TObject);
 begin
     TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KGruen;
-    Zeichnen(Konstantenbox.KGruen);
     EditFuellerBeiPanelbedienung(Konstantenbox.KGruen);
+    BtnStart.Click;
 end;
 
 //Panel Orange
@@ -953,8 +953,8 @@ procedure TFrmProjektionsflaeche.PnlOrangeClick(Sender: TObject);
 begin
     TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KOrange;
-    Zeichnen(Konstantenbox.KOrange);
     EditFuellerBeiPanelbedienung(GWellenlaenge);
+    BtnStart.Click;
 end;
 
 //Panel Rot
@@ -962,8 +962,8 @@ procedure TFrmProjektionsflaeche.PnlRotClick(Sender: TObject);
 begin
     TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KRot;
-    Zeichnen(Konstantenbox.KRot);
     EditFuellerBeiPanelbedienung(Konstantenbox.KRot);
+    BtnStart.Click;
 end;
 
 //Panel Violett
@@ -971,8 +971,8 @@ procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
 begin
     TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KViolett;
-    Zeichnen(Konstantenbox.KViolett);
     EditFuellerBeiPanelbedienung(Konstantenbox.KViolett);
+    BtnStart.Click;
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
