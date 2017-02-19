@@ -890,7 +890,8 @@ begin
   //Berechnung und Zeichnen ueber Frequenz-Eingabe
   if (CmbEinheit.ItemIndex=1) then
     begin
-      GWellenlaenge := FrequenzInWellenlaenge(StrToFloat(EdtEingabe.Text)*(Power(10,13)));
+      Frequenz:=StrToFloat(EdtEingabe.text)*(Power(10,13));
+      GWellenlaenge := FrequenzInWellenlaenge(Frequenz);
 
       //Fehlerabfrage für ungueltige Frequenz
         if ((379.47/(Power(10,(9)))) > GWellenlaenge) or (GWellenlaenge > (788.93/(Power(10,(9))))) then
