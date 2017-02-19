@@ -1270,7 +1270,7 @@ begin
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(+1,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
 
-           ynach:=Intensitaet_Einzelspalt(b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
+           ynach:=UToolbox.Intensitaet_Einzelspalt(b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
               
            if (yvor<y) and (ynach<y) and (posy<>0) and (GReal=false) then
                 Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
