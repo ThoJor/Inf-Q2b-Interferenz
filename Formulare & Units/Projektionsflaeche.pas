@@ -1236,7 +1236,7 @@ begin
       begin
        if I<>0 then
           begin x:=I/(GDynZoom*TBZoom.Position);
-            y:= UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
+            y:= Intensitaet_Einzelspalt(b,e,GWellenlaenge,x);
             if y>ymax then ymax:=y;
           end;
 
@@ -1246,16 +1246,12 @@ begin
         if posx<>0 then
           begin
             x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
-            y:=UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
+            y:=Intensitaet_Einzelspalt(b,e,GWellenlaenge,x);
 
             posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
             koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
             koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
 
-
-
-            // 0.Maximum zeichnen
-            Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
 
             if (GReal=true) then
               begin

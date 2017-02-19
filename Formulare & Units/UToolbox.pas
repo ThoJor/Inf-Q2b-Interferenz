@@ -38,7 +38,7 @@ end;
 function Intensitaet_Einzelspalt(b,e,lambda,x:real):real;     //b = Spaltbreite   e = Abstand Blende Schrim
 begin
   if x<>0 then
-    result:=Power(((sin(pi*b*sin(arctan(x/e))/lambda))/(pi*b/(lambda*b))),(2)) else
+    result:=Power(((sin(pi*b*sin(arctan(x/e))/lambda))/(pi*b*sin(arctan(x/e))/lambda)),(2)) else
     result:=0;
 end;
 
