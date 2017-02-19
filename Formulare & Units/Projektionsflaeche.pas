@@ -103,6 +103,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure CmbEinheitChange(Sender: TObject);
     procedure ImageIntensitaet();
+    procedure Intensitaetsverlauf_Einzelspalt(wellenlaenge:real);
     procedure Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
     procedure Intensitaetsverlauf_Gitter(Wellenlaenge:real);
     procedure EdtSpaltbreiteKeyPress(Sender: TObject; var Key: Char);
@@ -791,7 +792,7 @@ begin
   TbZoom.Position:=100;
   GetLocaleFormatSettings(GetThreadLocale, myFormatSettings);
   //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
-  if STrToInt(EdtSpaltanzahl.Text)<=1 then
+  if STrToInt(EdtSpaltanzahl.Text)<1 then
     begin
       ShowMessage('Die angegebene Spaltanzahl ist zu niedrig.');
       exit;
@@ -1211,6 +1212,74 @@ begin
       ImgIntensitaet.Canvas;
 end;
 
+procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Einzelspalt(Wellenlaenge:real);
+var
+  a,b,e,n,ymax,y,x:real;
+  koordx, koordy,posx,posy:Integer;
+  I: Integer;
+  farbe,hintergrundfarbe:string;
+begin
+    ImgIntensitaet.picture:=nil;
+    a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
+    e:=StrToFloat(EdtSchirmAbstand.Text);
+    b:=StrToFloat(EdtSpaltbreite.Text)*0.001;
+    n:=StrToFloat(EdtSpaltanzahl.Text);
+
+    ImgIntensitaet.Canvas.pen.Color:=clblack;
+    ymax:=0;
+
+    //Zuweisung der Stiftfarbe
+    farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
+
+    for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
+      begin
+       if I<>0 then
+          begin x:=I/(GDynZoom*TBZoom.Position);
+            y:= UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
+            if y>ymax then ymax:=y;
+          end;
+
+      end;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
+    for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
+      begin
+        if posx<>0 then
+          begin
+            x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
+            y:=UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
+
+            posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
+            koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
+            koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
+
+
+
+            // 0.Maximum zeichnen
+            Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
+
+            if (GReal=true) then
+              begin
+                case GBackground of
+                    2:hintergrundfarbe:='$00000000';
+                    1:hintergrundfarbe:='$00ffffff';
+                  end;
+
+                Strich_Zeichnen(koordx,Intensitaet_Farbe(stringtocolor(farbe),stringtocolor(hintergrundfarbe),y/ymax));
+              end;
+
+            if koordx=0 then ImgIntensitaet.Canvas.MoveTo(+1,koordy)
+              else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
+
+
+           if (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) and (GReal=false) then
+                Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
+
+          end else
+          begin
+            ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
+          end;
+      end;
+end;
+
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
 var
   a,b,e,ymax,y,x,yvor,ynach:real;
@@ -1376,6 +1445,8 @@ begin
     Background;
 
     //Verlauf zeichnen
+    if StrToInt(EdtSpaltanzahl.Text)=1 then
+      Intensitaetsverlauf_Einzelspalt(GWellenlaenge);
     if StrToInt(EdtSpaltanzahl.Text)=2 then
       Intensitaetsverlauf_Doppelspalt(GWellenlaenge);
     if StrToInt(EdtSpaltanzahl.Text)>2 then
