@@ -7,6 +7,7 @@ function AbstandMaxima (e,d,lambda,n:real) :real;
 function WellenlaengeInFrequenz (lambda: real):real;
 function Intensitaet_Doppelspalt(a,b,e,lambda,x:real):real;
 function Intensitaet_Gitter(a,b,e,n,lambda,x:real):real;
+function Intensitaet_Einzelspalt(b,e,lambda,x:real):real;
 function MaximaCheck_Gitter(a,e,wellenlaenge,x:real):boolean;
 function RundeAufStelle(zahl: real; stellen: integer): real;
 
@@ -37,7 +38,7 @@ end;
 function Intensitaet_Einzelspalt(b,e,lambda,x:real):real;     //b = Spaltbreite   e = Abstand Blende Schrim
 begin
   if x<>0 then
-    result:=Power(((sin(pi*b*sin(arctan(x/e))/lambda))/(pi*b/(lambda*b))),(2)) else
+    result:=Power(((sin(pi*b*sin(arctan(x/e))/lambda))/(pi*b*sin(arctan(x/e))/lambda)),(2)) else
     result:=0;
 end;
 

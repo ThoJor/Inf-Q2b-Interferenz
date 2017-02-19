@@ -926,8 +926,8 @@ procedure TFrmProjektionsflaeche.PnlBlauClick(Sender: TObject);
 begin
     TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KBlau;
-    Zeichnen(Konstantenbox.KBlau);
     EditFuellerBeiPanelbedienung(Konstantenbox.KBlau);
+    BtnStart.Click;
 end;
 
 //Panel Gelb
@@ -935,8 +935,8 @@ procedure TFrmProjektionsflaeche.PnlGelbClick(Sender: TObject);
 begin
     TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KGelb;
-    Zeichnen(Konstantenbox.KGelb);
     EditFuellerBeiPanelbedienung(Konstantenbox.KGelb);
+    BtnStart.Click;
 end;
 
 //Panel Gruen
@@ -944,8 +944,8 @@ procedure TFrmProjektionsflaeche.PnlGruenClick(Sender: TObject);
 begin
     TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KGruen;
-    Zeichnen(Konstantenbox.KGruen);
     EditFuellerBeiPanelbedienung(Konstantenbox.KGruen);
+    BtnStart.Click;
 end;
 
 //Panel Orange
@@ -953,8 +953,8 @@ procedure TFrmProjektionsflaeche.PnlOrangeClick(Sender: TObject);
 begin
     TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KOrange;
-    Zeichnen(Konstantenbox.KOrange);
     EditFuellerBeiPanelbedienung(GWellenlaenge);
+    BtnStart.Click;
 end;
 
 //Panel Rot
@@ -962,8 +962,8 @@ procedure TFrmProjektionsflaeche.PnlRotClick(Sender: TObject);
 begin
     TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KRot;
-    Zeichnen(Konstantenbox.KRot);
     EditFuellerBeiPanelbedienung(Konstantenbox.KRot);
+    BtnStart.Click;
 end;
 
 //Panel Violett
@@ -971,8 +971,8 @@ procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
 begin
     TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KViolett;
-    Zeichnen(Konstantenbox.KViolett);
     EditFuellerBeiPanelbedienung(Konstantenbox.KViolett);
+    BtnStart.Click;
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1236,7 +1236,7 @@ begin
       begin
        if I<>0 then
           begin x:=I/(GDynZoom*TBZoom.Position);
-            y:= UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
+            y:= Intensitaet_Einzelspalt(b,e,GWellenlaenge,x);
             if y>ymax then ymax:=y;
           end;
 
@@ -1246,16 +1246,12 @@ begin
         if posx<>0 then
           begin
             x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
-            y:=UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
+            y:=Intensitaet_Einzelspalt(b,e,GWellenlaenge,x);
 
             posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
             koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
             koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
 
-
-
-            // 0.Maximum zeichnen
-            Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
 
             if (GReal=true) then
               begin
@@ -1263,14 +1259,14 @@ begin
                     2:hintergrundfarbe:='$00000000';
                     1:hintergrundfarbe:='$00ffffff';
                   end;
-
+                Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
                 Strich_Zeichnen(koordx,Intensitaet_Farbe(stringtocolor(farbe),stringtocolor(hintergrundfarbe),y/ymax));
               end;
 
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(+1,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
 
-           ynach:=Intensitaet_Einzelspalt(b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
+           ynach:=UToolbox.Intensitaet_Einzelspalt(b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
               
            if (yvor<y) and (ynach<y) and (posy<>0) and (GReal=false) then
                 Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
