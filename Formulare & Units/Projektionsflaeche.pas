@@ -1259,7 +1259,7 @@ begin
                     2:hintergrundfarbe:='$00000000';
                     1:hintergrundfarbe:='$00ffffff';
                   end;
-
+                Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
                 Strich_Zeichnen(koordx,Intensitaet_Farbe(stringtocolor(farbe),stringtocolor(hintergrundfarbe),y/ymax));
               end;
 
