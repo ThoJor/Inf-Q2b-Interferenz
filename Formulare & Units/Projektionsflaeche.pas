@@ -1374,8 +1374,14 @@ begin
     ymax:=0;
     schritte:=50;
 
+
+
     //Zuweisung der Stiftfarbe
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
+
+    // 0.Maximum zeichnen
+    Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
+
 
     for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
       begin
@@ -1399,9 +1405,6 @@ begin
             koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
 
 
-
-            // 0.Maximum zeichnen
-            Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
 
             if (GReal=true) then
               begin
