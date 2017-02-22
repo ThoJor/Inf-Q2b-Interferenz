@@ -159,7 +159,7 @@ begin
   PnlOrange.ParentBackground:= false;
   PnlOrange.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KOrange*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlOrange.Hint:='Klicken, um die Simulation mit orangem Licht durchzuführen';
+  PnlOrange.Hint:='Klicken, um die Simulation mit rotem Licht durchzuführen';
   PnlOrange.ShowHint:=true;
 end;
 
@@ -253,7 +253,7 @@ begin
   BtnOptionen.Left:= 20;
   BtnOptionen.Width:= Schirm.Left - (BtnOptionen.Left * 2);
   BtnOptionen.Caption:= 'graphische Optionen';
-  BtnOptionen.Hint:='Klicken, um die Optionen für die graphische Darstellungsweise anzuzeigen';
+  BtnOptionen.Hint:='Klicken, um die Optionen für die Darstellungsweise anzuzeigen';
 end;
 
 procedure TFrmProjektionsflaeche.Option_Spaltabstand;
@@ -573,7 +573,7 @@ begin
   BtnReset.Width :=Round((PnlFarbe.Width-6)/5);
   BtnReset.Height := Konstantenbox.Schrift+10;
   BtnReset.Caption := 'Reset';
-  BtnReset.Hint:= 'Klicken, um den Ausgangszustand wiederherzustellen';
+  BtnReset.Hint:= 'Klicken, um auf Anfangszustand zurückzusetzen';
   BtnReset.ShowHint:=true;
 end;
 
@@ -584,7 +584,7 @@ begin
   BtnBeenden.Width:=Round((PnlFarbe.Width-6)/5);
   BtnBeenden.Height:=Konstantenbox.Schrift+10;
   BtnBeenden.Caption:='Beenden';
-  BtnBeenden.Hint:='Klicken, um das Fenster zu schließen';
+  BtnBeenden.Hint:='Klicken, um zu Beenden';
   BtnBeenden.ShowHint:=true;
 end;
 
@@ -600,7 +600,7 @@ begin
   TBZoom.Frequency:=2;
   TBZoom.Position:=100;
   TBZoom.Visible:=False;
-  TBZoom.Hint:='Verschieben, um den Zoomfaktor zu verändern (Werte in Prozent)';
+  TBZoom.Hint:='Verschieben, um die Vergrößerung in Prozent einzustellen';
   TbZoom.ShowHint:=true;
 end;
 

@@ -573,7 +573,7 @@ begin
   BtnReset.Width :=Round((PnlFarbe.Width-6)/5);
   BtnReset.Height := Konstantenbox.Schrift+10;
   BtnReset.Caption := 'Reset';
-  BtnReset.Hint:= 'Klicken, um den Ausgangszustand wiederherzustellen';
+  BtnReset.Hint:= 'Klicken, um auf Anfangszustand zurückzusetzen';
   BtnReset.ShowHint:=true;
 end;
 
@@ -584,7 +584,7 @@ begin
   BtnBeenden.Width:=Round((PnlFarbe.Width-6)/5);
   BtnBeenden.Height:=Konstantenbox.Schrift+10;
   BtnBeenden.Caption:='Beenden';
-  BtnBeenden.Hint:='Klicken, um das Fenster zu schließen';
+  BtnBeenden.Hint:='Klicken, um zu Beenden';
   BtnBeenden.ShowHint:=true;
 end;
 
@@ -600,7 +600,7 @@ begin
   TBZoom.Frequency:=2;
   TBZoom.Position:=100;
   TBZoom.Visible:=False;
-  TBZoom.Hint:='Verschieben, um den Zoomfaktor zu verändern (Werte in Prozent)';
+  TBZoom.Hint:='Verschieben, um die Vergrößerung in Prozent einzustellen';
   TbZoom.ShowHint:=true;
 end;
 
