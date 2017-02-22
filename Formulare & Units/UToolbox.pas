@@ -77,12 +77,14 @@ end;
 function Intervall_Einzelspalt(schritte:Integer;zoom,b,e,lambda,x:real):real;
 var i: Integer; karl:real;
 begin
-  {for i := 0 to (schritte-1) do
+  karl:=0;
+  for i := 0 to (schritte-1) do
     begin
-      karl:=karl+Intensitaet_Einzelspalt(b,e,lambda,(x+(i/schritte)-0.5));
+      karl:=karl+Intensitaet_Einzelspalt(b,e,lambda,(x+zoom*((i/schritte)-0.5)));
+
     end;
-    result:=karl/schritte;  }
-    result:=Intensitaet_Einzelspalt(b,e,lambda,(x-(zoom*0.5)));
+    result:=karl/schritte;
+   // result:=Intensitaet_Einzelspalt(b,e,lambda,(x-(zoom*0.5)));
 end;
 
 

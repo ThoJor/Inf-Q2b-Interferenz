@@ -1226,7 +1226,7 @@ begin
     b:=StrToFloat(EdtSpaltbreite.Text)*0.001;
     n:=StrToFloat(EdtSpaltanzahl.Text);
 
-    schritte:=1;
+    schritte:=100;
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
     ymax:=0;
