@@ -1216,7 +1216,7 @@ end;
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Einzelspalt(Wellenlaenge:real);
 var
   a,b,e,n,ymax,yvor,ynach,y,x:real;
-  koordx, koordy,posx,posy:Integer;
+  koordx, koordy,posx,posy,schritte:Integer;
   I: Integer;
   farbe,hintergrundfarbe:string;
 begin
@@ -1225,6 +1225,8 @@ begin
     e:=StrToFloat(EdtSchirmAbstand.Text);
     b:=StrToFloat(EdtSpaltbreite.Text)*0.001;
     n:=StrToFloat(EdtSpaltanzahl.Text);
+
+    schritte:=1;
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
     ymax:=0;
@@ -1236,7 +1238,7 @@ begin
       begin
        if I<>0 then
           begin x:=I/(GDynZoom*TBZoom.Position);
-            y:= Intensitaet_Einzelspalt(b,e,GWellenlaenge,x);
+            y:= Intervall_Einzelspalt(schritte,1/(GDynZoom*TBZoom.Position),b,e,GWellenlaenge,x);
             if y>ymax then ymax:=y;
           end;
 
@@ -1246,7 +1248,7 @@ begin
         if posx<>0 then
           begin
             x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
-            y:=Intensitaet_Einzelspalt(b,e,GWellenlaenge,x);
+            y:=Intervall_Einzelspalt(schritte,1/(GDynZoom*TBZoom.Position),b,e,GWellenlaenge,x);
 
             posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
             koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
@@ -1266,8 +1268,8 @@ begin
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(+1,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
 
-           ynach:=UToolbox.Intensitaet_Einzelspalt(b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
-              
+           ynach:=UToolbox.Intervall_Einzelspalt(schritte,1/(GDynZoom*TBZoom.Position),b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
+
            if (yvor<y) and (ynach<y) and (posy<>0) and (GReal=false) then
                 Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
 
