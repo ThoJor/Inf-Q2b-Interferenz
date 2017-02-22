@@ -11,6 +11,7 @@ function Intensitaet_Einzelspalt(b,e,lambda,x:real):real;
 function MaximaCheck_Gitter(a,e,wellenlaenge,x:real):boolean;
 function RundeAufStelle(zahl: real; stellen: integer): real;
 function Intervall_Einzelspalt(schritte:Integer;zoom,b,e,lambda,x:real):real;
+function Intervall_Gitter(schritte:Integer;zoom,a,b,e,n,lambda,x:real):real;
 
 implementation
 
@@ -81,11 +82,19 @@ begin
   for i := 0 to (schritte-1) do
     begin
       karl:=karl+Intensitaet_Einzelspalt(b,e,lambda,(x+zoom*((i/schritte)-0.5)));
-
     end;
     result:=karl/schritte;
-   // result:=Intensitaet_Einzelspalt(b,e,lambda,(x-(zoom*0.5)));
 end;
 
+function Intervall_Gitter(schritte:Integer;zoom,a,b,e,n,lambda,x:real):real;
+var i: Integer; karl:real;
+begin
+  karl:=0;
+  for i := 0 to (schritte-1) do
+    begin
+      karl:=karl+Intensitaet_Gitter(a,b,e,n,lambda,(x+zoom*((i/schritte)-0.5)));
+    end;
+    result:=karl/schritte;
+end;
 
 end.
