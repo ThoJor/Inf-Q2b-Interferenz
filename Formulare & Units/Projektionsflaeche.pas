@@ -1372,7 +1372,7 @@ begin
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
     ymax:=0;
-    schritte:=1;
+    schritte:=50;
 
     //Zuweisung der Stiftfarbe
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
@@ -1381,7 +1381,8 @@ begin
       begin
        if I<>0 then
           begin x:=I/(GDynZoom*TBZoom.Position);
-            y:= UToolbox.Intervall_Gitter(schritte,a,b,e,n,1/(GDynZoom*TBZoom.Position),GWellenlaenge,x);
+            y:= UToolbox.Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x);
+            //Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
             if y>ymax then ymax:=y;
           end;
 
@@ -1391,7 +1392,7 @@ begin
         if posx<>0 then
           begin
             x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
-            y:=UToolbox.Intervall_Gitter(schritte,a,b,e,n,1/(GDynZoom*TBZoom.Position),GWellenlaenge,x);
+            y:=UToolbox.Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x);
 
             posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
             koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
