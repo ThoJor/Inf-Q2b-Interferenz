@@ -1238,7 +1238,7 @@ begin
       begin
        if I<>0 then
           begin x:=I/(GDynZoom*TBZoom.Position);
-            y:= Intervall_Einzelspalt(schritte,1/(GDynZoom*TBZoom.Position),b,e,GWellenlaenge,x);
+            y:= Intensitaet_Einzelspalt(b,e,GWellenlaenge,x);
             if y>ymax then ymax:=y;
           end;
 
@@ -1268,7 +1268,7 @@ begin
             if koordx=0 then ImgIntensitaet.Canvas.MoveTo(+1,koordy)
               else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
 
-           ynach:=UToolbox.Intervall_Einzelspalt(schritte,1/(GDynZoom*TBZoom.Position),b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
+           ynach:=UToolbox.Intensitaet_Einzelspalt(b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
 
            if (yvor<y) and (ynach<y) and (posy<>0) and (GReal=false) then
                 Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
@@ -1285,7 +1285,7 @@ end;
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
 var
   a,b,e,ymax,y,x,yvor,ynach:real;
-  koordx, koordy,posx,posy:Integer;
+  koordx, koordy,posx,posy,schritte:Integer;
   I: Integer;
   farbe, hintergrundfarbe:string;
 begin
@@ -1293,6 +1293,8 @@ begin
     a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
     e:=StrToFloat(EdtSchirmAbstand.Text);
     b:=StrToFloat(EdtSpaltbreite.Text)*0.001; //0.0001;
+
+    schritte:=50;
 
     //Hintergrund zeichnen
     Background;
@@ -1387,8 +1389,8 @@ begin
       begin
        if I<>0 then
           begin x:=I/(GDynZoom*TBZoom.Position);
-            y:= UToolbox.Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x);
-            //Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
+            y:= UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
+               // Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x);
             if y>ymax then ymax:=y;
           end;
 
@@ -1398,7 +1400,7 @@ begin
         if posx<>0 then
           begin
             x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
-            y:=UToolbox.Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x);
+            y:=UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
 
             posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
             koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
