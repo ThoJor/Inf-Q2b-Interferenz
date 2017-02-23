@@ -84,7 +84,7 @@ begin
       end;
 
     //Ueberprüfung ob generelles Maximum Hauptmaxima ist
-    toleranz:=1500000*(0.000001 - lambda)/n;
+    toleranz:=1000000*(0.000001 - lambda)/n;
     ordnung:=(a*sin(arctan(x/e))/lambda);
     if (sqrt(power(frac(ordnung),2))<toleranz) or (sqrt(power(frac(ordnung),2))>(1-toleranz)) then
       maximabedinung:=true else
