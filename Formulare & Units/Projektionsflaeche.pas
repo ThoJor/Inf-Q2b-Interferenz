@@ -1423,7 +1423,8 @@ begin
 
 
            if (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) and (GReal=false) then
-                Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
+                if Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x) then
+                  Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
 
           end else
           begin
