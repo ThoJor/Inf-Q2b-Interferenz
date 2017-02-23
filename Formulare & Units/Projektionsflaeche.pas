@@ -67,6 +67,7 @@ type
     procedure Farbe_Gelb;
     procedure Farbe_Orange;
     procedure Farbe_Rot;
+    procedure Lineal_Strich(x:Integer);
     procedure Linealskala;
     procedure Lineal;
     procedure Zoomleiste;
@@ -596,7 +597,7 @@ begin
   TBZoom.Top:=ImgLineal.Top-TBZoom.Height;
   TBZoom.Left:=FrmProjektionsflaeche.Width-TBZoom.Width;
   TBzoom.Max:=200;
-  TBZoom.Min:=2;
+  TBZoom.Min:=10;
   TBZoom.Frequency:=2;
   TBZoom.Position:=100;
   TBZoom.Visible:=False;
@@ -634,6 +635,15 @@ begin
     AutoSize:=true;
     Caption:='x10^-' +IntToStr(Exponent)+ 'm';
   end;
+end;
+
+procedure TFrmProjektionsflaeche.Lineal_Strich(x:Integer);
+begin
+  with ImgLineal.Canvas do
+    begin
+      moveto(ImgLineal.Width div 2 + x,1);
+      lineto(ImgLineal.Width div 2 + x,Round(ImgLineal.Height/3*2));
+    end;
 end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
@@ -1241,7 +1251,7 @@ begin
         if posx<>0 then
           begin
             x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
-            y:=Intervall_Einzelspalt(schritte,1/(GDynZoom*TBZoom.Position),b,e,GWellenlaenge,x);
+            y:=Intensitaet_Einzelspalt(b,e,GWellenlaenge,x);
 
             posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
             koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
@@ -1285,9 +1295,7 @@ begin
     ImgIntensitaet.picture:=nil;
     a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
     e:=StrToFloat(EdtSchirmAbstand.Text);
-    b:=StrToFloat(EdtSpaltbreite.Text)*0.001; //0.0001;
-
-    schritte:=50;
+    b:=StrToFloat(EdtSpaltbreite.Text)*0.001;
 
     //Hintergrund zeichnen
     Background;
@@ -1301,6 +1309,7 @@ begin
     //Zuweisung der Stiftfarbe
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
 
+    //Maximalen y-Wert berechnen für Skallierung des Intensitaetsverslaufs
     ymax:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,0.0000000000001);
 
     if Greal=true then Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
@@ -1359,10 +1368,8 @@ begin
     n:=StrToFloat(EdtSpaltanzahl.Text);
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
-    ymax:=0;
-    schritte:=101;
 
-
+    schritte:=51;
 
     //Zuweisung der Stiftfarbe
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
@@ -1370,15 +1377,6 @@ begin
     // 0.Maximum zeichnen
     Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
 
-
-    {for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
-      begin
-       if I<>0 then
-          begin x:=I/(GDynZoom*TBZoom.Position);
-            y:= UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
-            if y>ymax then ymax:=y;
-          end;
-      end;   }
     ymax:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,0.0000000000001);
                                                                        // weil Funktion nicht fuer x = 0 definiert ist
     for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
@@ -1391,7 +1389,6 @@ begin
             posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
             koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
             koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
-
 
 
             if (GReal=true) then
@@ -1408,8 +1405,8 @@ begin
               else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
 
 
-           if (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) and (GReal=false) then
-                if Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x) then
+           if (posy<>0) and {MaximaCheck_Gitter(a,e,n,GWellenlaenge,x) and} (GReal=false) then
+              if Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x) then
                   Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
 
           end else

@@ -9,10 +9,7 @@ function Intensitaet_Einzelspalt(b,e,lambda,x:real):real;
 function Intensitaet_Doppelspalt(a,b,e,lambda,x:real):real;
 function Intensitaet_Gitter(a,b,e,n,lambda,x:real):real;
 function RundeAufStelle(zahl: real; stellen: integer): real;
-function Intervall_Einzelspalt(schritte:Integer;zoom,b,e,lambda,x:real):real;
-function Intervall_Doppelspalt(schritte:Integer;zoom,a,b,e,lambda,x:real):real;
 function Intervall_Gitter(schritte:Integer;zoom,a,b,e,n,lambda,x:real):boolean;
-function MaximaCheck_Gitter(a,e,wellenlaenge,x:real):boolean;
 
 implementation
 
@@ -34,7 +31,7 @@ end;
 function AbstandMaxima (e,d,lambda,n:real) :real;
 begin
   if ((lambda*n)/d <= 1) then
-    result:= e * tan(arcsin((lambda*n)/d)) Else
+    result:= e * tan(arcsin((lambda*n)/d)) Else       //müsste nur für Doppelspalt gelten
     result:= -1;
 end;
 
@@ -59,16 +56,6 @@ begin
     result:=0;
 end;
 
-function MaximaCheck_Gitter(a,e,wellenlaenge,x:real):boolean;
-var n,toleranz:real;
-begin
-  toleranz:= 0.2;
-  n:=Rundeaufstelle((a*sin(arctan(x/e))/wellenlaenge),2);
-  if (sqrt(power(frac(n),2))<toleranz) or (sqrt(power(frac(n),2))>(1-toleranz)) then
-    Result:=true else
-    result:=false;
-end;
-
 function RundeAufStelle(zahl: real; stellen: integer): real;
 var multi: double;
 begin
@@ -77,49 +64,34 @@ begin
   result:=zahl/multi;
 end;
 
-function Intervall_Einzelspalt(schritte:Integer;zoom,b,e,lambda,x:real):real;
-var i: Integer; karl:real;
-begin
-  karl:=0;
-  for i := 0 to (schritte-1) do
-    begin
-      karl:=karl+Intensitaet_Einzelspalt(b,e,lambda,(x+zoom*((i/schritte)-0.5)));
-    end;
-    result:=karl/schritte;
-end;
-
-function Intervall_Doppelspalt(schritte:Integer;zoom,a,b,e,lambda,x:real):real;
-var i: Integer; karl:real;
-begin
-  karl:=0;
-  for i := 0 to (schritte-1) do
-    begin
-      karl:=karl+Intensitaet_Doppelspalt(a,b,e,lambda,(x+zoom*((i/schritte)-0.5)));
-    end;
-    result:=karl/schritte;
-end;
-
 function Intervall_Gitter(schritte:Integer;zoom,a,b,e,n,lambda,x:real):boolean;
-var i: Integer; karl,yvor,ynach,y:real;
+var i: Integer;
+    karl,yvor,ynach,y,ordnung,toleranz:real;
+    steigungspruefung,maximabedinung:boolean;
 begin
-  {karl:=0;
-  for i := 0 to (schritte-1) do
-    begin
-      karl:=karl+Intensitaet_Gitter(a,b,e,n,lambda,(x+zoom*((i/schritte)-0.5)));
-    end;
-    result:=karl/schritte;}
-
     result:=false;
+    steigungspruefung:=false;
+    maximabedinung:=false;
 
+    //Ueberprüfung ob im Intervall ±0.5 um x ein Maximumk liegt
     for i := 0 to schritte do
       begin
         yvor:=Intensitaet_Gitter(a,b,e,n,lambda,(x+zoom*(((i-1)/schritte)-0.5)));
         ynach:=Intensitaet_Gitter(a,b,e,n,lambda,(x+zoom*(((i+1)/schritte)-0.5)));
         y:=Intensitaet_Gitter(a,b,e,n,lambda,(x+zoom*((i/(schritte))-0.5)));
         if (yvor<y) and (ynach<y) then
-          result:=true;
+          steigungspruefung:=true;
       end;
 
+    //Ueberprüfung ob generelles Maximum Hauptmaxima ist
+    toleranz:=1500000*(0.000001 - lambda)/n;
+    ordnung:=(a*sin(arctan(x/e))/lambda);
+    if (sqrt(power(frac(ordnung),2))<toleranz) or (sqrt(power(frac(ordnung),2))>(1-toleranz)) then
+      maximabedinung:=true else
+      maximabedinung:=false;
+
+    if maximabedinung and steigungspruefung then
+      result:=true;
 end;
 
 end.
