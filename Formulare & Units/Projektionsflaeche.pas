@@ -1234,15 +1234,8 @@ begin
     //Zuweisung der Stiftfarbe
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
 
-    for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
-      begin
-       if I<>0 then
-          begin x:=I/(GDynZoom*TBZoom.Position);
-            y:= Intensitaet_Einzelspalt(b,e,GWellenlaenge,x);
-            if y>ymax then ymax:=y;
-          end;
-
-      end;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
+    ymax:=Intensitaet_Einzelspalt(e,n,GWellenlaenge,0.0000000000001);
+                                                                         // weil Funktion nicht fuer x = 0 definiert ist
     for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
       begin
         if posx<>0 then
@@ -1308,14 +1301,7 @@ begin
     //Zuweisung der Stiftfarbe
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
 
-    for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
-      begin
-       if I<>0 then
-          begin x:=I/(GDynZoom*TBZoom.Position);
-            y:= UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,x);
-            if y>ymax then ymax:=y;
-          end;
-      end;
+    ymax:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,0.0000000000001);
 
     if Greal=true then Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
     yvor:=0;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
@@ -1385,16 +1371,16 @@ begin
     Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
 
 
-    for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
+    {for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
       begin
        if I<>0 then
           begin x:=I/(GDynZoom*TBZoom.Position);
             y:= UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
-               // Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x);
             if y>ymax then ymax:=y;
           end;
-
-      end;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
+      end;   }
+    ymax:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,0.0000000000001);
+                                                                       // weil Funktion nicht fuer x = 0 definiert ist
     for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
       begin
         if posx<>0 then
@@ -1422,8 +1408,8 @@ begin
               else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
 
 
-          // if (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) and (GReal=false) then
-                if Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x) then
+           if (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) and (GReal=false) then
+             //   if Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x) then
                   Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
 
           end else
