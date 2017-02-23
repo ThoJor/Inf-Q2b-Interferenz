@@ -60,10 +60,11 @@ begin
 end;
 
 function MaximaCheck_Gitter(a,e,wellenlaenge,x:real):boolean;
-var n:real;
+var n,toleranz:real;
 begin
+  toleranz:= 0.2;
   n:=Rundeaufstelle((a*sin(arctan(x/e))/wellenlaenge),2);
-  if (sqrt(power(frac(n),2))<0.1) then
+  if (sqrt(power(frac(n),2))<toleranz) or (sqrt(power(frac(n),2))>(1-toleranz)) then
     Result:=true else
     result:=false;
 end;
