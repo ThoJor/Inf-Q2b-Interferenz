@@ -110,13 +110,14 @@ begin
 
     yvor:=0;
 
+    result:=false;
+
     for i := 0 to schritte do
       begin
         ynach:=Intensitaet_Gitter(a,b,e,n,lambda,(x+zoom*((i/(schritte+1))-0.5)));
         y:=Intensitaet_Gitter(a,b,e,n,lambda,(x+zoom*((i/(schritte))-0.5)));
         if (yvor<y) and (ynach<y) then
-          result:=true else
-          result:=false;
+          result:=true;
         yvor:=y;
       end;
 
