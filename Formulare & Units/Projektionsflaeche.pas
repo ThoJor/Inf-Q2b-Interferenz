@@ -1374,7 +1374,7 @@ begin
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
     ymax:=0;
-    schritte:=50;
+    schritte:=101;
 
 
 
@@ -1422,7 +1422,7 @@ begin
               else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
 
 
-           if (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) and (GReal=false) then
+          // if (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) and (GReal=false) then
                 if Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x) then
                   Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
 
