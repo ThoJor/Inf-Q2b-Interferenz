@@ -370,6 +370,7 @@ begin
   LblEingabe.Left:= Konstantenbox.KLabelLeft;
   LblEingabe.Width:= Schirm.Left - LblEingabe.Left;
   LblEingabe.Caption:= 'Wellenlänge λ';
+  LblEingabe.Visible:=false;
 
   EdtEingabe.Top:= LblEingabe.Top + LblEingabe.Height;
   EdtEingabe.Left:= Konstantenbox.KEditLeft;
