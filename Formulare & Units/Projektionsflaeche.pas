@@ -439,6 +439,13 @@ procedure TFrmProjektionsflaeche.BtnBeendenClick(Sender: TObject);
 begin
   FrmProjektionsflaeche.close;
   Reset;
+
+  //Zoomleiste zurücksetzen
+  TBZoom.Visible:=false;
+  TBZoom.Position:=100;
+
+  ImgLineal.Picture:=NIL;
+  Linealskala;
 end;
 
 procedure TFrmProjektionsflaeche.BtnOptionenClick(Sender: TObject);
@@ -818,7 +825,7 @@ begin
   EdtSpaltAbstand.Text:=StringReplace(EdtSpaltAbstand.Text,',',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
   EdtSpaltAbstand.Text:=StringReplace(EdtSpaltAbstand.Text,'.',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
 
-    if StrToFloat(EdtSpaltabstand.Text)<=0 then
+    if StrToFloat(EdtSpaltabstand.Text)<0.005 then
       begin
         ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
         exit;
@@ -1128,6 +1135,7 @@ end;
 
 
 procedure TFrmProjektionsflaeche.Reset;
+var myFormatSettings : TFormatSettings;
 begin
   //Schirm zurücksetzen
   Schirm.Picture:=nil;
@@ -1143,17 +1151,26 @@ begin
   if GStartet=true then Lineal;
 
   //Zoomleiste zurücksetzen
-  TBZoom.Visible:=false;
-  TBZoom.Position:=100;
+ { TBZoom.Visible:=false;
+  TBZoom.Position:=100;      }
 
   //Eingabefelder zurücksetzten
   EdtEingabe.Text:='500';
+  EdtEingabeEinheit.Text:='nm';
   EdtAusgabe.Text:='';
   EdtAusgabeEinheit.Text:='10^13 Hz';
   CmbEinheit.ItemIndex:=0;
+  EdtSpaltabstand.Text:='1';
+  EdtSpaltanzahl.Text:='2';
+  EdtSchirmAbstand.Text:='10';
+
+  if (myFormatSettings.DecimalSeparator=#$18) then
+    EdtSpaltbreite.Text:='0,1' else
+    EdtSpaltbreite.Text:='0.1';
 
   //Hilfe
   Hilfe_aus;
+
 
   //Projektiosnflaeche uebermalen
   Background;
@@ -1318,7 +1335,7 @@ begin
       begin
         if (posx<>0) then                                                            // weil Funktion nicht fuer x = 0 definiert ist
           begin
-            x:=(posx+1)/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN
+            x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN
             y:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,x);
 
             posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
@@ -1348,10 +1365,9 @@ begin
           end else
           begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
+         //   Strich_Zeichnen(Schirm.Width-3,clwhite);
           end;
       end;
-
-
 end;
 
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Gitter(Wellenlaenge:real);
@@ -1418,8 +1434,8 @@ end;
 procedure TFrmProjektionsflaeche.Strich_Zeichnen(x:Integer;farbe:TColor);
 begin
   Schirm.Canvas.Pen.Color := farbe;
-  Schirm.Canvas.MoveTo(x+1, Schirm.Height div 30);
-  Schirm.Canvas.LineTo(x+1, Schirm.Height-(Schirm.Height div 30));
+  Schirm.Canvas.MoveTo(x{+1}, Schirm.Height div 30);
+  Schirm.Canvas.LineTo(x{+1}, Schirm.Height-(Schirm.Height div 30));
 end;
 
 procedure TFrmProjektionsflaeche.Zeichnen(wellenlaenge:real);
