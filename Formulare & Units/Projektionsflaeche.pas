@@ -16,7 +16,6 @@ type
     EdtSchirmAbstand: TEdit;
     LblSchirmAbstand: TLabel;
     LblSpaltanzahl: TLabel;
-    EdtSpaltanzahl: TEdit;
     LblSpaltabstand: TLabel;
     EdtSpaltabstand: TEdit;
     BtnOptionen: TButton;
@@ -46,6 +45,7 @@ type
     EdtEingabeEinheit: TEdit;
     LblEingabe: TLabel;
     LblAusgabe: TLabel;
+    EdtSpaltanzahl: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -1476,5 +1476,6 @@ begin
 
   result:=RGB(R, G, B);
 end;
+
 
 end.
