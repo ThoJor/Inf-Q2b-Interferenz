@@ -16,7 +16,6 @@ type
     EdtSchirmAbstand: TEdit;
     LblSchirmAbstand: TLabel;
     LblSpaltanzahl: TLabel;
-    EdtSpaltanzahl: TEdit;
     LblSpaltabstand: TLabel;
     EdtSpaltabstand: TEdit;
     BtnOptionen: TButton;
@@ -46,6 +45,7 @@ type
     EdtEingabeEinheit: TEdit;
     LblEingabe: TLabel;
     LblAusgabe: TLabel;
+    EdtSpaltanzahl: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -67,6 +67,7 @@ type
     procedure Farbe_Gelb;
     procedure Farbe_Orange;
     procedure Farbe_Rot;
+    procedure Lineal_Strich(x:Integer);
     procedure Linealskala;
     procedure Lineal;
     procedure Zoomleiste;
@@ -438,6 +439,13 @@ procedure TFrmProjektionsflaeche.BtnBeendenClick(Sender: TObject);
 begin
   FrmProjektionsflaeche.close;
   Reset;
+
+  //Zoomleiste zurücksetzen
+  TBZoom.Visible:=false;
+  TBZoom.Position:=100;
+
+  ImgLineal.Picture:=NIL;
+  Linealskala;
 end;
 
 procedure TFrmProjektionsflaeche.BtnOptionenClick(Sender: TObject);
@@ -596,7 +604,7 @@ begin
   TBZoom.Top:=ImgLineal.Top-TBZoom.Height;
   TBZoom.Left:=FrmProjektionsflaeche.Width-TBZoom.Width;
   TBzoom.Max:=200;
-  TBZoom.Min:=2;
+  TBZoom.Min:=10;
   TBZoom.Frequency:=2;
   TBZoom.Position:=100;
   TBZoom.Visible:=False;
@@ -634,6 +642,15 @@ begin
     AutoSize:=true;
     Caption:='x10^-' +IntToStr(Exponent)+ 'm';
   end;
+end;
+
+procedure TFrmProjektionsflaeche.Lineal_Strich(x:Integer);
+begin
+  with ImgLineal.Canvas do
+    begin
+      moveto(ImgLineal.Width div 2 + x,1);
+      lineto(ImgLineal.Width div 2 + x,Round(ImgLineal.Height/3*2));
+    end;
 end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
@@ -808,7 +825,7 @@ begin
   EdtSpaltAbstand.Text:=StringReplace(EdtSpaltAbstand.Text,',',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
   EdtSpaltAbstand.Text:=StringReplace(EdtSpaltAbstand.Text,'.',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
 
-    if StrToFloat(EdtSpaltabstand.Text)<=0 then
+    if StrToFloat(EdtSpaltabstand.Text)<0.005 then
       begin
         ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
         exit;
@@ -1118,6 +1135,7 @@ end;
 
 
 procedure TFrmProjektionsflaeche.Reset;
+var myFormatSettings : TFormatSettings;
 begin
   //Schirm zurücksetzen
   Schirm.Picture:=nil;
@@ -1133,17 +1151,26 @@ begin
   if GStartet=true then Lineal;
 
   //Zoomleiste zurücksetzen
-  TBZoom.Visible:=false;
-  TBZoom.Position:=100;
+ { TBZoom.Visible:=false;
+  TBZoom.Position:=100;      }
 
   //Eingabefelder zurücksetzten
   EdtEingabe.Text:='500';
+  EdtEingabeEinheit.Text:='nm';
   EdtAusgabe.Text:='';
   EdtAusgabeEinheit.Text:='10^13 Hz';
   CmbEinheit.ItemIndex:=0;
+  EdtSpaltabstand.Text:='1';
+  EdtSpaltanzahl.Text:='2';
+  EdtSchirmAbstand.Text:='10';
+
+  if (myFormatSettings.DecimalSeparator=#$18) then
+    EdtSpaltbreite.Text:='0,1' else
+    EdtSpaltbreite.Text:='0.1';
 
   //Hilfe
   Hilfe_aus;
+
 
   //Projektiosnflaeche uebermalen
   Background;
@@ -1216,7 +1243,7 @@ end;
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Einzelspalt(Wellenlaenge:real);
 var
   a,b,e,n,ymax,yvor,ynach,y,x:real;
-  koordx, koordy,posx,posy:Integer;
+  koordx, koordy,posx,posy,schritte:Integer;
   I: Integer;
   farbe,hintergrundfarbe:string;
 begin
@@ -1226,21 +1253,16 @@ begin
     b:=StrToFloat(EdtSpaltbreite.Text)*0.001;
     n:=StrToFloat(EdtSpaltanzahl.Text);
 
+    schritte:=100;
+
     ImgIntensitaet.Canvas.pen.Color:=clblack;
     ymax:=0;
 
     //Zuweisung der Stiftfarbe
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
 
-    for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
-      begin
-       if I<>0 then
-          begin x:=I/(GDynZoom*TBZoom.Position);
-            y:= Intensitaet_Einzelspalt(b,e,GWellenlaenge,x);
-            if y>ymax then ymax:=y;
-          end;
-
-      end;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
+    ymax:=Intensitaet_Einzelspalt(e,n,GWellenlaenge,0.0000000000001);
+                                                                         // weil Funktion nicht fuer x = 0 definiert ist
     for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
       begin
         if posx<>0 then
@@ -1267,7 +1289,7 @@ begin
               else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
 
            ynach:=UToolbox.Intensitaet_Einzelspalt(b,e,GWellenlaenge,(posx+1)/(GDynZoom*TBZoom.Position));
-              
+
            if (yvor<y) and (ynach<y) and (posy<>0) and (GReal=false) then
                 Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
 
@@ -1283,14 +1305,14 @@ end;
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Doppelspalt(wellenlaenge:real);
 var
   a,b,e,ymax,y,x,yvor,ynach:real;
-  koordx, koordy,posx,posy:Integer;
+  koordx, koordy,posx,posy,schritte:Integer;
   I: Integer;
   farbe, hintergrundfarbe:string;
 begin
     ImgIntensitaet.picture:=nil;
     a:=StrToFloat(EdtSpaltabstand.Text)*0.001;
     e:=StrToFloat(EdtSchirmAbstand.Text);
-    b:=StrToFloat(EdtSpaltbreite.Text)*0.001; //0.0001;
+    b:=StrToFloat(EdtSpaltbreite.Text)*0.001;
 
     //Hintergrund zeichnen
     Background;
@@ -1304,22 +1326,16 @@ begin
     //Zuweisung der Stiftfarbe
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
 
-    for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
-      begin
-       if I<>0 then
-          begin x:=I/(GDynZoom*TBZoom.Position);
-            y:= UToolbox.Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,x);
-            if y>ymax then ymax:=y;
-          end;
-      end;
+    //Maximalen y-Wert berechnen für Skallierung des Intensitaetsverslaufs
+    ymax:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,0.0000000000001);
 
     if Greal=true then Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
-    yvor:=0;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
-    for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
+    yvor:=0;
+    for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do
       begin
-        if posx<>0 then
+        if (posx<>0) then                                                            // weil Funktion nicht fuer x = 0 definiert ist
           begin
-            x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN … theoretisch zumindest…
+            x:=posx/(GDynZoom*TBZoom.Position);                                    //x = realer Abstand auf Schirm von Mitte in METERN
             y:=Intensitaet_Doppelspalt(a,b,e,GWellenlaenge,x);
 
             posy:=Round(ImgIntensitaet.Height*4 div 5*y/ymax);                     // Hilfswert fuer y als Anteil des Images
@@ -1349,16 +1365,15 @@ begin
           end else
           begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
+         //   Strich_Zeichnen(Schirm.Width-3,clwhite);
           end;
       end;
-
-
 end;
 
 procedure TFrmProjektionsflaeche.Intensitaetsverlauf_Gitter(Wellenlaenge:real);
 var
   a,b,e,n,ymax,y,x:real;
-  koordx, koordy,posx,posy:Integer;
+  koordx, koordy,posx,posy,schritte:Integer;
   I: Integer;
   farbe,hintergrundfarbe:string;
 begin
@@ -1369,20 +1384,17 @@ begin
     n:=StrToFloat(EdtSpaltanzahl.Text);
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
-    ymax:=0;
+
+    schritte:=51;
 
     //Zuweisung der Stiftfarbe
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
 
-    for I := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do      // Berechnet maximalen y-Wert
-      begin
-       if I<>0 then
-          begin x:=I/(GDynZoom*TBZoom.Position);
-            y:= UToolbox.Intensitaet_Gitter(a,b,e,n,GWellenlaenge,x);
-            if y>ymax then ymax:=y;
-          end;
+    // 0.Maximum zeichnen
+    Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
 
-      end;                                                                         // weil Funktion nicht fuer x = 0 definiert ist
+    ymax:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,0.0000000000001);
+                                                                       // weil Funktion nicht fuer x = 0 definiert ist
     for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
       begin
         if posx<>0 then
@@ -1394,10 +1406,6 @@ begin
             koordy:=ImgIntensitaet.Height-(ImgIntensitaet.Height div 5)-posy;      // Berechunung der gezeichneten x-Werte
             koordx:=(ImgIntensitaet.Width div 2)+posx;                             // Berechnung der gezeichneten y-Werte
 
-
-
-            // 0.Maximum zeichnen
-            Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
 
             if (GReal=true) then
               begin
@@ -1413,8 +1421,8 @@ begin
               else ImgIntensitaet.Canvas.LineTo(koordx+1,koordy);
 
 
-           if (posy<>0) and MaximaCheck_Gitter(a,e,GWellenlaenge,x) and (GReal=false) then
-                Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
+           if (posy<>0) and (GReal=false)and Intervall_Gitter(schritte,1/(GDynZoom*TBZoom.Position),a,b,e,n,GWellenlaenge,x) then
+                  Strich_Zeichnen(posx+(Schirm.Width div 2),stringtocolor(farbe));
 
           end else
           begin
@@ -1426,8 +1434,8 @@ end;
 procedure TFrmProjektionsflaeche.Strich_Zeichnen(x:Integer;farbe:TColor);
 begin
   Schirm.Canvas.Pen.Color := farbe;
-  Schirm.Canvas.MoveTo(x+1, Schirm.Height div 30);
-  Schirm.Canvas.LineTo(x+1, Schirm.Height-(Schirm.Height div 30));
+  Schirm.Canvas.MoveTo(x{+1}, Schirm.Height div 30);
+  Schirm.Canvas.LineTo(x{+1}, Schirm.Height-(Schirm.Height div 30));
 end;
 
 procedure TFrmProjektionsflaeche.Zeichnen(wellenlaenge:real);
@@ -1468,5 +1476,6 @@ begin
 
   result:=RGB(R, G, B);
 end;
+
 
 end.

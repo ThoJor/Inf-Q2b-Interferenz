@@ -142,7 +142,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Right = 2
     Margins.Bottom = 2
     Caption = 'PnlOptionen'
-    TabOrder = 0
+    TabOrder = 12
   end
   object EdtEingabe: TEdit
     Left = 119
@@ -168,7 +168,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Right = 2
     Margins.Bottom = 2
     TabStop = False
-    TabOrder = 10
+    TabOrder = 14
     Text = 'EdtAusgabe'
   end
   object EdtSchirmAbstand: TEdit
@@ -180,23 +180,9 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Top = 2
     Margins.Right = 2
     Margins.Bottom = 2
-    TabOrder = 9
+    TabOrder = 10
     Text = 'EdtSchirmAbstand'
     OnKeyPress = EdtSchirmAbstandKeyPress
-  end
-  object EdtSpaltanzahl: TEdit
-    Left = 98
-    Top = 502
-    Width = 91
-    Height = 20
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    TabStop = False
-    TabOrder = 11
-    Text = 'EdtSpaltanzahl'
-    OnKeyPress = EdtSpaltanzahlKeyPress
   end
   object EdtSpaltabstand: TEdit
     Left = 93
@@ -221,7 +207,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Right = 2
     Margins.Bottom = 2
     Caption = 'BtnOptionen'
-    TabOrder = 7
+    TabOrder = 6
     OnClick = BtnOptionenClick
   end
   object PnlFarbe: TPanel
@@ -234,7 +220,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Right = 2
     Margins.Bottom = 2
     Caption = 'PnlFarbe'
-    TabOrder = 12
+    TabOrder = 16
     object PnlFarbeCaption: TPanel
       Left = 108
       Top = 7
@@ -337,7 +323,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Frequency = 2
     Position = 2
     PositionToolTip = ptTop
-    TabOrder = 13
+    TabOrder = 11
     TabStop = False
     Visible = False
     OnChange = TBZoomChange
@@ -349,7 +335,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Width = 75
     Height = 25
     Caption = 'BtnStart'
-    TabOrder = 3
+    TabOrder = 2
     OnClick = BtnStartClick
   end
   object BtnBeenden: TButton
@@ -358,7 +344,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Width = 75
     Height = 25
     Caption = 'Beenden'
-    TabOrder = 5
+    TabOrder = 4
     OnClick = BtnBeendenClick
   end
   object BtnHilfe: TButton
@@ -371,7 +357,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Margins.Right = 2
     Margins.Bottom = 2
     Caption = 'BtnHilfe'
-    TabOrder = 6
+    TabOrder = 5
     OnClick = BtnHilfeClick
   end
   object BtnReset: TButton
@@ -380,7 +366,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Width = 75
     Height = 25
     Caption = 'BtnReset'
-    TabOrder = 4
+    TabOrder = 3
     OnClick = BtnResetClick
   end
   object CmbEinheit: TComboBox
@@ -388,7 +374,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Top = 48
     Width = 145
     Height = 20
-    TabOrder = 2
+    TabOrder = 0
     Text = 'CmbEinheit'
     OnChange = CmbEinheitChange
   end
@@ -398,7 +384,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Width = 121
     Height = 20
     TabStop = False
-    TabOrder = 14
+    TabOrder = 13
     Text = 'EdtAusgabeEinheit'
   end
   object EdtSpaltbreite: TEdit
@@ -406,7 +392,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Top = 453
     Width = 121
     Height = 20
-    TabOrder = 15
+    TabOrder = 7
     Text = 'EdtSpaltbreite'
     OnKeyPress = EdtSpaltbreiteKeyPress
   end
@@ -415,7 +401,21 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Top = 73
     Width = 121
     Height = 20
-    TabOrder = 16
+    TabOrder = 15
     Text = 'EdtEingabeEinheit'
+  end
+  object EdtSpaltanzahl: TEdit
+    Left = 98
+    Top = 502
+    Width = 91
+    Height = 20
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
+    TabStop = False
+    TabOrder = 9
+    Text = 'EdtSpaltanzahl'
+    OnKeyPress = EdtSpaltanzahlKeyPress
   end
 end
