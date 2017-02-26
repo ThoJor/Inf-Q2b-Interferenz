@@ -96,6 +96,7 @@ begin
   ImgTYoung.Top := 0 + (FormVersuchsuebersicht.Width div 30);
   ImgTYoung.Left := 0 + (FormVersuchsuebersicht.Width div 30);
   ImgTYoung.Picture.LoadFromFile(Path+'\TYoung.png');
+  ImgTYoung.BringToFront;
   GVergroessert:=True;
   LquelleEinstellungen;
   LQuelle.Visible:=true;
@@ -111,11 +112,15 @@ procedure TFormVersuchsuebersicht.LQuelleEinstellungen();
 begin
   LQuelle.Visible:=false;
   lQuelle.Height:=50;
-  lQuelle.Width:=400;
+  lQuelle.Width:=ImgTYoung.Width;;
+  LQuelle.AutoSize:=true;
+  LQuelle.WordWrap:=false;
   lQuelle.Caption:='https://en.wikipedia.org/wiki/Thomas_Young_(scientist)#/media/File:Thomas_Young_(scientist).jpg';
-  lQuelle.Left:=ImgTYoung.Left;
+  lQuelle.Left:=20+ImgTYoung.Left;
   lQuelle.Top:=ImgTYoung.Top+ImgTYoung.Height-LQuelle.Height;
   Lquelle.Font.Color:=clred;
+  LQuelle.Font.Size:=6;
+  LQuelle.BringToFront;
 end;
 
 //Einstellungen fuer die Label, die den Versuchsaufbau und den historischen Hintergrund in Textform darstellt

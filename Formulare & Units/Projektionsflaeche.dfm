@@ -416,6 +416,7 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     TabStop = False
     TabOrder = 9
     Text = 'EdtSpaltanzahl'
+    OnChange = EdtSpaltanzahlChange
     OnKeyPress = EdtSpaltanzahlKeyPress
   end
 end

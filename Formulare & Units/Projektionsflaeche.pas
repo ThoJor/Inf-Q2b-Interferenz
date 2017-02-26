@@ -115,6 +115,8 @@ type
     function Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
     procedure TBZoomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure TabOrder;
+    procedure EdtSpaltanzahlChange(Sender: TObject);
+    procedure ZoomPfusch;
   private
     { Private-Deklarationen }
   public
@@ -139,10 +141,10 @@ implementation
 
 procedure TFrmProjektionsflaeche.TabOrder;
 begin
-  CmbEinheit.TabStop:= true;
-  CmbEinheit.TabOrder:= 0;
   EdtEingabe.TabStop:= true;
-  EdtEingabe.TabOrder:= 1;
+  EdtEingabe.TabOrder:= 0;
+  CmbEinheit.TabStop:= true;
+  CmbEinheit.TabOrder:= 1;
   BtnOptionen.TabStop:= true;
   BtnOptionen.TabOrder:= 2;
   EdtSpaltbreite.TabStop:= true;
@@ -370,6 +372,7 @@ begin
   LblEingabe.Left:= Konstantenbox.KLabelLeft;
   LblEingabe.Width:= Schirm.Left - LblEingabe.Left;
   LblEingabe.Caption:= 'Wellenlänge λ';
+  LblEingabe.Visible:=false;
 
   EdtEingabe.Top:= LblEingabe.Top + LblEingabe.Height;
   EdtEingabe.Left:= Konstantenbox.KEditLeft;
@@ -431,6 +434,7 @@ begin
       EdtEingabeEinheit.Text:='nm';
       EdtAusgabeEinheit.Text:='10^13Hz';
       EdtEingabe.Hint:='Wellenlänge von 380 bis 780 nm eingeben';
+      EdtEingabe.Text:=FloatToStrF(FrequenzInWellenlaenge(StrToFloat(EdtEingabe.Text)*Power(10,13))*(Power(10,(9))),ffNumber,20,5);
     end
     else begin
       LblEingabe.Caption:='Frequenz f';
@@ -438,6 +442,7 @@ begin
       EdtEingabeEinheit.Text:='10^13Hz';
       EdtAusgabeEinheit.Text:='nm';
       EdtEingabe.Hint:='Frequenz von 38 bis 79 x10^13Hz eingeben';
+      EdtEingabe.Text:=FloatToStrF(WellenlaengeInFrequenz(StrToFloat(EdtEingabe.Text)*1/Power(10,9))/(Power(10,(13))),ffNumber,20,5);
     end;
 end;
 
@@ -506,8 +511,10 @@ begin
 end;
 
 procedure TFrmProjektionsflaeche.BtnResetClick(Sender: TObject);
+var myFormatSettings:TFormatSettings;
 begin
   Reset;
+  TBZoom.Visible:=false;
 end;
 
 procedure TFrmProjektionsflaeche.Hilfe;
@@ -773,6 +780,7 @@ end;
 procedure TFrmProjektionsflaeche.EdtEingabeChange(Sender: TObject);
 begin
   EdtAusgabe.Text:='';
+  ZoomPfusch;
 end;
 
 procedure TFrmProjektionsflaeche.EdtEingabeKeyPress(Sender: TObject;
@@ -805,6 +813,11 @@ begin
   if not (Key in AllowKeys) then Key := #0;
 end;
 
+procedure TFrmProjektionsflaeche.EdtSpaltanzahlChange(Sender: TObject);
+begin
+  ZoomPfusch;
+end;
+
 procedure TFrmProjektionsflaeche.EdtSpaltanzahlKeyPress(Sender: TObject;
 var Key: Char);
 const
@@ -834,7 +847,6 @@ var Frequenz: real;
 begin
   //Programmstart
   GStartet:=true;
-  TbZoom.Position:=100;
   GetLocaleFormatSettings(GetThreadLocale, myFormatSettings);
   //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
   if STrToInt(EdtSpaltanzahl.Text)<1 then
@@ -969,7 +981,6 @@ end;
 //Panel Blau
 procedure TFrmProjektionsflaeche.PnlBlauClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KBlau;
     EditFuellerBeiPanelbedienung(Konstantenbox.KBlau);
     BtnStart.Click;
@@ -978,7 +989,6 @@ end;
 //Panel Gelb
 procedure TFrmProjektionsflaeche.PnlGelbClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KGelb;
     EditFuellerBeiPanelbedienung(Konstantenbox.KGelb);
     BtnStart.Click;
@@ -987,7 +997,6 @@ end;
 //Panel Gruen
 procedure TFrmProjektionsflaeche.PnlGruenClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KGruen;
     EditFuellerBeiPanelbedienung(Konstantenbox.KGruen);
     BtnStart.Click;
@@ -996,7 +1005,6 @@ end;
 //Panel Orange
 procedure TFrmProjektionsflaeche.PnlOrangeClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KOrange;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
     BtnStart.Click;
@@ -1005,7 +1013,6 @@ end;
 //Panel Rot
 procedure TFrmProjektionsflaeche.PnlRotClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KRot;
     EditFuellerBeiPanelbedienung(Konstantenbox.KRot);
     BtnStart.Click;
@@ -1014,7 +1021,6 @@ end;
 //Panel Violett
 procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KViolett;
     EditFuellerBeiPanelbedienung(Konstantenbox.KViolett);
     BtnStart.Click;
@@ -1191,10 +1197,7 @@ begin
   EdtSpaltabstand.Text:='1';
   EdtSpaltanzahl.Text:='2';
   EdtSchirmAbstand.Text:='10';
-
-  if (myFormatSettings.DecimalSeparator=#$18) then
-    EdtSpaltbreite.Text:='0,1' else
-    EdtSpaltbreite.Text:='0.1';
+  EdtSpaltbreite.Text:=FloatToStr(0.1);
 
   //Hilfe
   Hilfe_aus;
@@ -1349,7 +1352,6 @@ begin
     Schirm.Canvas.Pen.Color := Stringtocolor('$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9)))));
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
-    ymax:=0;
 
     //Zuweisung der Stiftfarbe
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
@@ -1505,5 +1507,14 @@ begin
   result:=RGB(R, G, B);
 end;
 
+procedure TFrmProjektionsflaeche.ZoomPfusch;
+begin
+  if (EdtSpaltanzahl.Text<>'') and (GStartet=true) then
+    begin
+      if (strToInt(EdtSpaltanzahl.Text)>2) and ((strToInt(EdtEingabe.Text)>500) or (strToInt(EdtEingabe.Text)<59.9585)) then
+          TBZoom.Min:=36 else
+          TBZoom.Min:=10;
+    end;
+end;
 
 end.

@@ -27,16 +27,16 @@ const
 
 var
   //Objekte
-  KCheckBoxHoehe: ShortInt; //Screen.Height div 54;
-  KCheckBoxWidth: ShortInt; //Screen.Width div 6;
-  KLabelHoehe: ShortInt; //Screen.Height div 54;
-  KLabelLeft: ShortInt; //Screen.Width div 192;
-  KEditHoehe: ShortInt; //Screen.Height div 54;
-  KPanelHoehe: ShortInt; //Screen.Height div 22;
+  KCheckBoxHoehe: Integer; //Screen.Height div 54;
+  KCheckBoxWidth: Integer; //Screen.Width div 6;
+  KLabelHoehe: Integer; //Screen.Height div 54;
+  KLabelLeft: Integer; //Screen.Width div 192;
+  KEditHoehe: Integer; //Screen.Height div 54;
+  KPanelHoehe: Integer; //Screen.Height div 22;
 
   //Schrift
-  Ueberschrift: ShortInt; //Screen.Width div 96;
-  Schrift: ShortInt; //Screen.Width div 160;
+  Ueberschrift: Integer; //Screen.Width div 96;
+  Schrift: Integer; //Screen.Width div 160;
 
 
 implementation
