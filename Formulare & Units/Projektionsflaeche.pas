@@ -431,6 +431,7 @@ begin
       EdtEingabeEinheit.Text:='nm';
       EdtAusgabeEinheit.Text:='10^13Hz';
       EdtEingabe.Hint:='Wellenlänge von 380 bis 780 nm eingeben';
+      EdtEingabe.Text:=FloatToStrF(FrequenzInWellenlaenge(StrToFloat(EdtEingabe.Text)*Power(10,13))*(Power(10,(9))),ffNumber,20,5);
     end
     else begin
       LblEingabe.Caption:='Frequenz f';
@@ -438,6 +439,7 @@ begin
       EdtEingabeEinheit.Text:='10^13Hz';
       EdtAusgabeEinheit.Text:='nm';
       EdtEingabe.Hint:='Frequenz von 38 bis 79 x10^13Hz eingeben';
+      EdtEingabe.Text:=FloatToStrF(WellenlaengeInFrequenz(StrToFloat(EdtEingabe.Text)*1/Power(10,9))/(Power(10,(13))),ffNumber,20,5);
     end;
 end;
 
