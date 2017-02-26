@@ -815,8 +815,8 @@ procedure TFrmProjektionsflaeche.EdtSpaltanzahlChange(Sender: TObject);
 begin
   if (EdtSpaltanzahl.Text<>'') and (GStartet=true) then
     begin
-      if strToInt(EdtSpaltanzahl.Text)>2 then
-          TBZoom.Min:=52 else
+      if (strToInt(EdtSpaltanzahl.Text)>2) and ((strToInt(EdtEingabe.Text)>500) or (strToInt(EdtEingabe.Text)<59.9585)) then
+          TBZoom.Min:=36 else
           TBZoom.Min:=10;
     end;
 end;
@@ -1355,7 +1355,6 @@ begin
     Schirm.Canvas.Pen.Color := Stringtocolor('$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9)))));
 
     ImgIntensitaet.Canvas.pen.Color:=clblack;
-    ymax:=0;
 
     //Zuweisung der Stiftfarbe
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
