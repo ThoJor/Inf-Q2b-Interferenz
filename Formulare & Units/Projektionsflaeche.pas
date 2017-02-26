@@ -114,6 +114,7 @@ type
     procedure Strich_Zeichnen(x:Integer;farbe:TColor);
     function Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
     procedure TBZoomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure TabOrder;
   private
     { Private-Deklarationen }
   public
@@ -136,6 +137,32 @@ implementation
 
 {$R *.dfm}
 
+procedure TFrmProjektionsflaeche.TabOrder;
+begin
+  CmbEinheit.TabStop:= true;
+  CmbEinheit.TabOrder:= 1;
+  EdtEingabe.TabStop:= true;
+  EdtEingabe.TabOrder:= 0;
+  BtnOptionen.TabStop:= true;
+  BtnOptionen.TabOrder:= 2;
+  EdtSpaltbreite.TabStop:= true;
+  EdtSpaltbreite.TabOrder:= 3;
+  EdtSpaltabstand.TabStop:= true;
+  EdtSpaltabstand.TabOrder:= 4;
+  EdtSpaltanzahl.TabStop:= true;
+  EdtSpaltanzahl.TabOrder:= 5;
+  EdtSchirmAbstand.TabStop:= true;
+  EdtSchirmAbstand.TabOrder:= 6;
+  BtnStart.TabStop:= true;
+  BtnStart.TabOrder:= 7;
+  BtnReset.TabStop:= true;
+  BtnReset.TabOrder:= 8;
+  BtnBeenden.TabStop:= true;
+  BtnBeenden.TabOrder:= 9;
+  BtnHilfe.TabStop:= true;
+  BtnHilfe.TabOrder:= 10;
+end;
+
 procedure TFrmProjektionsflaeche.Farbe_Rot;
 begin
   PnlRot.Top:= PnlGelb.Top + PnlGelb.Height;
@@ -146,7 +173,7 @@ begin
   PnlRot.ParentBackground:= false;
   PnlRot.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KRot*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlRot.Hint:='Klicken, um rotes Licht zu simulieren';
+  PnlRot.Hint:='Klicken, um die Simulation mit rotem Licht durchzuführen';
   PnlRot.ShowHint:=true;
 end;
 
@@ -160,7 +187,7 @@ begin
   PnlOrange.ParentBackground:= false;
   PnlOrange.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KOrange*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlOrange.Hint:='Klicken, um oranges Licht zu simulieren';
+  PnlOrange.Hint:='Klicken, um die Simulation mit orangem Licht durchzuführen';
   PnlOrange.ShowHint:=true;
 end;
 
@@ -174,7 +201,7 @@ begin
   PnlGelb.ParentBackground:= false;
   PnlGelb.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KGelb*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlGelb.Hint:='Klicken, um gelbes Licht zu simulieren';
+  PnlGelb.Hint:='Klicken, um die Simulation mit gelbem Licht durchzuführen';
   PnlGelb.ShowHint:=true;
 end;
 
@@ -188,7 +215,7 @@ begin
   PnlGruen.ParentBackground:= false;
   PnlGruen.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KGruen*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlGruen.Hint:='Klicken, um grünes Licht zu simulieren';
+  PnlGruen.Hint:='Klicken, um die Simulation mit grünem Licht durchzuführen';
   PnlGruen.ShowHint:=true;
 end;
 
@@ -202,7 +229,7 @@ begin
   PnlBlau.ParentBackground:= false;
   PnlBlau.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KBlau*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlBlau.Hint:='Klicken, um blaues Licht zu simulieren';
+  PnlBlau.Hint:='Klicken, um die Simulation mit blauem Licht durchzuführen';
   PnlBlau.ShowHint:=true;
 end;
 
@@ -216,7 +243,7 @@ begin
   PnlViolett.ParentBackground:= false;
   PnlViolett.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KViolett*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlViolett.Hint:='Klicken, um violettes Licht zu simulieren';
+  PnlViolett.Hint:='Klicken, um die Simulation mit violettem Licht durchzuführen';
   PnlViolett.ShowHint:=true;
 end;
 
@@ -254,7 +281,7 @@ begin
   BtnOptionen.Left:= 20;
   BtnOptionen.Width:= Schirm.Left - (BtnOptionen.Left * 2);
   BtnOptionen.Caption:= 'graphische Optionen';
-  BtnOptionen.hint:='Klicken, um graphische Optionen anzuzeigen';
+  BtnOptionen.Hint:='Klicken, um die Optionen für die graphische Darstellungsweise anzuzeigen';
 end;
 
 procedure TFrmProjektionsflaeche.Option_Spaltabstand;
@@ -264,7 +291,7 @@ begin
   EdtSpaltabstand.Left:= Konstantenbox.KEditLeft;
   EdtSpaltabstand.Width:= Schirm.Left - EdtSpaltabstand.Left;
   EdtSpaltabstand.Text:= '1';
-  EdtSpaltabstand.Hint:='Spaltabstand von X bis Y mm eingeben';
+  EdtSpaltabstand.Hint:='Spaltabstand über 0 und unter 1001 mm eingeben';
   EdtSpaltabstand.ShowHint:=true;
 
   LblSpaltabstand.Top:= EdtSpaltabstand.Top - LblSpaltabstand.Height;
@@ -280,7 +307,7 @@ begin
   EdtSpaltanzahl.Left:= Konstantenbox.KEditLeft;
   EdtSpaltanzahl.Width:= Schirm.Left - EdtSpaltanzahl.Left;
   EdtSpaltanzahl.Text:= '2';
-  EdtSpaltanzahl.Hint:='Spaltanzahl von 1 bis X eingeben';
+  EdtSpaltanzahl.Hint:='Spaltanzahl von 1 bis 1000 eingeben';
   EdtSpaltanzahl.ShowHint:=true;
 
   LblSpaltanzahl.Top:= EdtSpaltanzahl.Top - LblSpaltanzahl.Height;
@@ -296,7 +323,7 @@ begin
   EdtSpaltbreite.Left:= Konstantenbox.KEditLeft;
   EdtSpaltbreite.Width:= Schirm.Left - EdtSpaltbreite.Left;
   EdtSpaltbreite.Text:= '0.1';
-  EdtSpaltbreite.Hint:='Spaltbreite von X bis Y mm eingeben';
+  EdtSpaltbreite.Hint:='Spaltbreite über 0 und unter 1001 mm eingeben';
   EdtSpaltbreite.ShowHint:=true;
 
   LblSpaltbreite.Top:= EdtSpaltbreite.Top - LblSpaltbreite.Height;
@@ -312,7 +339,7 @@ begin
   EdtSchirmAbstand.Left:= Konstantenbox.KEditLeft;
   EdtSchirmAbstand.Width:= Schirm.Left - EdtSchirmAbstand.Left;
   EdtSchirmAbstand.Text:= '10';
-  EdtSchirmAbstand.Hint:='Abstand zwischen Spalt und Schirm von X bis Y eingeben';
+  EdtSchirmAbstand.Hint:='Abstand zwischen Spalt und Schirm über 0 und unter 1001 eingeben';
   EdtSchirmAbstand.ShowHint:=true;
 
   LblSchirmAbstand.Top:= EdtSchirmAbstand.Top - LblSchirmAbstand.Height;
@@ -397,13 +424,16 @@ end;
 
 procedure TFrmProjektionsflaeche.CmbEinheitChange(Sender: TObject);
 begin
-  if CmbEinheit.ItemIndex= 0
+  if CmbEinheit.ItemIndex = 0
     then begin
       LblEingabe.caption:='Wellenlänge λ';
       LblAusgabe.caption:='Frequenz f';
       EdtEingabeEinheit.Text:='nm';
       EdtAusgabeEinheit.Text:='10^13Hz';
       EdtEingabe.Hint:='Wellenlänge von 380 bis 780 nm eingeben';
+      //EdtEingabe.Text:=FloatToStr(WellenlaengeInFrequenz(StrToFloat(EdtEingabe.Text)*1/Power(10,9)));
+
+      EdtEingabe.Text:=FloatToStrF(FrequenzInWellenlaenge(StrToFloat(EdtEingabe.Text)*Power(10,13))*(Power(10,(9))),ffNumber,20,5);
     end
     else begin
       LblEingabe.Caption:='Frequenz f';
@@ -411,6 +441,7 @@ begin
       EdtEingabeEinheit.Text:='10^13Hz';
       EdtAusgabeEinheit.Text:='nm';
       EdtEingabe.Hint:='Frequenz von 38 bis 79 x10^13Hz eingeben';
+      EdtEingabe.Text:=FloatToStrF(WellenlaengeInFrequenz(StrToFloat(EdtEingabe.Text)*1/Power(10,9))/(Power(10,(13))),ffNumber,20,5);
     end;
 end;
 
@@ -461,7 +492,7 @@ begin
   BtnHilfe.Top:=(EdtAusgabe.Top + EdtAusgabe.Height) + 10;
   BtnHilfe.Left:=BtnBeenden.Left+BtnReset.Width+5;
   BtnHilfe.Caption:= 'Hilfe';
-  BtnHilfe.Hint:='Klicken, um Hilfe anzuzeigen';
+  BtnHilfe.Hint:='Klicken, um das Hilfe-Overlay anzuzeigen';
   BtnHilfe.ShowHint:=true;
 
   //Alle Labels unsichtbar machen
@@ -485,7 +516,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Hilfe;
 begin
-  BtnHilfe.Hint:='Klicken, um Hilfe zu verbergen';
+  BtnHilfe.Hint:='Klicken, um das Hilfe-Overlay zu verbergen';
 
   //Hilfe Schirm
   LblHilfeSchirm.Visible:= true;
@@ -513,7 +544,7 @@ begin
 
   //experimento v5
   EdtEingabe.ShowHint:=true;
-  EdtEingabe.Hint:='Frequenz oder Wellenlaenge eingeben';
+  EdtEingabe.Hint:='Frequenz bzw. Wellenlaenge eingeben';
 
   //dem Programm mitteilen, dass das Overlay eingeblendet ist
   GHilfe:= true;
@@ -521,7 +552,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Hilfe_aus;
 begin
-  BtnHilfe.Hint:='Klicken, um Hilfe anzuzeigen';
+  BtnHilfe.Hint:='Klicken, um das Hilfe-Overlay anzuzeigen';
 
   //alle Overlay-Labels verstecken
   LblHilfeSchirm.Visible:= false;
@@ -545,6 +576,7 @@ end;
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
 begin
   Schrifteinstellungen;
+  TabOrder;
   Fenstereinstellungen;
   Canvaseinstellungen;
   Optionen;
@@ -581,7 +613,7 @@ begin
   BtnReset.Width :=Round((PnlFarbe.Width-6)/5);
   BtnReset.Height := Konstantenbox.Schrift+10;
   BtnReset.Caption := 'Reset';
-  BtnReset.Hint:= 'Klicken, um auf Anfangszustand zurückzusetzen';
+  BtnReset.Hint:= 'Klicken, um den Ausgangszustand wiederherzustellen';
   BtnReset.ShowHint:=true;
 end;
 
@@ -592,7 +624,7 @@ begin
   BtnBeenden.Width:=Round((PnlFarbe.Width-6)/5);
   BtnBeenden.Height:=Konstantenbox.Schrift+10;
   BtnBeenden.Caption:='Beenden';
-  BtnBeenden.Hint:='Klicken, um zu Beenden';
+  BtnBeenden.Hint:='Klicken, um das Fenster zu schließen';
   BtnBeenden.ShowHint:=true;
 end;
 
@@ -608,7 +640,7 @@ begin
   TBZoom.Frequency:=2;
   TBZoom.Position:=100;
   TBZoom.Visible:=False;
-  TBZoom.Hint:='Verschieben, um die Vergrößerung in Prozent einzustellen';
+  TBZoom.Hint:='Verschieben, um den Zoomfaktor zu verändern (Werte in Prozent)';
   TbZoom.ShowHint:=true;
 end;
 
@@ -806,7 +838,7 @@ var Frequenz: real;
 begin
   //Programmstart
   GStartet:=true;
-  TbZoom.Position:=100;
+  //TbZoom.Position:=100;
   GetLocaleFormatSettings(GetThreadLocale, myFormatSettings);
   //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
   if STrToInt(EdtSpaltanzahl.Text)<1 then
@@ -941,7 +973,6 @@ end;
 //Panel Blau
 procedure TFrmProjektionsflaeche.PnlBlauClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KBlau;
     EditFuellerBeiPanelbedienung(Konstantenbox.KBlau);
     BtnStart.Click;
@@ -950,7 +981,6 @@ end;
 //Panel Gelb
 procedure TFrmProjektionsflaeche.PnlGelbClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KGelb;
     EditFuellerBeiPanelbedienung(Konstantenbox.KGelb);
     BtnStart.Click;
@@ -959,7 +989,6 @@ end;
 //Panel Gruen
 procedure TFrmProjektionsflaeche.PnlGruenClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KGruen;
     EditFuellerBeiPanelbedienung(Konstantenbox.KGruen);
     BtnStart.Click;
@@ -968,7 +997,6 @@ end;
 //Panel Orange
 procedure TFrmProjektionsflaeche.PnlOrangeClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KOrange;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
     BtnStart.Click;
@@ -977,7 +1005,6 @@ end;
 //Panel Rot
 procedure TFrmProjektionsflaeche.PnlRotClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KRot;
     EditFuellerBeiPanelbedienung(Konstantenbox.KRot);
     BtnStart.Click;
@@ -986,7 +1013,6 @@ end;
 //Panel Violett
 procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KViolett;
     EditFuellerBeiPanelbedienung(Konstantenbox.KViolett);
     BtnStart.Click;
@@ -1178,7 +1204,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Combobox;
 begin
-  CmbEinheit.Top:= PnlOptionen.Height + PnlOptionen.Top + 5;
+  CmbEinheit.Top:= PnlOptionen.Height + PnlOptionen.Top-3;
   CmbEinheit.Width:= EdtEingabe.Width div 2;
   CmbEinheit.Left:= Konstantenbox.KEditLeft;
   CmbEinheit.Height:= Konstantenbox.KEditHoehe;

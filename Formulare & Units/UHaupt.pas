@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UInfo, UVersuchsuebersicht, UToolbox, Projektionsflaeche,
-  Vcl.ExtCtrls, Vcl.StdCtrls;
+  Vcl.ExtCtrls, Vcl.StdCtrls, Konstantenbox;
 
 type
   TFrmHaupt = class(TForm)
@@ -29,6 +29,8 @@ type
     procedure LInfoClick(Sender: TObject);
     procedure TimerProjektionsflaecheTimer(Sender: TObject);
     procedure BtnBeendenClick(Sender: TObject);
+    procedure dynamischeKonstanten;
+    procedure TabOrder;
   private
     { Private-Deklarationen }
   public
@@ -42,17 +44,44 @@ implementation
 
 {$R *.dfm}
 
-uses Konstantenbox;
 
-
-//Programm beim Schlieﬂen terminieren
+//Programm beim Schliessen terminieren
 procedure TFrmHaupt.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Application.Terminate;
 end;
 
+procedure TFrmHaupt.TabOrder;
+begin
+  BtnStart.TabStop:= true;
+  BtnStart.TabOrder:= 0;
+  BtnVersuchsaufbau.TabStop:= true;
+  BtnVersuchsaufbau.TabOrder:= 1;
+  BtnBeenden.TabStop:= true;
+  BtnBeenden.TabOrder:= 2;
+end;
+
+procedure TFrmHaupt.dynamischeKonstanten;
+begin
+  {Festlegen der Bildschirmspezifischen Konstanten (Abhaengig von der Aufloesung des Bildschirms)}
+
+  //Objekte
+  Konstantenbox.KCheckBoxHoehe:= Screen.Height div 54;
+  Konstantenbox.KCheckBoxWidth:= Screen.Width div 6;
+  Konstantenbox.KLabelHoehe:= Screen.Height div 54;
+  Konstantenbox.KLabelLeft:= Screen.Width div 192;
+  Konstantenbox.KEditHoehe:= Screen.Height div 54;
+  Konstantenbox.KPanelHoehe:= Screen.Height div 22;
+
+  //Schrift
+  Konstantenbox.Ueberschrift:= Screen.Width div 96;
+  Konstantenbox.Schrift:= Screen.Width div 160
+end;
+
 procedure TFrmHaupt.FormCreate(Sender: TObject);
 begin
+  dynamischeKonstanten;
+  TabOrder;
   HomeSettings;
   HeadingSettings;
   BtnStartSettings;
