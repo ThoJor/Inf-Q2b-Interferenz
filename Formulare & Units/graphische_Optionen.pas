@@ -32,7 +32,6 @@ type
     procedure ChBBgVerlaufMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure CBRealClick(Sender: TObject);
-    procedure TabOrder;
   private
     { Private-Deklarationen }
   public
@@ -50,24 +49,8 @@ implementation
 
 {$R *.dfm}
 
-procedure TFrmGraphischeOptionen.TabOrder;
-begin
-  ChBBgBlack.TabStop:= true;
-  ChBBgBlack.TabOrder:= 0;
-  ChBBgWhite.TabStop:= true;
-  ChBBgWhite.TabOrder:= 1;
-  ChBBgVerlauf.TabStop:= true;
-  ChBBgVerlauf.TabOrder:= 2;
-  CBReal.TabStop:= true;
-  CBReal.TabOrder:= 3;
-  BtnBeenden.TabStop:= true;
-  BtnBeenden.TabOrder:= 4;
-end;
-
 procedure TFrmGraphischeOptionen.FormCreate(Sender: TObject);
 begin
-  TabOrder;
-
   FrmGraphischeOptionen.BorderStyle:=bsNone;
 
   BtnBeenden.font.size:=Konstantenbox.Schrift;
