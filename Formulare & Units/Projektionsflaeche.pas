@@ -1190,9 +1190,10 @@ begin
   EdtSpaltanzahl.Text:='2';
   EdtSchirmAbstand.Text:='10';
 
-  if (myFormatSettings.DecimalSeparator=#$18) then
+  EdtSpaltabstand.Text:='0'+myFormatSettings.DecimalSeparator+'1';
+ { if (myFormatSettings.DecimalSeparator=#$18) then
     EdtSpaltbreite.Text:='0,1' else
-    EdtSpaltbreite.Text:='0.1';
+    EdtSpaltbreite.Text:='0.1';  }
 
   //Hilfe
   Hilfe_aus;
