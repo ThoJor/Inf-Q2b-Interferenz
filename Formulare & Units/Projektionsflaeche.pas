@@ -508,8 +508,10 @@ begin
 end;
 
 procedure TFrmProjektionsflaeche.BtnResetClick(Sender: TObject);
+var myFormatSettings:TFormatSettings;
 begin
   Reset;
+  TBZoom.Visible:=false;
 end;
 
 procedure TFrmProjektionsflaeche.Hilfe;
@@ -1186,10 +1188,7 @@ begin
   EdtSpaltabstand.Text:='1';
   EdtSpaltanzahl.Text:='2';
   EdtSchirmAbstand.Text:='10';
-
-  if (myFormatSettings.DecimalSeparator=#$18) then
-    EdtSpaltbreite.Text:='0,1' else
-    EdtSpaltbreite.Text:='0.1';
+  EdtSpaltbreite.Text:=FloatToStr(0.1);
 
   //Hilfe
   Hilfe_aus;
