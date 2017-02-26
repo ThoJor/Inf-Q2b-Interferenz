@@ -17,22 +17,26 @@ const
   KOrange= 0.00000062;
   KRot= 0.000000705;
 
-  //Schriftgroesse/ -art/ -farbe
-  Ueberschrift= 20;
-  Schrift= 12;
+  //Objekte
+  KAnzahlCheckboxen= 4;
+  KEditLeft= 0;
+
+  //Schrift
   Schriftart= 'Arial';
   Schriftfarbe= clBlack;
 
+var
+  //Objekte
+  KCheckBoxHoehe: ShortInt; //Screen.Height div 54;
+  KCheckBoxWidth: ShortInt; //Screen.Width div 6;
+  KLabelHoehe: ShortInt; //Screen.Height div 54;
+  KLabelLeft: ShortInt; //Screen.Width div 192;
+  KEditHoehe: ShortInt; //Screen.Height div 54;
+  KPanelHoehe: ShortInt; //Screen.Height div 22;
 
-  KCheckBoxHoehe= 20;
-  KCheckBoxWidth= 300;
-  KAnzahlCheckboxen= 4;
-
-  KLabelHoehe= 20;
-  KLabelLeft= 10;
-  KEditHoehe= 20;
-  KEditLeft= 0;
-  KPanelHoehe= 50;
+  //Schrift
+  Ueberschrift: ShortInt; //Screen.Width div 96;
+  Schrift: ShortInt; //Screen.Width div 160;
 
 
 implementation
