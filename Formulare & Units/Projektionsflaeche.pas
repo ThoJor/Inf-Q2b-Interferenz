@@ -114,6 +114,7 @@ type
     procedure Strich_Zeichnen(x:Integer;farbe:TColor);
     function Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
     procedure TBZoomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure TabOrder;
   private
     { Private-Deklarationen }
   public
@@ -135,6 +136,32 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TFrmProjektionsflaeche.TabOrder;
+begin
+  CmbEinheit.TabStop:= true;
+  CmbEinheit.TabOrder:= 0;
+  EdtEingabe.TabStop:= true;
+  EdtEingabe.TabOrder:= 1;
+  BtnOptionen.TabStop:= true;
+  BtnOptionen.TabOrder:= 2;
+  EdtSpaltbreite.TabStop:= true;
+  EdtSpaltbreite.TabOrder:= 3;
+  EdtSpaltabstand.TabStop:= true;
+  EdtSpaltabstand.TabOrder:= 4;
+  EdtSpaltanzahl.TabStop:= true;
+  EdtSpaltanzahl.TabOrder:= 5;
+  EdtSchirmAbstand.TabStop:= true;
+  EdtSchirmAbstand.TabOrder:= 6;
+  BtnStart.TabStop:= true;
+  BtnStart.TabOrder:= 7;
+  BtnReset.TabStop:= true;
+  BtnReset.TabOrder:= 8;
+  BtnBeenden.TabStop:= true;
+  BtnBeenden.TabOrder:= 9;
+  BtnHilfe.TabStop:= true;
+  BtnHilfe.TabOrder:= 10;
+end;
 
 procedure TFrmProjektionsflaeche.Farbe_Rot;
 begin
@@ -545,6 +572,7 @@ end;
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
 begin
   Schrifteinstellungen;
+  TabOrder;
   Fenstereinstellungen;
   Canvaseinstellungen;
   Optionen;
