@@ -146,7 +146,7 @@ begin
   PnlRot.ParentBackground:= false;
   PnlRot.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KRot*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlRot.Hint:='Klicken, um rotes Licht zu simulieren';
+  PnlRot.Hint:='Klicken, um die Simulation mit rotem Licht durchzuführen';
   PnlRot.ShowHint:=true;
 end;
 
@@ -160,7 +160,7 @@ begin
   PnlOrange.ParentBackground:= false;
   PnlOrange.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KOrange*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlOrange.Hint:='Klicken, um oranges Licht zu simulieren';
+  PnlOrange.Hint:='Klicken, um die Simulation mit orangem Licht durchzuführen';
   PnlOrange.ShowHint:=true;
 end;
 
@@ -174,7 +174,7 @@ begin
   PnlGelb.ParentBackground:= false;
   PnlGelb.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KGelb*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlGelb.Hint:='Klicken, um gelbes Licht zu simulieren';
+  PnlGelb.Hint:='Klicken, um die Simulation mit gelbem Licht durchzuführen';
   PnlGelb.ShowHint:=true;
 end;
 
@@ -188,7 +188,7 @@ begin
   PnlGruen.ParentBackground:= false;
   PnlGruen.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KGruen*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlGruen.Hint:='Klicken, um grünes Licht zu simulieren';
+  PnlGruen.Hint:='Klicken, um die Simulation mit grünem Licht durchzuführen';
   PnlGruen.ShowHint:=true;
 end;
 
@@ -202,7 +202,7 @@ begin
   PnlBlau.ParentBackground:= false;
   PnlBlau.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KBlau*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlBlau.Hint:='Klicken, um blaues Licht zu simulieren';
+  PnlBlau.Hint:='Klicken, um die Simulation mit blauem Licht durchzuführen';
   PnlBlau.ShowHint:=true;
 end;
 
@@ -216,7 +216,7 @@ begin
   PnlViolett.ParentBackground:= false;
   PnlViolett.Color:= StringToColor('$00' + Ufarbtabelle.Farbe(Konstantenbox.KViolett*(Power(10,(9)))));
   TBZoom.Visible:= true;
-  PnlViolett.Hint:='Klicken, um violettes Licht zu simulieren';
+  PnlViolett.Hint:='Klicken, um die Simulation mit violettem Licht durchzuführen';
   PnlViolett.ShowHint:=true;
 end;
 
@@ -254,7 +254,7 @@ begin
   BtnOptionen.Left:= 20;
   BtnOptionen.Width:= Schirm.Left - (BtnOptionen.Left * 2);
   BtnOptionen.Caption:= 'graphische Optionen';
-  BtnOptionen.hint:='Klicken, um graphische Optionen anzuzeigen';
+  BtnOptionen.Hint:='Klicken, um die Optionen für die graphische Darstellungsweise anzuzeigen';
 end;
 
 procedure TFrmProjektionsflaeche.Option_Spaltabstand;
@@ -264,7 +264,7 @@ begin
   EdtSpaltabstand.Left:= Konstantenbox.KEditLeft;
   EdtSpaltabstand.Width:= Schirm.Left - EdtSpaltabstand.Left;
   EdtSpaltabstand.Text:= '1';
-  EdtSpaltabstand.Hint:='Spaltabstand von X bis Y mm eingeben';
+  EdtSpaltabstand.Hint:='Spaltabstand über 0 und unter 1001 mm eingeben';
   EdtSpaltabstand.ShowHint:=true;
 
   LblSpaltabstand.Top:= EdtSpaltabstand.Top - LblSpaltabstand.Height;
@@ -280,7 +280,7 @@ begin
   EdtSpaltanzahl.Left:= Konstantenbox.KEditLeft;
   EdtSpaltanzahl.Width:= Schirm.Left - EdtSpaltanzahl.Left;
   EdtSpaltanzahl.Text:= '2';
-  EdtSpaltanzahl.Hint:='Spaltanzahl von 1 bis X eingeben';
+  EdtSpaltanzahl.Hint:='Spaltanzahl von 1 bis 1000 eingeben';
   EdtSpaltanzahl.ShowHint:=true;
 
   LblSpaltanzahl.Top:= EdtSpaltanzahl.Top - LblSpaltanzahl.Height;
@@ -296,7 +296,7 @@ begin
   EdtSpaltbreite.Left:= Konstantenbox.KEditLeft;
   EdtSpaltbreite.Width:= Schirm.Left - EdtSpaltbreite.Left;
   EdtSpaltbreite.Text:= '0.1';
-  EdtSpaltbreite.Hint:='Spaltbreite von X bis Y mm eingeben';
+  EdtSpaltbreite.Hint:='Spaltbreite über 0 und unter 1001 mm eingeben';
   EdtSpaltbreite.ShowHint:=true;
 
   LblSpaltbreite.Top:= EdtSpaltbreite.Top - LblSpaltbreite.Height;
@@ -312,7 +312,7 @@ begin
   EdtSchirmAbstand.Left:= Konstantenbox.KEditLeft;
   EdtSchirmAbstand.Width:= Schirm.Left - EdtSchirmAbstand.Left;
   EdtSchirmAbstand.Text:= '10';
-  EdtSchirmAbstand.Hint:='Abstand zwischen Spalt und Schirm von X bis Y eingeben';
+  EdtSchirmAbstand.Hint:='Abstand zwischen Spalt und Schirm über 0 und unter 1001 eingeben';
   EdtSchirmAbstand.ShowHint:=true;
 
   LblSchirmAbstand.Top:= EdtSchirmAbstand.Top - LblSchirmAbstand.Height;
@@ -461,7 +461,7 @@ begin
   BtnHilfe.Top:=(EdtAusgabe.Top + EdtAusgabe.Height) + 10;
   BtnHilfe.Left:=BtnBeenden.Left+BtnReset.Width+5;
   BtnHilfe.Caption:= 'Hilfe';
-  BtnHilfe.Hint:='Klicken, um Hilfe anzuzeigen';
+  BtnHilfe.Hint:='Klicken, um das Hilfe-Overlay anzuzeigen';
   BtnHilfe.ShowHint:=true;
 
   //Alle Labels unsichtbar machen
@@ -485,7 +485,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Hilfe;
 begin
-  BtnHilfe.Hint:='Klicken, um Hilfe zu verbergen';
+  BtnHilfe.Hint:='Klicken, um das Hilfe-Overlay zu verbergen';
 
   //Hilfe Schirm
   LblHilfeSchirm.Visible:= true;
@@ -513,7 +513,7 @@ begin
 
   //experimento v5
   EdtEingabe.ShowHint:=true;
-  EdtEingabe.Hint:='Frequenz oder Wellenlaenge eingeben';
+  EdtEingabe.Hint:='Frequenz bzw. Wellenlaenge eingeben';
 
   //dem Programm mitteilen, dass das Overlay eingeblendet ist
   GHilfe:= true;
@@ -521,7 +521,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Hilfe_aus;
 begin
-  BtnHilfe.Hint:='Klicken, um Hilfe anzuzeigen';
+  BtnHilfe.Hint:='Klicken, um das Hilfe-Overlay anzuzeigen';
 
   //alle Overlay-Labels verstecken
   LblHilfeSchirm.Visible:= false;
@@ -581,7 +581,7 @@ begin
   BtnReset.Width :=Round((PnlFarbe.Width-6)/5);
   BtnReset.Height := Konstantenbox.Schrift+10;
   BtnReset.Caption := 'Reset';
-  BtnReset.Hint:= 'Klicken, um auf Anfangszustand zurückzusetzen';
+  BtnReset.Hint:= 'Klicken, um den Ausgangszustand wiederherzustellen';
   BtnReset.ShowHint:=true;
 end;
 
@@ -592,7 +592,7 @@ begin
   BtnBeenden.Width:=Round((PnlFarbe.Width-6)/5);
   BtnBeenden.Height:=Konstantenbox.Schrift+10;
   BtnBeenden.Caption:='Beenden';
-  BtnBeenden.Hint:='Klicken, um zu Beenden';
+  BtnBeenden.Hint:='Klicken, um das Fenster zu schließen';
   BtnBeenden.ShowHint:=true;
 end;
 
@@ -608,7 +608,7 @@ begin
   TBZoom.Frequency:=2;
   TBZoom.Position:=100;
   TBZoom.Visible:=False;
-  TBZoom.Hint:='Verschieben, um die Vergrößerung in Prozent einzustellen';
+  TBZoom.Hint:='Verschieben, um den Zoomfaktor zu verändern (Werte in Prozent)';
   TbZoom.ShowHint:=true;
 end;
 
