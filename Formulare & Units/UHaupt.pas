@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UInfo, UVersuchsuebersicht, UToolbox, Projektionsflaeche,
-  Vcl.ExtCtrls, Vcl.StdCtrls, Konstantenbox;
+  Vcl.ExtCtrls, Vcl.StdCtrls;
 
 type
   TFrmHaupt = class(TForm)
@@ -41,6 +41,8 @@ var
 implementation
 
 {$R *.dfm}
+
+uses Konstantenbox;
 
 
 //Programm beim Schlieﬂen terminieren
