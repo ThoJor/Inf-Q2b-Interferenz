@@ -115,6 +115,7 @@ type
     function Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
     procedure TBZoomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure TabOrder;
+    procedure EdtSpaltanzahlChange(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -808,6 +809,16 @@ const
 begin
   if Key=#13 then BtnStart.Click;
   if not (Key in AllowKeys) then Key := #0;
+end;
+
+procedure TFrmProjektionsflaeche.EdtSpaltanzahlChange(Sender: TObject);
+begin
+  if (EdtSpaltanzahl.Text<>'') and (GStartet=true) then
+    begin
+      if strToInt(EdtSpaltanzahl.Text)>2 then
+          TBZoom.Min:=52 else
+          TBZoom.Min:=10;
+    end;
 end;
 
 procedure TFrmProjektionsflaeche.EdtSpaltanzahlKeyPress(Sender: TObject;
