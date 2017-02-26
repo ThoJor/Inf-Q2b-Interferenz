@@ -30,6 +30,7 @@ type
     procedure TimerProjektionsflaecheTimer(Sender: TObject);
     procedure BtnBeendenClick(Sender: TObject);
     procedure dynamischeKonstanten;
+    procedure TabOrder;
   private
     { Private-Deklarationen }
   public
@@ -48,6 +49,16 @@ implementation
 procedure TFrmHaupt.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Application.Terminate;
+end;
+
+procedure TFrmHaupt.TabOrder;
+begin
+  BtnStart.TabStop:= true;
+  BtnStart.TabOrder:= 0;
+  BtnVersuchsaufbau.TabStop:= true;
+  BtnVersuchsaufbau.TabOrder:= 1;
+  BtnBeenden.TabStop:= true;
+  BtnBeenden.TabOrder:= 2;
 end;
 
 procedure TFrmHaupt.dynamischeKonstanten;
@@ -70,6 +81,7 @@ end;
 procedure TFrmHaupt.FormCreate(Sender: TObject);
 begin
   dynamischeKonstanten;
+  TabOrder;
   HomeSettings;
   HeadingSettings;
   BtnStartSettings;
