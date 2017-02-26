@@ -836,7 +836,6 @@ var Frequenz: real;
 begin
   //Programmstart
   GStartet:=true;
-  TbZoom.Position:=100;
   GetLocaleFormatSettings(GetThreadLocale, myFormatSettings);
   //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
   if STrToInt(EdtSpaltanzahl.Text)<1 then
@@ -971,7 +970,6 @@ end;
 //Panel Blau
 procedure TFrmProjektionsflaeche.PnlBlauClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KBlau;
     EditFuellerBeiPanelbedienung(Konstantenbox.KBlau);
     BtnStart.Click;
@@ -980,7 +978,6 @@ end;
 //Panel Gelb
 procedure TFrmProjektionsflaeche.PnlGelbClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KGelb;
     EditFuellerBeiPanelbedienung(Konstantenbox.KGelb);
     BtnStart.Click;
@@ -989,7 +986,6 @@ end;
 //Panel Gruen
 procedure TFrmProjektionsflaeche.PnlGruenClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KGruen;
     EditFuellerBeiPanelbedienung(Konstantenbox.KGruen);
     BtnStart.Click;
@@ -998,7 +994,6 @@ end;
 //Panel Orange
 procedure TFrmProjektionsflaeche.PnlOrangeClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KOrange;
     EditFuellerBeiPanelbedienung(GWellenlaenge);
     BtnStart.Click;
@@ -1007,7 +1002,6 @@ end;
 //Panel Rot
 procedure TFrmProjektionsflaeche.PnlRotClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KRot;
     EditFuellerBeiPanelbedienung(Konstantenbox.KRot);
     BtnStart.Click;
@@ -1016,7 +1010,6 @@ end;
 //Panel Violett
 procedure TFrmProjektionsflaeche.PnlViolettClick(Sender: TObject);
 begin
-    TBzoom.Position:=100;
     GWellenlaenge := Konstantenbox.KViolett;
     EditFuellerBeiPanelbedienung(Konstantenbox.KViolett);
     BtnStart.Click;
