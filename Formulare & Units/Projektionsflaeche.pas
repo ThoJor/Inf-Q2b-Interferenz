@@ -139,10 +139,10 @@ implementation
 
 procedure TFrmProjektionsflaeche.TabOrder;
 begin
-  CmbEinheit.TabStop:= true;
-  CmbEinheit.TabOrder:= 1;
   EdtEingabe.TabStop:= true;
   EdtEingabe.TabOrder:= 0;
+  CmbEinheit.TabStop:= true;
+  CmbEinheit.TabOrder:= 1;
   BtnOptionen.TabStop:= true;
   BtnOptionen.TabOrder:= 2;
   EdtSpaltbreite.TabStop:= true;
