@@ -116,6 +116,7 @@ type
     procedure TBZoomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure TabOrder;
     procedure EdtSpaltanzahlChange(Sender: TObject);
+    procedure ZoomPfusch;
   private
     { Private-Deklarationen }
   public
@@ -779,6 +780,7 @@ end;
 procedure TFrmProjektionsflaeche.EdtEingabeChange(Sender: TObject);
 begin
   EdtAusgabe.Text:='';
+  ZoomPfusch;
 end;
 
 procedure TFrmProjektionsflaeche.EdtEingabeKeyPress(Sender: TObject;
@@ -813,12 +815,7 @@ end;
 
 procedure TFrmProjektionsflaeche.EdtSpaltanzahlChange(Sender: TObject);
 begin
-  if (EdtSpaltanzahl.Text<>'') and (GStartet=true) then
-    begin
-      if (strToInt(EdtSpaltanzahl.Text)>2) and ((strToInt(EdtEingabe.Text)>500) or (strToInt(EdtEingabe.Text)<59.9585)) then
-          TBZoom.Min:=36 else
-          TBZoom.Min:=10;
-    end;
+  ZoomPfusch;
 end;
 
 procedure TFrmProjektionsflaeche.EdtSpaltanzahlKeyPress(Sender: TObject;
@@ -1510,5 +1507,14 @@ begin
   result:=RGB(R, G, B);
 end;
 
+procedure TFrmProjektionsflaeche.ZoomPfusch;
+begin
+  if (EdtSpaltanzahl.Text<>'') and (GStartet=true) then
+    begin
+      if (strToInt(EdtSpaltanzahl.Text)>2) and ((strToInt(EdtEingabe.Text)>500) or (strToInt(EdtEingabe.Text)<59.9585)) then
+          TBZoom.Min:=36 else
+          TBZoom.Min:=10;
+    end;
+end;
 
 end.
