@@ -148,12 +148,6 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment>
-                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\15.0\Bpl\PackageInterferenzo.bpl" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>PackageInterferenzo.bpl</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="PackageInterferenzo.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>PackageInterferenzo.bpl</RemoteName>
@@ -161,6 +155,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="..\..\..\..\..\Public\Documents\Embarcadero\Studio\15.0\Bpl\PackageInterferenzo.bpl" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>PackageInterferenzo.bpl</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\15.0\Bpl\PackageInterferenzo.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>PackageInterferenzo.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
