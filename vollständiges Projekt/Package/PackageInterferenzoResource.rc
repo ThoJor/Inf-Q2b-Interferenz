@@ -1,0 +1,3 @@
+Icon_1 ICON "..\\Win32\\Debug\\Interferenzo_Logo.ico"
+PngImage_1 RCDATA "..\\Win32\\Debug\\Interferenzo_Logo.png"
+PngImage_2 RCDATA "..\\Win32\\Debug\\TYoung.png"
