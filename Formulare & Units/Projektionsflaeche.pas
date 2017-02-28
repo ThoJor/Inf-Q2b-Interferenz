@@ -46,6 +46,7 @@ type
     LblEingabe: TLabel;
     LblAusgabe: TLabel;
     EdtSpaltanzahl: TEdit;
+    LblZoom: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -506,6 +507,7 @@ begin
   LblHilfeSchirm.Visible:= false;
   LblHilfeEinstellungen.Visible:= false;
   LblHilfeEinstellungen2.Visible:= false;
+  LblZoom.Visible:=false;
 
   //Hilfe ist inaktiv -> GHilfe:= false
   GHilfe:= false;
@@ -551,6 +553,17 @@ begin
   LblHilfeEinstellungen2.Color:=clwhite;
   LblHilfeEinstellungen2.Caption:= 'Wellenlänge, Frequenz oder Farbe (zum Auswählen der Farbe auf diese klicken)';
 
+  //TBZoom Hilfe
+  with LblZoom do
+    begin
+      visible:=true;
+      top:= TBZoom.Top;
+      Caption:='Verschieben, um die Vergrößerung in Prozent zu ändern -->';
+      Transparent:=false;
+      Color:=clWhite;
+      Left:=TBZoom.left-LblZoom.Width;
+    end;
+
   //experimento v5
   EdtEingabe.ShowHint:=true;
   EdtEingabe.Hint:='Frequenz bzw. Wellenlaenge eingeben';
@@ -567,6 +580,7 @@ begin
   LblHilfeSchirm.Visible:= false;
   LblHilfeEinstellungen.Visible:= false;
   LblHilfeEinstellungen2.Visible:= false;
+  LblZoom.Visible:=false;
 
   //dem Programm mitteilen, dass das Overlay ausgeblendet ist
   GHilfe:= false;
