@@ -867,6 +867,11 @@ begin
   GStartet:=true;
   GetLocaleFormatSettings(GetThreadLocale, myFormatSettings);
   //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
+  if EdtSpaltanzahl.Text='' then begin
+                                   Showmessage('Bitte gib eine Spaltanzahl ein!');
+                                   exit;
+                                 end;
+
   if STrToInt(EdtSpaltanzahl.Text)<1 then
     begin
       ShowMessage('Die angegebene Spaltanzahl ist zu niedrig.');
@@ -882,7 +887,11 @@ begin
 
   EdtSpaltAbstand.Text:=StringReplace(EdtSpaltAbstand.Text,',',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
   EdtSpaltAbstand.Text:=StringReplace(EdtSpaltAbstand.Text,'.',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
-
+    if EdtSpaltabstand.Text='' then begin
+                                      Showmessage('Bitte gib einen Spaltabstand ein!');
+                                      exit;
+                                    end;
+    
     if StrToFloat(EdtSpaltabstand.Text)<0.005 then
       begin
         ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
@@ -898,6 +907,12 @@ begin
 
   EdtSpaltBreite.Text:=StringReplace(EdtSpaltbreite.Text,',',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
   EdtSpaltBreite.Text:=StringReplace(EdtSpaltbreite.Text,'.',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
+
+  if EdtSpaltbreite.Text='' then begin
+                                   Showmessage('Bitte gib eine Spaltbreite ein!');
+                                   exit;
+                                 end;
+
 
   if StrToFloat(EdtSpaltbreite.Text)<=0 then
     begin
@@ -916,6 +931,11 @@ begin
   EdtSchirmAbstand.Text:=StringReplace(EdtSchirmAbstand.Text,',',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
   EdtSchirmAbstand.Text:=StringReplace(EdtSchirmAbstand.Text,'.',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
 
+  if EdtSchirmabstand.Text='' then begin
+                                     Showmessage('Bitte gib einen Abstand von Schirm und Blende an!');
+                                     exit;
+                                   end;
+
     if StrToFloat(EdtSchirmAbstand.Text)<= 0 then
       begin
         ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu niedrig.');
@@ -931,7 +951,7 @@ begin
   //Fehlerabfrage für fehlende Eingabe
   if (EdtEingabe.Text = '') {and (EdtAusgabe.Text = '')} then
     begin
-      Showmessage('Das Fehlen einer Angabe der Wellenlänge/Frequenz war doch ein Versehen, oder?');
+      Showmessage('Bitte gib eine Frequenz bzw. Wellenlänge an!');
       exit;
     end;
 
