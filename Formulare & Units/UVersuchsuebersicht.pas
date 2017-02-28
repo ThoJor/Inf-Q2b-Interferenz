@@ -54,6 +54,8 @@ end;
 //Einstellungen bezueglich des Formulars an sich
 procedure TFormVersuchsuebersicht.FormEinstellungen();
 begin
+  FormVersuchsuebersicht.Borderstyle:=bsSingle;
+  FormVersuchsuebersicht.Position:=poDefault;
   FormVersuchsuebersicht.Height := 600;
   FormVersuchsuebersicht.Width := 800;
   FormVersuchsuebersicht.Caption := 'Interferenzo - Versuchsübersicht';

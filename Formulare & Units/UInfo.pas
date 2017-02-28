@@ -49,7 +49,8 @@ begin
   FormInfo.Caption := 'Nutzungsbedingungen & Kontaktinformationen';
   FormInfo.Width := 400;
   FormInfo.Height := 900;
-  FormInfo.BorderStyle := bsDialog;
+  FormInfo.BorderStyle := bsSingle;
+  FormInfo.Position:=poDefault;
 end;
 
 //Eigenschaften der Ueberschrift für die Nutzungsbedingungen
