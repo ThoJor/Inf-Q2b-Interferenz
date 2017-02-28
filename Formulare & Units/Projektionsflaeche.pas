@@ -67,7 +67,7 @@ type
     procedure Farbe_Gelb;
     procedure Farbe_Orange;
     procedure Farbe_Rot;
-    procedure Lineal_Strich(x:Integer);
+    procedure Lineal_Strich(x,K:Integer);
     procedure Linealskala;
     procedure Lineal;
     procedure Zoomleiste;
@@ -649,11 +649,7 @@ begin
 end;
 
 procedure TFrmProjektionsflaeche.Lineal;
-var Exponent : Integer;
 begin
-  Exponent:=1;
-  if GDynZoom>0 then Exponent:=GZoom;
-
   //Groeße und Position des Image
   ImgLineal.Height:=Round((1/15) * FrmProjektionsflaeche.Height);
   ImgLineal.Width:= Schirm.Width;
@@ -669,6 +665,59 @@ begin
       //Textout(penpos.x,penpos.y,'in m');
     end;
   Linealskala;
+end;
+
+procedure TFrmProjektionsflaeche.Lineal_Strich(x,K:Integer);
+var Beschriftung : real;
+begin
+  with ImgLineal.Canvas do
+    begin
+      moveto(x,1);
+      lineto(x,Round(ImgLineal.Height/3*2));
+      //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
+      Beschriftung:=K/(TBZoom.position/100);
+      textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
+    end;
+end;
+
+procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
+var
+  Strichabstand,Exponent, I,J,K : Integer;
+  Beschriftung: Real;
+begin
+  if GLineal=false then else
+  //Graphische Optionen - CBLineal
+  // if graphische_Optionen.CBLineal.checked:=true then
+  Strichabstand:=100;
+  J:=0;
+  K:=0;
+  with ImgLineal.Canvas do
+    begin
+      //Striche von Mitte->Rechts mit Beschriftung
+      for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
+        begin
+          J:=J+1;
+          if J = Strichabstand then begin
+                                   K:=K+1;
+                                   Lineal_Strich(I,K);
+                                   J:=0;
+                                 end;
+        end;
+      //Striche von Mitte->Links mit Beschriftung
+      J:=Strichabstand;
+      K:=-1;
+      for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
+        begin
+          J:=J-1;
+          if J = 0 then begin
+                          K:=K+1;
+                          Lineal_Strich(I,K);
+                          J:=Strichabstand;
+                        end;
+        end;
+    end;
+  Exponent:=1;
+    if GDynZoom>0 then Exponent:=GZoom;
   //Einheit-Label
   With LblLinealEinheit do
   begin
@@ -680,61 +729,6 @@ begin
   end;
 end;
 
-procedure TFrmProjektionsflaeche.Lineal_Strich(x:Integer);
-begin
-  with ImgLineal.Canvas do
-    begin
-      moveto(ImgLineal.Width div 2 + x,1);
-      lineto(ImgLineal.Width div 2 + x,Round(ImgLineal.Height/3*2));
-    end;
-end;
-
-procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
-var
-  Strichabstand, I,J,K : Integer;
-  Beschriftung: Real;
-begin
-  if GLineal=false then else
-  //Graphische Optionen - CBLineal
-  // if graphische_Optionen.CBLineal.checked:=true then
-  Strichabstand:=100;
-  J:=0;
-  K:=0;
-  with ImgLineal.Canvas do
-    begin
-      //Striche von Mitte->Links mit Beschriftung
-      for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
-        begin
-          J:=J+1;
-          if J = Strichabstand then begin
-                                   moveto(I,1);
-                                   lineto(I,Round(ImgLineal.Height/3*2));
-                                   J:=0;
-                                   K:=K+1;
-                                   //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
-                                   Beschriftung:=K/(TBZoom.position/100);
-                                   textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
-                                 end;
-        end;
-      //Striche von Mitte->Rechts mit Beschriftung
-      J:=Strichabstand;
-      K:=-1;
-      for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
-        begin
-          J:=J-1;
-          if J = 0 then begin
-                          moveto(I,1);
-                          lineto(I,Round(ImgLineal.Height/3*2));
-                          J:=Strichabstand;
-                          K:=K+1;
-                          //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
-                          Beschriftung:=K/(TBZoom.position/100);
-                          textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
-                        end;
-
-        end;
-    end;
-end;
 
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
