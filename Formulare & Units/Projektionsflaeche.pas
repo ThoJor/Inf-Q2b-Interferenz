@@ -363,6 +363,7 @@ begin
   EdtAusgabe.Width:= (Schirm.Left - EdtAusgabe.Left) div 3*2;
   EdtAusgabe.Text:= '';
   EdtAusgabe.ReadOnly:=false;
+  EdtAusgabe.Enabled:=False;
 end;
 
 procedure TFrmProjektionsflaeche.Option_Eingabe;
@@ -1209,19 +1210,17 @@ end;
 
 procedure TFrmProjektionsflaeche.Combobox;
 begin
-  CmbEinheit.Top:= PnlOptionen.Height + PnlOptionen.Top + 5;
-  CmbEinheit.Width:= EdtEingabe.Width div 2;
-  CmbEinheit.Left:= Konstantenbox.KEditLeft;
-  CmbEinheit.Height:= Konstantenbox.KEditHoehe;
-  CmbEinheit.Hint:='Frequenz bzw. Wellenlänge einstellen';
+  CmbEinheit.Top:= 5 + PnlOptionen.Top + PnlOptionen.Height;
+  CmbEinheit.Left:= 0;
+  CmbEinheit.Width:= (Schirm.Left - LblEingabe.Left) div 2;
+  //CmbEinheit.Height:= Konstantenbox.KEditHoehe;
   CmbEinheit.ShowHint:=true;
+  CmbEinheit.Hint:='Frequenz bzw. Wellenlänge einstellen';
   CmbEinheit.Style:=csDropDownList;
 
   CmbEinheit.AddItem('Wellenlänge', nil);
   CmbEinheit.AddItem('Frequenz', nil);
   CmbEInheit.ItemIndex := 0;
-
-  EdtAusgabe.Enabled:=False;
 end;
 
 procedure TFrmProjektionsflaeche.EdtEingabeEinheiten;
