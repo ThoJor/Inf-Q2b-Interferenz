@@ -13,24 +13,24 @@ type
     BtnStart: TButton;
     BtnVersuchsaufbau: TButton;
     LInfo: TLabel;
-    TimerProjektionsflaeche: TTimer;
     BtnBeenden: TButton;
     ImgLogo: TImage;
     procedure FormCreate(Sender: TObject);
-    procedure HomeSettings();
-    procedure HeadingSettings();
-    procedure BtnStartSettings();
-    procedure LogoSettings();
-    procedure BtnVersuchsaufbauSettings();
-    procedure LInfoSettings();
+    procedure HomeSettings;
+    procedure HeadingSettings;
+    procedure BtnStartSettings;
+    procedure LogoSettings;
+    procedure BtnVersuchsaufbauSettings;
+    procedure LInfoSettings;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BtnStartClick(Sender: TObject);
     procedure BtnVersuchsaufbauClick(Sender: TObject);
     procedure LInfoClick(Sender: TObject);
-    procedure TimerProjektionsflaecheTimer(Sender: TObject);
     procedure BtnBeendenClick(Sender: TObject);
     procedure dynamischeKonstanten;
     procedure TabOrder;
+    procedure BtnBeendenSettings;
+    procedure FensterSettings;
   private
     { Private-Deklarationen }
   public
@@ -39,31 +39,35 @@ type
 
 var
   FrmHaupt: TFrmHaupt;
+  //Hilfsvariable für LInfo - enthaelt BtnVersuchsaufbau.Top
+  VUTop: Integer;
+  //Hilfsvariable für LInfo - enthält BtnVersuchsaufbau.Height
+  VUHeight: Integer;
 
 implementation
 
 {$R *.dfm}
 
-
-//Programm beim Schliessen terminieren
-procedure TFrmHaupt.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TFrmHaupt.FormCreate(Sender: TObject);
 begin
-  Application.Terminate;
-end;
+  //Um Skalierung von dem OS zu verhindern
+  FrmHaupt.Scaled:= false;
 
-procedure TFrmHaupt.TabOrder;
-begin
-  BtnStart.TabStop:= true;
-  BtnStart.TabOrder:= 0;
-  BtnVersuchsaufbau.TabStop:= true;
-  BtnVersuchsaufbau.TabOrder:= 1;
-  BtnBeenden.TabStop:= true;
-  BtnBeenden.TabOrder:= 2;
+  dynamischeKonstanten;
+  TabOrder;
+  HomeSettings;
+  HeadingSettings;
+  LogoSettings;
+  BtnStartSettings;
+  BtnVersuchsaufbauSettings;
+  LInfoSettings;
+  BtnBeendenSettings;
+  Fenstersettings;
 end;
 
 procedure TFrmHaupt.dynamischeKonstanten;
 begin
-  {Festlegen der Bildschirmspezifischen Konstanten (Abhaengig von der Aufloesung des Bildschirms)}
+  //Festlegen der Bildschirmspezifischen Konstanten (Abhaengig von der Aufloesung des Bildschirms)
 
   //Objekte
   Konstantenbox.KCheckBoxHoehe:= Screen.Height div 54;
@@ -78,77 +82,36 @@ begin
   Konstantenbox.Schrift:= Screen.Width div 160
 end;
 
-procedure TFrmHaupt.FormCreate(Sender: TObject);
+procedure TFrmHaupt.TabOrder;
 begin
-  dynamischeKonstanten;
-  TabOrder;
-  HomeSettings;
-  HeadingSettings;
-  BtnStartSettings;
-  LogoSettings;
-  BtnVersuchsaufbauSettings;
-  LInfoSettings;
-
-  TimerProjektionsflaeche.Enabled:= false;
-
-  FrmHaupt.BorderStyle:= bsNone;
-
-  BtnBeenden.Caption:= 'Beenden';
-  BtnBeenden.Top:=(FrmHaupt.ClientHeight div 6)*5+15;
-  BtnBeenden.Left:=(FrmHaupt.ClientWidth div 5)*4;
+  BtnStart.TabStop:= true;
+  BtnStart.TabOrder:= 0;
+  BtnVersuchsaufbau.TabStop:= true;
+  BtnVersuchsaufbau.TabOrder:= 1;
+  BtnBeenden.TabStop:= true;
+  BtnBeenden.TabOrder:= 2;
 end;
 
 //Eigenschaften des Hauptmenues
-procedure TFrmHaupt.HomeSettings();
+procedure TFrmHaupt.HomeSettings;
 begin
-  FrmHaupt.Width := 400;
-  FrmHaupt.Height := 400;
-  FrmHaupt.BorderStyle := bsDialog;
-  FrmHaupt.Caption := 'Interferenzo - Home';
-  FrmHaupt.Position := poScreenCenter;
+  FrmHaupt.BorderStyle:= bsNone;
+  FrmHaupt.Caption:= 'Interferenzo - Home';
 end;
 
 //Eigenschaften der Ueberschrift
 procedure TFrmHaupt.HeadingSettings;
 begin
-  LProgrammname.AutoSize := false;
-  LProgrammname.Left := 0;
-  LProgrammname.Top := FrmHaupt.Height div 20;
-  LProgrammname.Width := FrmHaupt.Width;
-  LProgrammname.Font.Size := Konstantenbox.Ueberschrift;
-  LProgrammname.Height := LProgrammname.Font.Size + 10;
-  LProgrammname.Alignment := tacenter;
-  LProgrammname.Layout := tlcenter;
-  LProgrammname.Caption := 'Interferenzo';
-  LProgrammname.Font.Color := Konstantenbox.Schriftfarbe;
-  LProgrammname.Font.Style := [fsunderline];
+  LProgrammname.AutoSize:= true;
+  LProgrammname.WordWrap:= false;
+  LProgrammname.Left:= 0;
+  LProgrammname.Top:= Screen.Height div 54;
+  LProgrammname.Alignment:= taCenter;
+  LProgrammname.Caption:= 'Interferenzo';
+  LProgrammname.Font.Style:= [fsunderline];
+  LProgrammname.Font.Size:= Konstantenbox.Ueberschrift;
+  LProgrammname.Font.Color:= Konstantenbox.Schriftfarbe;
   LProgrammname.Font.Name:= Konstantenbox.Schriftart;
-end;
-
-//Zeigen der Projektionsflaeche und Verstecken des Hauptmenues
-procedure TFrmHaupt.BtnBeendenClick(Sender: TObject);
-begin
-  Application.Terminate;
-end;
-
-procedure TFrmHaupt.BtnStartClick(Sender: TObject);
-begin
-  FrmProjektionsflaeche.Show;
-  TimerProjektionsflaeche.Enabled:= true;
-  FrmProjektionsflaeche.Reset;
-end;
-
-
-//Eigenschaften des Start-Buttons
-procedure TFrmHaupt.BtnStartSettings;
-begin
-  BtnStart.Top := LProgrammname.Top + Round(2.5*(FrmHaupt.Height div 5));
-  BtnStart.Left := FrmHaupt.Width div 10;
-  BtnStart.Width := FrmHaupt.Width - (FrmHaupt.Width div 5);
-  BtnStart.Caption := 'Start';
-  BtnStart.Font.Size:= Konstantenbox.Schrift;
-  BtnStart.Font.Color:= Konstantenbox.Schriftfarbe;
-  BtnStart.Font.Name:= Konstantenbox.Schriftart;
 end;
 
 procedure TFrmHaupt.LogoSettings;
@@ -157,62 +120,104 @@ begin
   Path:= GetCurrentDir;
 
   ImgLogo.Stretch:= true;
-  ImgLogo.Top:= LProgrammname.Top + LProgrammname.Height + FrmHaupt.Height div 20;
-  ImgLogo.Height:= BtnStart.Top - ImgLogo.Top - FrmHaupt.Height div 20;
+  ImgLogo.Top:= LProgrammname.Top + LProgrammname.Height + (Screen.Height div 54);
+  ImgLogo.Height:= Screen.Height div 5;
   ImgLogo.Width:= ImgLogo.Height;
-  ImgLogo.Left:= FrmHaupt.Width div 2 - ImgLogo.Width div 2;
+  //ImgLogo.Left:= FrmHaupt.Width div 2 - ImgLogo.Width div 2;
   ImgLogo.Picture.LoadFromFile(Path+'\Interferenzo_Logo.png');
 end;
 
+//Eigenschaften des Start-Buttons
+procedure TFrmHaupt.BtnStartSettings;
+begin
+  BtnStart.Top:= ImgLogo.Top + ImgLogo.Height + (Screen.Height div 54);
+  BtnStart.Left := 0; //FrmHaupt.Width div 10;
+  BtnStart.Width:= Screen.Width div 6;
+  BtnStart.Caption:= 'Start';
+  BtnStart.Font.Size:= Konstantenbox.Ueberschrift;
+  BtnStart.Font.Color:= Konstantenbox.Schriftfarbe;
+  BtnStart.Font.Name:= Konstantenbox.Schriftart;
+  BtnStart.Height:= (-1 * BtnStart.Font.Height) + (Screen.Height div 100);
+end;
+
+//Eigenschaften des Versuchsaufbau-Buttons
+procedure TFrmHaupt.BtnVersuchsaufbauSettings;
+begin
+  BtnVersuchsaufbau.Top:= BtnStart.Top + BtnStart.Height + (Screen.Height div 54);
+  //VUTop:= BtnVersuchsaufbau.Top;
+  BtnVersuchsaufbau.Left := 0; //BtnStart.Left;
+  BtnVersuchsaufbau.Width:= Screen.Width div 7;
+  BtnVersuchsaufbau.Caption:= 'Versuchsübersicht';
+  BtnVersuchsaufbau.Font.Size:= Konstantenbox.Schrift;
+  BtnVersuchsaufbau.Font.Color:= Konstantenbox.Schriftfarbe;
+  BtnVersuchsaufbau.Font.Name:= Konstantenbox.Schriftart;
+  BtnVersuchsaufbau.Height:= (-1 * BtnVersuchsaufbau.Font.Height) + (Screen.Height div 100);
+end;
+
+//Eigenschaften des Info-Labels (Inhalt: Nutzungsbedingungen und Kontakt)
+procedure TFrmHaupt.LInfoSettings;
+begin
+  LInfo.Autosize:= true;
+  LInfo.WordWrap:= false;
+  LInfo.Left := Screen.Height div 54;
+  LInfo.Top:=  BtnVersuchsaufbau.Top + BtnVersuchsaufbau.Height + (Screen.Height div 54);
+  LInfo.Alignment:= tacenter;
+  LInfo.Caption:= 'Nutzungsbedingungen und Kontaktinformationen';
+  LInfo.Font.Style:=[fsUnderline];
+  LInfo.Font.Size:= Konstantenbox.Schrift;
+  LInfo.Font.Color:= Konstantenbox.Schriftfarbe;
+  LInfo.Font.Name:= Konstantenbox.Schriftart;
+end;
+
+procedure TFrmHaupt.BtnBeendenSettings;
+begin
+  BtnBeenden.Top:= LInfo.Top + LInfo.Height + (Screen.Height div 54);
+  BtnBeenden.Width:= BtnStart.Width div 3;
+  BtnBeenden.Caption:= 'Beenden';
+  BtnBeenden.Font.Size:= Konstantenbox.Schrift;
+  BtnBeenden.Font.Color:= Konstantenbox.Schriftfarbe;
+  BtnBeenden.Font.Name:= Konstantenbox.Schriftart;
+  BtnBeenden.Height:= (-1 * BtnBeenden.Font.Height) + (Screen.Height div 100);
+  BtnBeenden.Left:= 0 //(FrmHaupt.ClientWidth div 5)*4;}
+end;
+
+procedure TFrmHaupt.FensterSettings;
+begin
+  FrmHaupt.Width:= LInfo.Width + (2 * (Screen.Height div 54));
+  FrmHaupt.Height:= BtnBeenden.Top + BtnBeenden.Height + (Screen.Height div 54);
+  LProgrammname.Left:= (FrmHaupt.Width div 2) - (LProgrammname.Width div 2);
+  ImgLogo.Left:= (FrmHaupt.Width div 2) - (ImgLogo.Width div 2);
+  BtnStart.Left:= (FrmHaupt.Width div 2) - (BtnStart.Width div 2);
+  BtnVersuchsaufbau.Left:= (FrmHaupt.Width div 2) - (BtnVersuchsaufbau.Width div 2);
+  BtnBeenden.Left:= FrmHaupt.Width - BtnBeenden.Width - (Screen.Height div 54);
+
+  FrmHaupt.Position:= poScreenCenter;
+end;
+
+procedure TFrmHaupt.BtnStartClick(Sender: TObject);
+begin
+  FrmProjektionsflaeche.ShowModal;
+  FrmProjektionsflaeche.Reset;
+end;
 
 procedure TFrmHaupt.BtnVersuchsaufbauClick(Sender: TObject);
 begin
   FormVersuchsuebersicht.ShowModal;
 end;
 
-//Eigenschaften des Versuchsaufbau-Buttons
-procedure TFrmHaupt.BtnVersuchsaufbauSettings;
-begin
-  BtnVersuchsaufbau.Top := BtnStart.Top + (FrmHaupt.Height div 10);
-  BtnVersuchsaufbau.Left := BtnStart.Left;
-  BtnVersuchsaufbau.Width := BtnStart.Width;
-  BtnVersuchsaufbau.Caption := 'Versuchsübersicht';
-  //BtnVersuchsaufbau.Size:= Konstantenbox.Schrift;
-  //BtnVersuchsaufbau.Color:= Konstantenbox.Schriftfarbe;
-  BtnVersuchsaufbau.Name:= Konstantenbox.Schriftart;
-end;
-
-
 procedure TFrmHaupt.LInfoClick(Sender: TObject);
 begin
   FormInfo.ShowModal;
 end;
 
-//Eigenschaften des Info-Labels (Inhalt: Nutzungsbedingungen und Kontakt)
-procedure TFrmHaupt.LInfoSettings;
+//Programm beim Schliessen terminieren
+procedure TFrmHaupt.BtnBeendenClick(Sender: TObject);
 begin
-  LInfo.Autosize := false;
-  LInfo.Left := 0;
-  LInfo.Top := FrmHaupt.Height - (FrmHaupt.Height div 5);
-  LInfo.Width := FrmHaupt.Width;
-  LInfo.Font.Size := Konstantenbox.Schrift;
-  LInfo.Height := LInfo.Font.Size + 10;
-  LInfo.Alignment := tacenter;
-  LInfo.Layout := tlcenter;
-  LInfo.Caption := 'Nutzungsbedingungen und Kontaktinformationen';
-  LInfo.Font.Style:=[fsUnderline];
-  LInfo.Font.Color := Konstantenbox.Schriftfarbe;
-  LInfo.Font.Name:= Konstantenbox.Schriftart;
+  Application.Terminate;
 end;
-
-//Oeffnen des Hauptmenues beim Schließen der Projektionsflaeche
-procedure TFrmHaupt.TimerProjektionsflaecheTimer(Sender: TObject);
+procedure TFrmHaupt.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  if FrmProjektionsflaeche.Visible= false then
-  begin
-    FrmHaupt.Visible:= true;
-    TimerProjektionsflaeche.Enabled:= false;
-  end;
+  Application.Terminate;
 end;
 
 end.
