@@ -31,6 +31,7 @@ object FrmGraphischeOptionen: TFrmGraphischeOptionen
     Margins.Bottom = 2
     Caption = 'CBLineal'
     TabOrder = 0
+    OnClick = CBLinealClick
   end
   object ChBBgBlack: TCheckBox
     Left = 8

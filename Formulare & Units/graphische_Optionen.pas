@@ -33,6 +33,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure CBRealClick(Sender: TObject);
     procedure TabOrder;
+    procedure CBLinealClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -44,6 +45,7 @@ var
 
   GBackground: Integer;  //1=Weiß, 2=Schwarz, 3=Verlauf
   GReal : Boolean; //Geh Real, einmal hin alles drin diggah!
+  GCBLineal : Boolean;
 
 
 implementation
@@ -141,12 +143,13 @@ begin
 
   //Lineal per default an und deaktiviert
   CBLineal.Checked:= true;
-  CBLineal.Enabled:= false;
+  CBLineal.Enabled:= true;
 
   //Default Hintergrundeinstellungen - weiß ist Hintergrundfarbe
   ChBBgWhite.Checked := true;
   GBackground := 1;
   GReal:=false;
+  GCBLineal:=true;
 end;
 
 procedure TFrmGraphischeOptionen.BtnBeendenClick(Sender: TObject);
@@ -159,6 +162,11 @@ begin
   if ChBBgBlack.Checked=true then ChBBgBlack.Checked:=false;
   if ChBBgVerlauf.Checked=true then ChBBgVerlauf.Checked:=false;
   if ChBBgWhite.Checked=true then ChBBgWhite.Checked:=false;
+end;
+
+procedure TFrmGraphischeOptionen.CBLinealClick(Sender: TObject);
+begin
+  if GCBLineal=true then GCBLineal:=false else GCBLineal:=true;
 end;
 
 procedure TFrmGraphischeOptionen.CBRealClick(Sender: TObject);
