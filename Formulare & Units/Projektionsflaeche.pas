@@ -72,6 +72,8 @@ type
     procedure Lineal;
     procedure Zoomleiste;
     procedure TBZoomChange(Sender: TObject);
+    procedure TBZoomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure OnMouseUp(Sender: TObject; Button : TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure Zeichnen(wellenlaenge:Real);
     procedure PnlViolettClick(Sender: TObject);
     procedure BtnStartClick(Sender: TObject);
@@ -113,7 +115,6 @@ type
     procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
     procedure Strich_Zeichnen(x:Integer;farbe:TColor);
     function Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
-    procedure TBZoomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure TabOrder;
     procedure EdtSpaltanzahlChange(Sender: TObject);
     procedure ZoomPfusch;
@@ -138,6 +139,9 @@ var
 implementation
 
 {$R *.dfm}
+
+type
+  TMouseTrackbar = class(TTrackbar);
 
 procedure TFrmProjektionsflaeche.TabOrder;
 begin
@@ -595,6 +599,8 @@ begin
   //Schrifteinstellungen;
   EdtEingabeEinheiten;
   EdtAusgabeEinheiten;
+  //Experimento
+  TMouseTrackbar(TBZoom).OnMouseUp:= OnMouseUp;
   //to be aufgeräumt
   GStartet:=false;
 end;
@@ -737,14 +743,18 @@ end;
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
   GLineal:=true;
-  if TBZoom.Position mod 2 = 0 then Zeichnen(GWellenlaenge)
+  if TBZoom.Position mod 2 = 0 then Zeichnen(GWellenlaenge) else TBzoom.Position:=TBZOom.Position+1;
 end;
 
 procedure TFrmProjektionsflaeche.TBZoomKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if key=vk_left then tbzoom.Position:=tbzoom.Position-2;
-  if Key=vk_right then tbzoom.Position:=tbzoom.position+2;
+end;
+
+procedure TFrmProjektionsflaeche.OnMouseUp(Sender: TObject; Button : TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  if TBZoom.position mod 2 <> 0 then TBZoom.Position:=TBZoom.Position+1;
 end;
 
 function TFrmProjektionsflaeche.dynamicZoom (Zahl: Real):Real;
