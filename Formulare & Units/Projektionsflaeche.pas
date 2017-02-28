@@ -575,7 +575,7 @@ begin
   //Hintergrund aktualisieren
   Background;
   //Neu Zeichnen
-  if GStartet=true then BtnStart.Click;
+  if GStartet=true then BtnStart.Click else Lineal;
 end;
 
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
@@ -688,7 +688,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
-  Strichabstand,Exponent, I,J,K : Integer;
+  Exponent, I,J,K,Strichabstand : Integer;
   Beschriftung: Real;
 begin
   if GLineal=false then else
