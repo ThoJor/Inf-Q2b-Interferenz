@@ -740,19 +740,14 @@ procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
   GLineal:=true;
   if TBZoom.Position mod 2 = 0 then Zeichnen(GWellenlaenge)
-  else begin
-         //if key = leftarrow then
-         // position:=position-1
-         tbzoom.Position:=tbzoom.Position+1;
-         // if key = rightarrow then
-         // position:=position+1
-       end;
 end;
 
 procedure TFrmProjektionsflaeche.TBZoomKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if key=vk_left then tbzoom.Position:=tbzoom.Position-2;
+  if Key=vk_right then tbzoom.Position:=tbzoom.position+2;
+
 end;
 
 function TFrmProjektionsflaeche.dynamicZoom (Zahl: Real):Real;
