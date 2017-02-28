@@ -531,7 +531,7 @@ begin
 
   //Hilfe Schirm
   LblHilfeSchirm.Visible:= true;
-  LblHilfeSchirm.Top:= 50;
+  LblHilfeSchirm.Top:= Schirm.Height div 15;
   LblHilfeSchirm.Left:= Round(Schirm.Width / 2);
   LblHilfeSchirm.Transparent:=false;
   LblHilfeSchirm.Color:=clwhite;
