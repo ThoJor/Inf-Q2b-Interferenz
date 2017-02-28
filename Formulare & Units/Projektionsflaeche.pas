@@ -655,16 +655,22 @@ begin
   ImgLineal.Width:= Schirm.Width;
   ImgLineal.Left:=FrmProjektionsflaeche.Width-ImgLineal.Width;
   ImgLineal.Top:=Round(FrmProjektionsflaeche.Height*3/5);
+
   with ImgLineal.canvas do
     begin
       pen.Color:=ClBlack;
     //Umriss des Lineals
       Moveto(ImgLineal.Width,0);
       Lineto(0,0);
-      //Moveto(Round(ImgLineal.Width*21/22),Round(imgLineal.Height*5/6));
-      //Textout(penpos.x,penpos.y,'in m');
     end;
-  Linealskala;
+   //Abfrage der Checkbox in gr. Opt.
+   if GCBLineal=true then Linealskala else begin
+                                             //miau
+                                             ImgLineal.canvas.Pen.Color:=clWhite;
+                                             ImgLineal.Canvas.Brush.Color:=clWhite;
+                                             ImgLineal.Canvas.FillRect(Rect(1,1,ImgLineal.Width,ImgLineal.height));
+                                             LblLinealEinheit.Visible:=false;
+                                           end;
 end;
 
 procedure TFrmProjektionsflaeche.Lineal_Strich(x,K:Integer);
@@ -686,14 +692,12 @@ var
   Beschriftung: Real;
 begin
   if GLineal=false then else
-  //Graphische Optionen - CBLineal
-  // if graphische_Optionen.CBLineal.checked:=true then
   Strichabstand:=100;
   J:=0;
   K:=0;
   with ImgLineal.Canvas do
     begin
-      //Striche von Mitte->Rechts mit Beschriftung
+      //Striche von Mitte->Rechts
       for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
         begin
           J:=J+1;
@@ -703,7 +707,7 @@ begin
                                    J:=0;
                                  end;
         end;
-      //Striche von Mitte->Links mit Beschriftung
+      //Striche von Mitte->Links
       J:=Strichabstand;
       K:=-1;
       for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
@@ -726,8 +730,10 @@ begin
     Font.Size:=10;
     AutoSize:=true;
     Caption:='x10^-' +IntToStr(Exponent)+ 'm';
+    visible:=true;
   end;
 end;
+
 
 
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
