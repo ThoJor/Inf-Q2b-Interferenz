@@ -375,7 +375,7 @@ begin
   LblEingabe.Caption:= 'Wellenlänge λ';
   LblEingabe.Visible:=false;
 
-  EdtEingabe.Top:= LblEingabe.Top + LblEingabe.Height;
+  EdtEingabe.Top:= 5 + CmbEinheit.Top + CmbEinheit.Height;
   EdtEingabe.Left:= Konstantenbox.KEditLeft;
   EdtEingabe.Width:= (Schirm.Left - EdtEingabe.Left) div 3*2;
   EdtEingabe.Text:= '500';
@@ -397,6 +397,7 @@ end;
 procedure TFrmProjektionsflaeche.Optionen;
 begin
   Optionspanel;
+  Combobox;
   Option_Eingabe;
   Option_Ausgabe;
   Option_Abstand_Blende_Schirm;
@@ -592,7 +593,6 @@ begin
   HilfeButton;
   ImageIntensitaet;
   //Schrifteinstellungen;
-  Combobox;
   EdtEingabeEinheiten;
   EdtAusgabeEinheiten;
   //to be aufgeräumt
