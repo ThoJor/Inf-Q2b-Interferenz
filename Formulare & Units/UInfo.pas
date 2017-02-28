@@ -35,6 +35,7 @@ implementation
 
 procedure TFormInfo.FormCreate(Sender: TObject);
 begin
+  FormInfo.Scaled:=false;
   Path:= GetCurrentDir;
   FormEinstellungen;
   HeadingNutzungsbedingungenSettings;

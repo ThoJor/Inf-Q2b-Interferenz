@@ -68,6 +68,8 @@ end;
 
 procedure TFrmGraphischeOptionen.FormCreate(Sender: TObject);
 begin
+  FrmGraphischeOptionen.Scaled:=false;
+
   TabOrder;
 
   FrmGraphischeOptionen.BorderStyle:=bsNone;

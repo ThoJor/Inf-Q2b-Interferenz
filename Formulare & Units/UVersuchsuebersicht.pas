@@ -43,6 +43,7 @@ implementation
 
 procedure TFormVersuchsuebersicht.FormCreate(Sender: TObject);
 begin
+  FormVersuchsuebersicht.Scaled:=false;
   Path:= GetCurrentDir;
   FormEinstellungen;
   ImgAufbauEinstellungen;

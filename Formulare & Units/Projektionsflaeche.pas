@@ -598,6 +598,7 @@ end;
 
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
 begin
+  FrmProjektionsflaeche.scaled:=false;
   Schrifteinstellungen;
   TabOrder;
   Fenstereinstellungen;
