@@ -132,12 +132,12 @@ procedure TFrmHaupt.BtnStartSettings;
 begin
   BtnStart.Top:= ImgLogo.Top + ImgLogo.Height + (Screen.Height div 54);
   BtnStart.Left := 0; //FrmHaupt.Width div 10;
-  BtnStart.Width:= Screen.Width div 6;
+  BtnStart.Width:= Screen.Width div 64*10;
   BtnStart.Caption:= 'Start';
   BtnStart.Font.Size:= Konstantenbox.Ueberschrift;
   BtnStart.Font.Color:= Konstantenbox.Schriftfarbe;
   BtnStart.Font.Name:= Konstantenbox.Schriftart;
-  BtnStart.Height:= (-1 * BtnStart.Font.Height) + (Screen.Height div 100);
+  BtnStart.Height:= (-1 * BtnStart.Font.Height) + (Screen.Height div 125);
 end;
 
 //Eigenschaften des Versuchsaufbau-Buttons
