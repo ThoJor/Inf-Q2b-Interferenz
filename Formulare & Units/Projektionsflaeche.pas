@@ -1523,7 +1523,7 @@ end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
-  Exponent, I,x,n,Strichabstand : Integer;
+  Exponent, I,x,x1,n,Strichabstand : Integer;
   faktor:Real;
   Zwischenspeicher:TLinealFaktorErgebnis;
 begin
@@ -1535,15 +1535,20 @@ begin
       Faktor:=Zwischenspeicher.faktor;
       Strichabstand:=Zwischenspeicher.strichabstand;
       x:=0;
+      x1:=0;
       n:=0;
       with ImgLineal.Canvas do
         begin
           //Striche von Mitte->Rechts
           for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
             begin
-              x:=x+1;
-              if x = Strichabstand div 5 then
-                Lineal_StrichOnly(x);
+              Inc(x);
+              Inc(x1);
+              if (x1 = Strichabstand div 5) then
+                begin
+                  Lineal_StrichOnly(I);
+                  x1:=0;
+                end;
               if x = Strichabstand then
                 begin
                   Inc(n);
@@ -1554,11 +1559,16 @@ begin
           //Striche von Mitte->Links
           x:=Strichabstand;
           n:=-1;
+          x1:=0;
           for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
             begin
               x:=x-1;
-              if x = Strichabstand div 5 then
-                Lineal_StrichOnly(x);
+              x1:=x1-1;
+              if (x1 = Strichabstand div 5) then
+                begin
+                  Lineal_StrichOnly(I);
+                  x1:=0;
+                end;
               if x = 0 then
                 begin
                   Inc(n);
