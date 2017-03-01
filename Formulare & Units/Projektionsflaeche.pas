@@ -1473,13 +1473,14 @@ begin
   ImgLineal.Left:=FrmProjektionsflaeche.Width-ImgLineal.Width;
   ImgLineal.Top:=Round(FrmProjektionsflaeche.Height*3/5);
 
-  with ImgLineal.canvas do
-    begin
-      pen.Color:=ClBlack;
-    //Umriss des Lineals
-      Moveto(ImgLineal.Width,0);
-      Lineto(0,0);
-    end;
+    With LblLinealEinheit do
+      begin
+        Top:=Round(ImgLineal.Top+ImgLineal.Height*95/115);
+        Left:=Round(ImgLineal.Left+ImgLineal.Width*95/100);
+        Font.Size:=10;
+        AutoSize:=true;
+        visible:=false;
+      end;
    //Abfrage der Checkbox in gr. Opt.
    if GCBLineal=true then Linealskala else begin
                                              //miau
@@ -1542,16 +1543,14 @@ begin
             end;
         end;
 
-
+      //Umriss des Lineals
+      ImgLineal.Canvas.moveto(ImgLineal.Width,0);
+      ImgLineal.Canvas.lineto(0,0);
       Exponent:=1;
-        if GDynZoom>0 then Exponent:=GZoom;
+      if GDynZoom>0 then Exponent:=GZoom;
       //Einheit-Label
       With LblLinealEinheit do
       begin
-        Top:=Round(ImgLineal.Top+ImgLineal.Height*95/115);
-        Left:=Round(ImgLineal.Left+ImgLineal.Width*95/100);
-        Font.Size:=10;
-        AutoSize:=true;
         Caption:='x10^-' +IntToStr(Exponent)+ 'm';
         visible:=true;
       end;
