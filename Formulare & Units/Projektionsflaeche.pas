@@ -1506,8 +1506,7 @@ begin
     begin
       moveto(x,1);
       lineto(x,Round(ImgLineal.Height/3*2));
-      //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
-      Beschriftung:=n*faktor{/(TBZoom.position/100)};
+      Beschriftung:=n*faktor;
       textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
     end;
 end;
@@ -1589,9 +1588,6 @@ begin
               Zwischenspeicher:=Linealfaktor(2*faktor,x*2);
               xneu:=Zwischenspeicher.strichabstand;
               faktor:=Zwischenspeicher.faktor;
-
-              //xneu:=x*2;
-              //faktor:=2;
             end;
         end;
     ergebnis.strichabstand:=xneu;
