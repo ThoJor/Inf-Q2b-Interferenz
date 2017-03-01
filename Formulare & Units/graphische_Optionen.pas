@@ -84,10 +84,10 @@ begin
   BtnBeenden.Font.Color:=Konstantenbox.Schriftfarbe;
 
   BtnBeenden.Top:=FrmGraphischeOptionen.Height div 6*5 - 10;
-  BtnBeenden.Left:=FrmGraphischeOptionen.Width div 5*4;
+  BtnBeenden.Left:=FrmGraphischeOptionen.Width div 5*4 - 5;
   BtnBeenden.Caption:='Anwenden';
   BtnBeenden.Height:=Konstantenbox.KLabelHoehe*2;
-  BtnBeenden.Width:=95;
+  BtnBeenden.Width:=FrmGraphischeOptionen.Width div 5;
 
   //Namensgebung
   FrmGraphischeOptionen.Caption:= 'Interferenzo - Optionen';
