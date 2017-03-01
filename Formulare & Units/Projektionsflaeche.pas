@@ -1376,7 +1376,7 @@ begin
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
 
     // 0.Maximum zeichnen
-    Strich_Zeichnen((Schirm.Width div 2 +2),stringtocolor(farbe));
+    Strich_Zeichnen((Schirm.Width div 2),stringtocolor(farbe));
 
     ymax:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,0.0000000000001);
                                                                        // weil Funktion nicht fuer x = 0 definiert ist
@@ -1504,8 +1504,8 @@ var Beschriftung : real;
 begin
   with ImgLineal.Canvas do
     begin
-      moveto(x,1);
-      lineto(x,Round(ImgLineal.Height/3*2));
+      moveto(x-1,1);
+      lineto(x-1,Round(ImgLineal.Height/3*2));
       Beschriftung:=n*faktor;
       textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
     end;
