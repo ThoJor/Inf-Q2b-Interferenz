@@ -68,7 +68,7 @@ type
     procedure Farbe_Gelb;
     procedure Farbe_Orange;
     procedure Farbe_Rot;
-    procedure Lineal_Strich(x,K:Integer);
+    procedure Lineal_Strich(x,n:Integer);
     procedure Linealskala;
     procedure Lineal;
     procedure Zoomleiste;
@@ -1491,7 +1491,7 @@ begin
 end;
 
 
-procedure TFrmProjektionsflaeche.Lineal_Strich(x,K:Integer);
+procedure TFrmProjektionsflaeche.Lineal_Strich(x,n:Integer);
 var Beschriftung : real;
 begin
   with ImgLineal.Canvas do
@@ -1499,7 +1499,7 @@ begin
       moveto(x,1);
       lineto(x,Round(ImgLineal.Height/3*2));
       //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
-      Beschriftung:=K/(TBZoom.position/100);
+      Beschriftung:=n/(TBZoom.position/100);
       textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
     end;
 end;
@@ -1507,10 +1507,9 @@ end;
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
   Exponent, I,J,K,Strichabstand : Integer;
-  Beschriftung: Real;
 begin
-  if GLineal=false then else
-  Strichabstand:=100;
+  if GLineal=true then
+    Strichabstand:=100;
   J:=0;
   K:=0;
   with ImgLineal.Canvas do
