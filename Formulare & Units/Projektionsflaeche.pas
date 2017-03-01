@@ -8,6 +8,12 @@ uses
   graphische_Optionen, UFarbtabelle, UToolbox, Vcl.ComCtrls, Konstantenbox;
 
 type
+    TLinealFaktorErgebnis = record
+    strichabstand:Integer;
+    faktor:real;
+  end;
+
+type
   TFrmProjektionsflaeche = class(TForm)
     Schirm: TImage;
     PnlOptionen: TPanel;
@@ -71,6 +77,7 @@ type
     procedure Lineal_Strich(x,n:Integer;faktor:Real);
     procedure Linealskala;
     procedure Lineal;
+    function  Linealfaktor(faktor:Real;x:Integer):TLinealFaktorErgebnis;
     procedure Zoomleiste;
     procedure TBZoomChange(Sender: TObject);
     procedure TBZoomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -1509,11 +1516,16 @@ procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
   Exponent, I,x,n,Strichabstand : Integer;
   faktor:Real;
+  Zwischenspeicher:TLinealFaktorErgebnis;
 begin
   if GLineal=true then
     begin
       ImgLineal.Picture:=Nil;
 
+      Zwischenspeicher:=Linealfaktor(1,TBZoom.Position);
+      Faktor:=Zwischenspeicher.faktor;
+      Strichabstand:=Zwischenspeicher.strichabstand;
+        {
       if (TBZoom.Position>75) and (TBZoom.Position<125) then
         begin
           Strichabstand:=TBZoom.Position;
@@ -1522,14 +1534,14 @@ begin
         begin
           if (TBZoom.Position>=125) then
             begin
-              Strichabstand:=TBZoom.Position div 2;
+              Strichabstand:=TBZoom.Position*0.5;
               faktor:=0.5;
             end else
             begin
               Strichabstand:=TBZoom.Position*2;
               faktor:=2;
             end;
-        end;
+        end;               }
 
       x:=0;
       n:=0;
@@ -1573,6 +1585,32 @@ begin
         visible:=true;
       end;
   end;
+end;
+
+function TFrmProjektionsflaeche.Linealfaktor(faktor:Real;x:Integer):TLinealFaktorErgebnis;
+var
+  Ergebnis:TLinealFaktorErgebnis;
+  xneu:integer;
+begin
+  if (TBZoom.Position>75) and (TBZoom.Position<125) then
+        begin
+          xneu:=x;
+          faktor:=1;
+        end else
+        begin
+          if (x>=125) then
+            begin
+              xneu:=round(x*0.5);
+              faktor:=0.5;
+            end else
+            begin
+              xneu:=x*2;
+              faktor:=2;
+            end;
+        end;
+    ergebnis.strichabstand:=xneu;
+    ergebnis.faktor:=faktor;
+    Result:=ergebnis;
 end;
 
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
