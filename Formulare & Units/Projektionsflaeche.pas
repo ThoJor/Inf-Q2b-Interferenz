@@ -76,7 +76,6 @@ type
     procedure Farbe_Rot;
     procedure Lineal_Strich(x,n:Integer;faktor:Real);
     procedure Linealskala;
-    procedure Lineal_StrichOnly(x:Integer);
     procedure Lineal;
     function  Linealfaktor(faktor:Real;x:Integer):TLinealFaktorErgebnis;
     procedure Zoomleiste;
@@ -1512,18 +1511,10 @@ begin
     end;
 end;
 
-procedure TFrmProjektionsflaeche.Lineal_StrichOnly(x:Integer);
-begin
-  with ImgLineal.Canvas do
-    begin
-      moveto(x,1);
-      lineto(x,Round(ImgLineal.Height/3));
-    end;
-end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
-  Exponent, I,x,x1,n,Strichabstand : Integer;
+  Exponent, I,x,x1,n,n1,Strichabstand : Integer;
   faktor:Real;
   Zwischenspeicher:TLinealFaktorErgebnis;
 begin
@@ -1535,7 +1526,6 @@ begin
       Faktor:=Zwischenspeicher.faktor;
       Strichabstand:=Zwischenspeicher.strichabstand;
       x:=0;
-      x1:=0;
       n:=0;
       with ImgLineal.Canvas do
         begin
@@ -1543,12 +1533,6 @@ begin
           for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
             begin
               Inc(x);
-              Inc(x1);
-              if (x1 = Strichabstand div 5) then
-                begin
-                  Lineal_StrichOnly(I);
-                  x1:=0;
-                end;
               if x = Strichabstand then
                 begin
                   Inc(n);
@@ -1556,19 +1540,14 @@ begin
                   x:=0;
                 end;
             end;
+
           //Striche von Mitte->Links
           x:=Strichabstand;
           n:=-1;
-          x1:=0;
+          x1:=strichabstand div 5;
           for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
             begin
               x:=x-1;
-              x1:=x1-1;
-              if (x1 = Strichabstand div 5) then
-                begin
-                  Lineal_StrichOnly(I);
-                  x1:=0;
-                end;
               if x = 0 then
                 begin
                   Inc(n);
