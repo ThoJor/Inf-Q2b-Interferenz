@@ -68,7 +68,7 @@ type
     procedure Farbe_Gelb;
     procedure Farbe_Orange;
     procedure Farbe_Rot;
-    procedure Lineal_Strich(x,n:Integer);
+    procedure Lineal_Strich(x,n,faktor:Integer);
     procedure Linealskala;
     procedure Lineal;
     procedure Zoomleiste;
@@ -115,7 +115,7 @@ type
     procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
     procedure Strich_Zeichnen(x:Integer;farbe:TColor);
-    function Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
+    function  Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
     procedure TabOrder;
     procedure EdtSpaltanzahlChange(Sender: TObject);
     procedure ZoomPfusch;
@@ -1492,7 +1492,7 @@ begin
 end;
 
 
-procedure TFrmProjektionsflaeche.Lineal_Strich(x,n:Integer);
+procedure TFrmProjektionsflaeche.Lineal_Strich(x,n,faktor:Integer);
 var Beschriftung : real;
 begin
   with ImgLineal.Canvas do
@@ -1500,19 +1500,20 @@ begin
       moveto(x,1);
       lineto(x,Round(ImgLineal.Height/3*2));
       //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
-      Beschriftung:=n{/(TBZoom.position/100)};
+      Beschriftung:=n*faktor{/(TBZoom.position/100)};
       textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
     end;
 end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
-  Exponent, I,x,n,Strichabstand : Integer;
+  Exponent, I,x,n,faktor,Strichabstand : Integer;
 begin
   if GLineal=true then
     begin
       ImgLineal.Picture:=Nil;
       Strichabstand:=TBZoom.Position;
+      faktor:=1;
       x:=0;
       n:=0;
       with ImgLineal.Canvas do
@@ -1524,7 +1525,7 @@ begin
               if x = Strichabstand then
                 begin
                   Inc(n);
-                  Lineal_Strich(I,n);
+                  Lineal_Strich(I,n,faktor);
                   x:=0;
                 end;
             end;
@@ -1537,7 +1538,7 @@ begin
               if x = 0 then
                 begin
                   Inc(n);
-                  Lineal_Strich(I,n);
+                  Lineal_Strich(I,n,faktor);
                   x:=Strichabstand;
                 end;
             end;
