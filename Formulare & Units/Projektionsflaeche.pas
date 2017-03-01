@@ -76,6 +76,7 @@ type
     procedure Farbe_Rot;
     procedure Lineal_Strich(x,n:Integer;faktor:Real);
     procedure Linealskala;
+    procedure Lineal_StrichOnly(x:Integer);
     procedure Lineal;
     function  Linealfaktor(faktor:Real;x:Integer):TLinealFaktorErgebnis;
     procedure Zoomleiste;
@@ -1511,6 +1512,15 @@ begin
     end;
 end;
 
+procedure TFrmProjektionsflaeche.Lineal_StrichOnly(x:Integer);
+begin
+  with ImgLineal.Canvas do
+    begin
+      moveto(x,1);
+      lineto(x,Round(ImgLineal.Height/3));
+    end;
+end;
+
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
   Exponent, I,x,n,Strichabstand : Integer;
@@ -1532,6 +1542,8 @@ begin
           for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
             begin
               x:=x+1;
+              if x = Strichabstand div 5 then
+                Lineal_StrichOnly(x);
               if x = Strichabstand then
                 begin
                   Inc(n);
@@ -1545,6 +1557,8 @@ begin
           for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
             begin
               x:=x-1;
+              if x = Strichabstand div 5 then
+                Lineal_StrichOnly(x);
               if x = 0 then
                 begin
                   Inc(n);
