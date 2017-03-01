@@ -760,9 +760,12 @@ end;
 
 procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
 begin
-  GLineal:=true;
-  Linealskala;
-  if TBZoom.Position mod 2 = 0 then Zeichnen(GWellenlaenge) else TBzoom.Position:=TBZOom.Position+1;
+  if GStartet=true then
+    begin
+      GLineal:=true;
+      Linealskala;
+      if TBZoom.Position mod 2 = 0 then Zeichnen(GWellenlaenge) else TBzoom.Position:=TBZOom.Position+1;
+    end;
 end;
 
 procedure TFrmProjektionsflaeche.TBZoomKeyDown(Sender: TObject; var Key: Word;
