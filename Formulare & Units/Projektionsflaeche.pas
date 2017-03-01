@@ -1525,24 +1525,6 @@ begin
       Zwischenspeicher:=Linealfaktor(1,TBZoom.Position);
       Faktor:=Zwischenspeicher.faktor;
       Strichabstand:=Zwischenspeicher.strichabstand;
-        {
-      if (TBZoom.Position>75) and (TBZoom.Position<125) then
-        begin
-          Strichabstand:=TBZoom.Position;
-          faktor:=1;
-        end else
-        begin
-          if (TBZoom.Position>=125) then
-            begin
-              Strichabstand:=TBZoom.Position*0.5;
-              faktor:=0.5;
-            end else
-            begin
-              Strichabstand:=TBZoom.Position*2;
-              faktor:=2;
-            end;
-        end;               }
-
       x:=0;
       n:=0;
       with ImgLineal.Canvas do
@@ -1592,7 +1574,7 @@ var
   Ergebnis:TLinealFaktorErgebnis;
   xneu:integer;
 begin
-  if (TBZoom.Position>75) and (TBZoom.Position<125) then
+  if (x>75) and (x<125) then
         begin
           xneu:=x;
           faktor:=1;
