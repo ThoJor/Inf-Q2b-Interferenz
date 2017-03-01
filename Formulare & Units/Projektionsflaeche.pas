@@ -672,101 +672,6 @@ begin
   TbZoom.ShowHint:=true;
 end;
 
-procedure TFrmProjektionsflaeche.Lineal;
-begin
-  //Groeße und Position des Image
-  ImgLineal.Height:=Round((1/15) * FrmProjektionsflaeche.Height);
-  ImgLineal.Width:= Schirm.Width;
-  ImgLineal.Left:=FrmProjektionsflaeche.Width-ImgLineal.Width;
-  ImgLineal.Top:=Round(FrmProjektionsflaeche.Height*3/5);
-
-  with ImgLineal.canvas do
-    begin
-      pen.Color:=ClBlack;
-    //Umriss des Lineals
-      Moveto(ImgLineal.Width,0);
-      Lineto(0,0);
-    end;
-   //Abfrage der Checkbox in gr. Opt.
-   if GCBLineal=true then Linealskala else begin
-                                             //miau
-                                             ImgLineal.canvas.Pen.Color:=clWhite;
-                                             ImgLineal.Canvas.Brush.Color:=clWhite;
-                                             ImgLineal.Canvas.FillRect(Rect(1,1,ImgLineal.Width,ImgLineal.height));
-                                             LblLinealEinheit.Visible:=false;
-                                           end;
-end;
-
-procedure TFrmProjektionsflaeche.Lineal_Strich(x,K:Integer);
-var Beschriftung : real;
-begin
-  with ImgLineal.Canvas do
-    begin
-      moveto(x,1);
-      lineto(x,Round(ImgLineal.Height/3*2));
-      //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
-      Beschriftung:=K/(TBZoom.position/100);
-      textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
-    end;
-end;
-
-procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
-var
-  Exponent, I,J,K,Strichabstand : Integer;
-  Beschriftung: Real;
-begin
-  if GLineal=false then else
-  Strichabstand:=100;
-  J:=0;
-  K:=0;
-  with ImgLineal.Canvas do
-    begin
-      //Striche von Mitte->Rechts
-      for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
-        begin
-          J:=J+1;
-          if J = Strichabstand then begin
-                                   K:=K+1;
-                                   Lineal_Strich(I,K);
-                                   J:=0;
-                                 end;
-        end;
-      //Striche von Mitte->Links
-      J:=Strichabstand;
-      K:=-1;
-      for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
-        begin
-          J:=J-1;
-          if J = 0 then begin
-                          K:=K+1;
-                          Lineal_Strich(I,K);
-                          J:=Strichabstand;
-                        end;
-        end;
-    end;
-  Exponent:=1;
-    if GDynZoom>0 then Exponent:=GZoom;
-  //Einheit-Label
-  With LblLinealEinheit do
-  begin
-    Top:=Round(ImgLineal.Top+ImgLineal.Height*95/115);
-    Left:=Round(ImgLineal.Left+ImgLineal.Width*95/100);
-    Font.Size:=10;
-    AutoSize:=true;
-    Caption:='x10^-' +IntToStr(Exponent)+ 'm';
-    visible:=true;
-  end;
-end;
-
-procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
-begin
-  if GStartet=true then
-    begin
-      GLineal:=true;
-      Linealskala;
-      if TBZoom.Position mod 2 = 0 then Zeichnen(GWellenlaenge) else TBzoom.Position:=TBZOom.Position+1;
-    end;
-end;
 
 procedure TFrmProjektionsflaeche.TBZoomKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
@@ -1557,6 +1462,103 @@ begin
       if (strToInt(EdtSpaltanzahl.Text)>2) and ((strToInt(EdtEingabe.Text)>500) or (strToInt(EdtEingabe.Text)<59.9585)) then
           TBZoom.Min:=36 else
           TBZoom.Min:=10;
+    end;
+end;
+
+procedure TFrmProjektionsflaeche.Lineal;
+begin
+  //Groeße und Position des Image
+  ImgLineal.Height:=Round((1/15) * FrmProjektionsflaeche.Height);
+  ImgLineal.Width:= Schirm.Width;
+  ImgLineal.Left:=FrmProjektionsflaeche.Width-ImgLineal.Width;
+  ImgLineal.Top:=Round(FrmProjektionsflaeche.Height*3/5);
+
+  with ImgLineal.canvas do
+    begin
+      pen.Color:=ClBlack;
+    //Umriss des Lineals
+      Moveto(ImgLineal.Width,0);
+      Lineto(0,0);
+    end;
+   //Abfrage der Checkbox in gr. Opt.
+   if GCBLineal=true then Linealskala else begin
+                                             //miau
+                                             ImgLineal.canvas.Pen.Color:=clWhite;
+                                             ImgLineal.Canvas.Brush.Color:=clWhite;
+                                             ImgLineal.Canvas.FillRect(Rect(1,1,ImgLineal.Width,ImgLineal.height));
+                                             LblLinealEinheit.Visible:=false;
+                                           end;
+end;
+
+
+procedure TFrmProjektionsflaeche.Lineal_Strich(x,K:Integer);
+var Beschriftung : real;
+begin
+  with ImgLineal.Canvas do
+    begin
+      moveto(x,1);
+      lineto(x,Round(ImgLineal.Height/3*2));
+      //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
+      Beschriftung:=K/(TBZoom.position/100);
+      textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
+    end;
+end;
+
+procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
+var
+  Exponent, I,J,K,Strichabstand : Integer;
+  Beschriftung: Real;
+begin
+  if GLineal=false then else
+  Strichabstand:=100;
+  J:=0;
+  K:=0;
+  with ImgLineal.Canvas do
+    begin
+      //Striche von Mitte->Rechts
+      for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
+        begin
+          J:=J+1;
+          if J = Strichabstand then begin
+                                   K:=K+1;
+                                   Lineal_Strich(I,K);
+                                   J:=0;
+                                 end;
+        end;
+      //Striche von Mitte->Links
+      J:=Strichabstand;
+      K:=-1;
+      for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
+        begin
+          J:=J-1;
+          if J = 0 then begin
+                          K:=K+1;
+                          Lineal_Strich(I,K);
+                          J:=Strichabstand;
+                        end;
+        end;
+    end;
+  Exponent:=1;
+    if GDynZoom>0 then Exponent:=GZoom;
+  //Einheit-Label
+  With LblLinealEinheit do
+  begin
+    Top:=Round(ImgLineal.Top+ImgLineal.Height*95/115);
+    Left:=Round(ImgLineal.Left+ImgLineal.Width*95/100);
+    Font.Size:=10;
+    AutoSize:=true;
+    Caption:='x10^-' +IntToStr(Exponent)+ 'm';
+    visible:=true;
+  end;
+end;
+
+procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
+begin
+  if GStartet=true then
+    begin
+      GLineal:=true;
+      Linealskala;
+      if TBZoom.Position mod 2 = 0 then Zeichnen(GWellenlaenge) else TBzoom.Position:=TBZOom.Position+1;
     end;
 end;
 
