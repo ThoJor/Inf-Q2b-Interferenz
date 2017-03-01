@@ -1284,6 +1284,7 @@ begin
           end else
           begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
+            Strich_Zeichnen(Schirm.Width div 2, stringtocolor(farbe));
           end;
       end;
 end;
@@ -1350,7 +1351,7 @@ begin
           end else
           begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
-         //   Strich_Zeichnen(Schirm.Width-3,clwhite);
+            Strich_Zeichnen(Schirm.Width div 2, stringtocolor(farbe));
           end;
       end;
 end;
@@ -1379,7 +1380,7 @@ begin
     Strich_Zeichnen((Schirm.Width div 2),stringtocolor(farbe));
 
     ymax:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,0.0000000000001);
-                                                                       // weil Funktion nicht fuer x = 0 definiert ist
+                                                                                   // weil Funktion nicht fuer x = 0 definiert ist
     for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
       begin
         if posx<>0 then
