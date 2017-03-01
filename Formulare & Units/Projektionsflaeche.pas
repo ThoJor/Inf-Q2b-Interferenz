@@ -1509,45 +1509,47 @@ var
   Exponent, I,J,K,Strichabstand : Integer;
 begin
   if GLineal=true then
-    Strichabstand:=100;
-  J:=0;
-  K:=0;
-  with ImgLineal.Canvas do
     begin
-      //Striche von Mitte->Rechts
-      for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
+      Strichabstand:=100;
+      J:=0;
+      K:=0;
+      with ImgLineal.Canvas do
         begin
-          J:=J+1;
-          if J = Strichabstand then begin
-                                   K:=K+1;
-                                   Lineal_Strich(I,K);
-                                   J:=0;
-                                 end;
+          //Striche von Mitte->Rechts
+          for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
+            begin
+              J:=J+1;
+              if J = Strichabstand then begin
+                                       K:=K+1;
+                                       Lineal_Strich(I,K);
+                                       J:=0;
+                                     end;
+            end;
+          //Striche von Mitte->Links
+          J:=Strichabstand;
+          K:=-1;
+          for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
+            begin
+              J:=J-1;
+              if J = 0 then begin
+                              K:=K+1;
+                              Lineal_Strich(I,K);
+                              J:=Strichabstand;
+                            end;
+            end;
         end;
-      //Striche von Mitte->Links
-      J:=Strichabstand;
-      K:=-1;
-      for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
-        begin
-          J:=J-1;
-          if J = 0 then begin
-                          K:=K+1;
-                          Lineal_Strich(I,K);
-                          J:=Strichabstand;
-                        end;
-        end;
-    end;
-  Exponent:=1;
-    if GDynZoom>0 then Exponent:=GZoom;
-  //Einheit-Label
-  With LblLinealEinheit do
-  begin
-    Top:=Round(ImgLineal.Top+ImgLineal.Height*95/115);
-    Left:=Round(ImgLineal.Left+ImgLineal.Width*95/100);
-    Font.Size:=10;
-    AutoSize:=true;
-    Caption:='x10^-' +IntToStr(Exponent)+ 'm';
-    visible:=true;
+      Exponent:=1;
+        if GDynZoom>0 then Exponent:=GZoom;
+      //Einheit-Label
+      With LblLinealEinheit do
+      begin
+        Top:=Round(ImgLineal.Top+ImgLineal.Height*95/115);
+        Left:=Round(ImgLineal.Left+ImgLineal.Width*95/100);
+        Font.Size:=10;
+        AutoSize:=true;
+        Caption:='x10^-' +IntToStr(Exponent)+ 'm';
+        visible:=true;
+      end;
   end;
 end;
 
