@@ -35,7 +35,6 @@ implementation
 
 procedure TFormInfo.FormCreate(Sender: TObject);
 begin
-  FormInfo.Scaled:=false;
   Path:= GetCurrentDir;
   FormEinstellungen;
   HeadingNutzungsbedingungenSettings;
@@ -50,8 +49,7 @@ begin
   FormInfo.Caption := 'Nutzungsbedingungen & Kontaktinformationen';
   FormInfo.Width := 400;
   FormInfo.Height := 900;
-  FormInfo.BorderStyle := bsSingle;
-  FormInfo.Position:=poDefault;
+  FormInfo.BorderStyle := bsDialog;
 end;
 
 //Eigenschaften der Ueberschrift für die Nutzungsbedingungen

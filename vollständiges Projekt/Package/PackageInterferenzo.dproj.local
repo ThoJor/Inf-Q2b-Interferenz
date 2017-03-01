@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.684,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\UToolbox.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.839,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Win32\Debug\Kontaktinformationen.txt</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.845,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Win32\Debug\Nutzungsbedingungen.txt</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.643,D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Package\PackageInterferenzo.dproj=C:\Users\Uswer\Documents\Embarcadero\Studio\Projekte\Package2.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.954,=vcl.dcp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.852,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Win32\Debug\TYoung.png</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.828,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Win32\Debug\Interferenzo_Logo.ico</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.865,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Win32\Debug\Wellen.txt</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.660,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\UHaupt.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.832,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Win32\Debug\Interferenzo_Logo.png</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.678,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\UInfo.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.946,=vclimg.dcp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.604,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\graphische_Optionen.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.641,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\UFarbtabelle.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.634,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Projektionsflaeche.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.610,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Konstantenbox.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.558,=rtl.dcp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.706,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\UVersuchsuebersicht.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.858,=D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Win32\Debug\Versuch.txt</Transaction>
+  </Transactions>
+</BorlandProject>

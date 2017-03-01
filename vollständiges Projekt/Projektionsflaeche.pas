@@ -8,12 +8,6 @@ uses
   graphische_Optionen, UFarbtabelle, UToolbox, Vcl.ComCtrls, Konstantenbox;
 
 type
-    TLinealFaktorErgebnis = record
-    strichabstand:Integer;
-    faktor:real;
-  end;
-
-type
   TFrmProjektionsflaeche = class(TForm)
     Schirm: TImage;
     PnlOptionen: TPanel;
@@ -52,7 +46,6 @@ type
     LblEingabe: TLabel;
     LblAusgabe: TLabel;
     EdtSpaltanzahl: TEdit;
-    LblZoom: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure BtnOptionenClick(Sender: TObject);
     procedure Fenstereinstellungen;
@@ -74,14 +67,11 @@ type
     procedure Farbe_Gelb;
     procedure Farbe_Orange;
     procedure Farbe_Rot;
-    procedure Lineal_Strich(x,n:Integer;faktor:Real);
+    procedure Lineal_Strich(x:Integer);
     procedure Linealskala;
     procedure Lineal;
-    function  Linealfaktor(faktor:Real;x:Integer):TLinealFaktorErgebnis;
     procedure Zoomleiste;
     procedure TBZoomChange(Sender: TObject);
-    procedure TBZoomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure OnMouseUp(Sender: TObject; Button : TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure Zeichnen(wellenlaenge:Real);
     procedure PnlViolettClick(Sender: TObject);
     procedure BtnStartClick(Sender: TObject);
@@ -122,7 +112,8 @@ type
     procedure EdtSchirmAbstandKeyPress(Sender: TObject; var Key: Char);
     procedure EdtSpaltabstandKeyPress(Sender: TObject; var Key: Char);
     procedure Strich_Zeichnen(x:Integer;farbe:TColor);
-    function  Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
+    function Intensitaet_Farbe(Farbe, Hintergrundfarbe: TColor; Intensitaet:real):TColor;
+    procedure TBZoomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure TabOrder;
     procedure EdtSpaltanzahlChange(Sender: TObject);
     procedure ZoomPfusch;
@@ -147,9 +138,6 @@ var
 implementation
 
 {$R *.dfm}
-
-type
-  TMouseTrackbar = class(TTrackbar);
 
 procedure TFrmProjektionsflaeche.TabOrder;
 begin
@@ -375,7 +363,6 @@ begin
   EdtAusgabe.Width:= (Schirm.Left - EdtAusgabe.Left) div 3*2;
   EdtAusgabe.Text:= '';
   EdtAusgabe.ReadOnly:=false;
-  EdtAusgabe.Enabled:=False;
 end;
 
 procedure TFrmProjektionsflaeche.Option_Eingabe;
@@ -387,7 +374,7 @@ begin
   LblEingabe.Caption:= 'Wellenlänge λ';
   LblEingabe.Visible:=false;
 
-  EdtEingabe.Top:= 5 + CmbEinheit.Top + CmbEinheit.Height;
+  EdtEingabe.Top:= LblEingabe.Top + LblEingabe.Height;
   EdtEingabe.Left:= Konstantenbox.KEditLeft;
   EdtEingabe.Width:= (Schirm.Left - EdtEingabe.Left) div 3*2;
   EdtEingabe.Text:= '500';
@@ -409,7 +396,6 @@ end;
 procedure TFrmProjektionsflaeche.Optionen;
 begin
   Optionspanel;
-  Combobox;
   Option_Eingabe;
   Option_Ausgabe;
   Option_Abstand_Blende_Schirm;
@@ -514,7 +500,6 @@ begin
   LblHilfeSchirm.Visible:= false;
   LblHilfeEinstellungen.Visible:= false;
   LblHilfeEinstellungen2.Visible:= false;
-  LblZoom.Visible:=false;
 
   //Hilfe ist inaktiv -> GHilfe:= false
   GHilfe:= false;
@@ -538,7 +523,7 @@ begin
 
   //Hilfe Schirm
   LblHilfeSchirm.Visible:= true;
-  LblHilfeSchirm.Top:= Schirm.Height div 15;
+  LblHilfeSchirm.Top:= 50;
   LblHilfeSchirm.Left:= Round(Schirm.Width / 2);
   LblHilfeSchirm.Transparent:=false;
   LblHilfeSchirm.Color:=clwhite;
@@ -560,19 +545,6 @@ begin
   LblHilfeEinstellungen2.Color:=clwhite;
   LblHilfeEinstellungen2.Caption:= 'Wellenlänge, Frequenz oder Farbe (zum Auswählen der Farbe auf diese klicken)';
 
-  //TBZoom Hilfe
-  if GStartet=true then begin
-                          with LblZoom do
-                            begin
-                              visible:=true;
-                              top:= TBZoom.Top;
-                              Caption:='Verschieben, um die Vergrößerung in Prozent zu ändern -->';
-                              Transparent:=false;
-                              Color:=clWhite;
-                              Left:=TBZoom.left-LblZoom.Width;
-                            end;
-                        end;
-
   //experimento v5
   EdtEingabe.ShowHint:=true;
   EdtEingabe.Hint:='Frequenz bzw. Wellenlaenge eingeben';
@@ -589,7 +561,6 @@ begin
   LblHilfeSchirm.Visible:= false;
   LblHilfeEinstellungen.Visible:= false;
   LblHilfeEinstellungen2.Visible:= false;
-  LblZoom.Visible:=false;
 
   //dem Programm mitteilen, dass das Overlay ausgeblendet ist
   GHilfe:= false;
@@ -602,12 +573,11 @@ begin
   //Hintergrund aktualisieren
   Background;
   //Neu Zeichnen
-  if GStartet=true then BtnStart.Click else Lineal;
+  if GStartet=true then BtnStart.Click;
 end;
 
 procedure TFrmProjektionsflaeche.FormCreate(Sender: TObject);
 begin
-  FrmProjektionsflaeche.scaled:=false;
   Schrifteinstellungen;
   TabOrder;
   Fenstereinstellungen;
@@ -621,13 +591,11 @@ begin
   HilfeButton;
   ImageIntensitaet;
   //Schrifteinstellungen;
+  Combobox;
   EdtEingabeEinheiten;
   EdtAusgabeEinheiten;
-  //Experimento
-  TMouseTrackbar(TBZoom).OnMouseUp:= OnMouseUp;
   //to be aufgeräumt
   GStartet:=false;
-  BtnReset.Click;
 end;
 
 procedure TFrmProjektionsflaeche.Startbutton;
@@ -679,16 +647,111 @@ begin
   TbZoom.ShowHint:=true;
 end;
 
+procedure TFrmProjektionsflaeche.Lineal;
+var Exponent : Integer;
+begin
+  Exponent:=1;
+  if GDynZoom>0 then Exponent:=GZoom;
+
+  //Groeße und Position des Image
+  ImgLineal.Height:=Round((1/15) * FrmProjektionsflaeche.Height);
+  ImgLineal.Width:= Schirm.Width;
+  ImgLineal.Left:=FrmProjektionsflaeche.Width-ImgLineal.Width;
+  ImgLineal.Top:=Round(FrmProjektionsflaeche.Height*3/5);
+  with ImgLineal.canvas do
+    begin
+      pen.Color:=ClBlack;
+    //Umriss des Lineals
+      Moveto(ImgLineal.Width,0);
+      Lineto(0,0);
+      //Moveto(Round(ImgLineal.Width*21/22),Round(imgLineal.Height*5/6));
+      //Textout(penpos.x,penpos.y,'in m');
+    end;
+  Linealskala;
+  //Einheit-Label
+  With LblLinealEinheit do
+  begin
+    Top:=Round(ImgLineal.Top+ImgLineal.Height*95/115);
+    Left:=Round(ImgLineal.Left+ImgLineal.Width*95/100);
+    Font.Size:=10;
+    AutoSize:=true;
+    Caption:='x10^-' +IntToStr(Exponent)+ 'm';
+  end;
+end;
+
+procedure TFrmProjektionsflaeche.Lineal_Strich(x:Integer);
+begin
+  with ImgLineal.Canvas do
+    begin
+      moveto(ImgLineal.Width div 2 + x,1);
+      lineto(ImgLineal.Width div 2 + x,Round(ImgLineal.Height/3*2));
+    end;
+end;
+
+procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
+var
+  Strichabstand, I,J,K : Integer;
+  Beschriftung: Real;
+begin
+  if GLineal=false then else
+  //Graphische Optionen - CBLineal
+  // if graphische_Optionen.CBLineal.checked:=true then
+  Strichabstand:=100;
+  J:=0;
+  K:=0;
+  with ImgLineal.Canvas do
+    begin
+      //Striche von Mitte->Links mit Beschriftung
+      for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
+        begin
+          J:=J+1;
+          if J = Strichabstand then begin
+                                   moveto(I,1);
+                                   lineto(I,Round(ImgLineal.Height/3*2));
+                                   J:=0;
+                                   K:=K+1;
+                                   //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
+                                   Beschriftung:=K/(TBZoom.position/100);
+                                   textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
+                                 end;
+        end;
+      //Striche von Mitte->Rechts mit Beschriftung
+      J:=Strichabstand;
+      K:=-1;
+      for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
+        begin
+          J:=J-1;
+          if J = 0 then begin
+                          moveto(I,1);
+                          lineto(I,Round(ImgLineal.Height/3*2));
+                          J:=Strichabstand;
+                          K:=K+1;
+                          //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
+                          Beschriftung:=K/(TBZoom.position/100);
+                          textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
+                        end;
+
+        end;
+    end;
+end;
+
+procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
+begin
+  GLineal:=true;
+  if TBZoom.Position mod 2 = 0 then Zeichnen(GWellenlaenge)
+  else begin
+         //if key = leftarrow then
+         // position:=position-1
+         tbzoom.Position:=tbzoom.Position+1;
+         // if key = rightarrow then
+         // position:=position+1
+       end;
+end;
 
 procedure TFrmProjektionsflaeche.TBZoomKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if key=vk_left then tbzoom.Position:=tbzoom.Position-2;
-end;
-
-procedure TFrmProjektionsflaeche.OnMouseUp(Sender: TObject; Button : TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-  if TBZoom.position mod 2 <> 0 then TBZoom.Position:=TBZoom.Position+1;
 end;
 
 function TFrmProjektionsflaeche.dynamicZoom (Zahl: Real):Real;
@@ -786,11 +849,6 @@ begin
   GStartet:=true;
   GetLocaleFormatSettings(GetThreadLocale, myFormatSettings);
   //Fehlerabfrage für Spaltanzahl (1 zu 0 ändern, sobald Einzelspalt eingebaut)
-  if EdtSpaltanzahl.Text='' then begin
-                                   Showmessage('Bitte gib eine Spaltanzahl ein!');
-                                   exit;
-                                 end;
-
   if STrToInt(EdtSpaltanzahl.Text)<1 then
     begin
       ShowMessage('Die angegebene Spaltanzahl ist zu niedrig.');
@@ -806,11 +864,7 @@ begin
 
   EdtSpaltAbstand.Text:=StringReplace(EdtSpaltAbstand.Text,',',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
   EdtSpaltAbstand.Text:=StringReplace(EdtSpaltAbstand.Text,'.',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
-    if EdtSpaltabstand.Text='' then begin
-                                      Showmessage('Bitte gib einen Spaltabstand ein!');
-                                      exit;
-                                    end;
-    
+
     if StrToFloat(EdtSpaltabstand.Text)<0.005 then
       begin
         ShowMessage('Der angegebene Spaltabstand ist zu niedrig.');
@@ -826,12 +880,6 @@ begin
 
   EdtSpaltBreite.Text:=StringReplace(EdtSpaltbreite.Text,',',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
   EdtSpaltBreite.Text:=StringReplace(EdtSpaltbreite.Text,'.',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
-
-  if EdtSpaltbreite.Text='' then begin
-                                   Showmessage('Bitte gib eine Spaltbreite ein!');
-                                   exit;
-                                 end;
-
 
   if StrToFloat(EdtSpaltbreite.Text)<=0 then
     begin
@@ -850,11 +898,6 @@ begin
   EdtSchirmAbstand.Text:=StringReplace(EdtSchirmAbstand.Text,',',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
   EdtSchirmAbstand.Text:=StringReplace(EdtSchirmAbstand.Text,'.',myFormatSettings.DecimalSeparator,[RfReplaceAll]);
 
-  if EdtSchirmabstand.Text='' then begin
-                                     Showmessage('Bitte gib einen Abstand von Schirm und Blende an!');
-                                     exit;
-                                   end;
-
     if StrToFloat(EdtSchirmAbstand.Text)<= 0 then
       begin
         ShowMessage('Der angegebene Abstand des Schirms zur Blende ist zu niedrig.');
@@ -870,7 +913,7 @@ begin
   //Fehlerabfrage für fehlende Eingabe
   if (EdtEingabe.Text = '') {and (EdtAusgabe.Text = '')} then
     begin
-      Showmessage('Bitte gib eine Frequenz bzw. Wellenlänge an!');
+      Showmessage('Das Fehlen einer Angabe der Wellenlänge/Frequenz war doch ein Versehen, oder?');
       exit;
     end;
 
@@ -1166,17 +1209,19 @@ end;
 
 procedure TFrmProjektionsflaeche.Combobox;
 begin
-  CmbEinheit.Top:= 5 + PnlOptionen.Top + PnlOptionen.Height;
-  CmbEinheit.Left:= 0;
-  CmbEinheit.Width:= (Schirm.Left - LblEingabe.Left) div 2;
-  //CmbEinheit.Height:= Konstantenbox.KEditHoehe;
-  CmbEinheit.ShowHint:=true;
+  CmbEinheit.Top:= PnlOptionen.Height + PnlOptionen.Top + 5;
+  CmbEinheit.Width:= EdtEingabe.Width div 2;
+  CmbEinheit.Left:= Konstantenbox.KEditLeft;
+  CmbEinheit.Height:= Konstantenbox.KEditHoehe;
   CmbEinheit.Hint:='Frequenz bzw. Wellenlänge einstellen';
+  CmbEinheit.ShowHint:=true;
   CmbEinheit.Style:=csDropDownList;
 
   CmbEinheit.AddItem('Wellenlänge', nil);
   CmbEinheit.AddItem('Frequenz', nil);
   CmbEInheit.ItemIndex := 0;
+
+  EdtAusgabe.Enabled:=False;
 end;
 
 procedure TFrmProjektionsflaeche.EdtEingabeEinheiten;
@@ -1376,7 +1421,7 @@ begin
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
 
     // 0.Maximum zeichnen
-    Strich_Zeichnen((Schirm.Width div 2 +2),stringtocolor(farbe));
+    Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
 
     ymax:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,0.0000000000001);
                                                                        // weil Funktion nicht fuer x = 0 definiert ist
@@ -1469,139 +1514,6 @@ begin
       if (strToInt(EdtSpaltanzahl.Text)>2) and ((strToInt(EdtEingabe.Text)>500) or (strToInt(EdtEingabe.Text)<59.9585)) then
           TBZoom.Min:=36 else
           TBZoom.Min:=10;
-    end;
-end;
-
-procedure TFrmProjektionsflaeche.Lineal;
-begin
-  //Groeße und Position des Image
-  ImgLineal.Height:=Round((1/15) * FrmProjektionsflaeche.Height);
-  ImgLineal.Width:= Schirm.Width;
-  ImgLineal.Left:=FrmProjektionsflaeche.Width-ImgLineal.Width;
-  ImgLineal.Top:=Round(FrmProjektionsflaeche.Height*3/5);
-
-    With LblLinealEinheit do
-      begin
-        Top:=Round(ImgLineal.Top+ImgLineal.Height*95/115);
-        Left:=Round(ImgLineal.Left+ImgLineal.Width*95/100);
-        Font.Size:=10;
-        AutoSize:=true;
-        visible:=false;
-      end;
-   //Abfrage der Checkbox in gr. Opt.
-   if GCBLineal=true then Linealskala else begin
-                                             //miau
-                                             ImgLineal.canvas.Pen.Color:=clWhite;
-                                             ImgLineal.Canvas.Brush.Color:=clWhite;
-                                             ImgLineal.Canvas.FillRect(Rect(1,1,ImgLineal.Width,ImgLineal.height));
-                                             LblLinealEinheit.Visible:=false;
-                                           end;
-end;
-
-
-procedure TFrmProjektionsflaeche.Lineal_Strich(x,n:Integer;faktor:Real);
-var Beschriftung : real;
-begin
-  with ImgLineal.Canvas do
-    begin
-      moveto(x,1);
-      lineto(x,Round(ImgLineal.Height/3*2));
-      //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
-      Beschriftung:=n*faktor{/(TBZoom.position/100)};
-      textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
-    end;
-end;
-
-procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
-var
-  Exponent, I,x,n,Strichabstand : Integer;
-  faktor:Real;
-  Zwischenspeicher:TLinealFaktorErgebnis;
-begin
-  if GLineal=true then
-    begin
-      ImgLineal.Picture:=Nil;
-
-      Zwischenspeicher:=Linealfaktor(1,TBZoom.Position);
-      Faktor:=Zwischenspeicher.faktor;
-      Strichabstand:=Zwischenspeicher.strichabstand;
-      x:=0;
-      n:=0;
-      with ImgLineal.Canvas do
-        begin
-          //Striche von Mitte->Rechts
-          for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
-            begin
-              x:=x+1;
-              if x = Strichabstand then
-                begin
-                  Inc(n);
-                  Lineal_Strich(I,n,faktor);
-                  x:=0;
-                end;
-            end;
-          //Striche von Mitte->Links
-          x:=Strichabstand;
-          n:=-1;
-          for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
-            begin
-              x:=x-1;
-              if x = 0 then
-                begin
-                  Inc(n);
-                  Lineal_Strich(I,n,faktor);
-                  x:=Strichabstand;
-                end;
-            end;
-        end;
-
-      //Umriss des Lineals
-      ImgLineal.Canvas.moveto(ImgLineal.Width,0);
-      ImgLineal.Canvas.lineto(0,0);
-      Exponent:=1;
-      if GDynZoom>0 then Exponent:=GZoom;
-      //Einheit-Label
-      With LblLinealEinheit do
-      begin
-        Caption:='x10^-' +IntToStr(Exponent)+ 'm';
-        visible:=true;
-      end;
-  end;
-end;
-
-function TFrmProjektionsflaeche.Linealfaktor(faktor:Real;x:Integer):TLinealFaktorErgebnis;
-var
-  Ergebnis:TLinealFaktorErgebnis;
-  xneu:integer;
-begin
-  if (x>75) and (x<125) then
-        begin
-          xneu:=x;
-          faktor:=1;
-        end else
-        begin
-          if (x>=125) then
-            begin
-              xneu:=round(x*0.5);
-              faktor:=0.5;
-            end else
-            begin
-              xneu:=x*2;
-              faktor:=2;
-            end;
-        end;
-    ergebnis.strichabstand:=xneu;
-    ergebnis.faktor:=faktor;
-    Result:=ergebnis;
-end;
-
-procedure TFrmProjektionsflaeche.TBZoomChange(Sender: TObject);
-begin
-  if GStartet=true then
-    begin
-      GLineal:=true;
-      Linealskala;
-      if TBZoom.Position mod 2 = 0 then Zeichnen(GWellenlaenge) else TBzoom.Position:=TBZOom.Position+1;
     end;
 end;
 

@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{C29A75B7-77B9-4D0B-99B9-522EDFD8715D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="PrjInterferenzo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Package\PackageInterferenzo.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="PrjInterferenzo">
+        <MSBuild Projects="PrjInterferenzo.dproj"/>
+    </Target>
+    <Target Name="PrjInterferenzo:Clean">
+        <MSBuild Projects="PrjInterferenzo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PrjInterferenzo:Make">
+        <MSBuild Projects="PrjInterferenzo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PackageInterferenzo">
+        <MSBuild Projects="Package\PackageInterferenzo.dproj"/>
+    </Target>
+    <Target Name="PackageInterferenzo:Clean">
+        <MSBuild Projects="Package\PackageInterferenzo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PackageInterferenzo:Make">
+        <MSBuild Projects="Package\PackageInterferenzo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="PrjInterferenzo;PackageInterferenzo"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="PrjInterferenzo:Clean;PackageInterferenzo:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="PrjInterferenzo:Make;PackageInterferenzo:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

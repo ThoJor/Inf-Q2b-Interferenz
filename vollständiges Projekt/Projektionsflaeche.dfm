@@ -132,13 +132,6 @@ object FrmProjektionsflaeche: TFrmProjektionsflaeche
     Height = 12
     Caption = 'LblAusgabe'
   end
-  object LblZoom: TLabel
-    Left = 632
-    Top = 458
-    Width = 39
-    Height = 12
-    Caption = 'LblZoom'
-  end
   object PnlOptionen: TPanel
     Left = 19
     Top = 7
