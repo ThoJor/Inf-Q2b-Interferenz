@@ -59,7 +59,7 @@ procedure TFormInfo.HeadingNutzungsbedingungenSettings;
 begin
   LNutzungsbedingungenHead.AutoSize := false;
   LNutzungsbedingungenHead.Width := FormInfo.Width - (FormInfo.Width div 5);
-  LNutzungsbedingungenHead.Font.Size := Konstantenbox.Ueberschrift;
+  LNutzungsbedingungenHead.Font.Size := round(Konstantenbox.Ueberschrift/96*80);
   LNutzungsbedingungenHead.Height := LNutzungsbedingungenHead.Font.Size + 10;
   LNutzungsbedingungenHead.Left := FormInfo.Width div 10;
   LNutzungsbedingungenHead.Top := FormInfo.Height div 30;
@@ -93,7 +93,7 @@ procedure TFormInfo.HeadingImpressumSettings;
 begin
   LImpressumHead.AutoSize := false;
   LImpressumHead.Width := FormInfo.Width - (FormInfo.Width div 5);
-  LImpressumHead.Font.Size := Konstantenbox.Ueberschrift;
+  LImpressumHead.Font.Size := round(Konstantenbox.Ueberschrift/96*80);
   LImpressumHead.Height := LImpressumHead.Font.Size + 10;
   LImpressumHead.Left := FormInfo.Width div 10;
   LImpressumHead.Top := 300;
@@ -121,55 +121,6 @@ begin
   LImpressumBody.WordWrap:=true;
 end;
 
-//Prozedur zum Textimport (aus einer .txt Datei in einen String)
-{function TFormInfo.Textimport(Filename: string):string;
-var
-  txt: TStringList;
-  i: Integer;
-  temp: String;
-begin
-  temp:='';
-  txt:= TStringList.Create;
-  txt.LoadFromFile(Filename);
-  for i:= 0 to txt.count - 1 do
-    begin
-    temp := temp + txt.Strings[i];
-      if (i mod 10)=0 then
-      temp := temp + txt.Strings[i] + #13#10
-      else
-      temp := temp + txt.Strings[i];
-    end;
-
-  result := temp;
-end;    }
-
-{//experimento v1
-function TFormInfo.Textimport(Filename: string):string;
-var
-  txt: TStringList;
-  i,k: Integer;
-  temp: String;
-begin
-  temp:='';
-  k:=0;
-  txt:= TStringList.Create;
-  txt.LoadFromFile(Filename);
-  for i:= 0 to txt.count - 1 do
-    begin
-    k:=k+1;
-    system.UTF8Decode(txt.Strings[i]);
-    if k=1 then
-      begin
-        temp := temp + txt.Strings[i]+ sLineBreak;
-        k:=0;
-      end
-    else temp := temp + txt.Strings[i];
-
-    end;
-  result := temp;
-end;  }
-
-//experimento  v4
 function TFormInfo.Textimport(Filename: string):string;
 var
   txt: TStringList;

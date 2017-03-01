@@ -1284,6 +1284,7 @@ begin
           end else
           begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
+            Strich_Zeichnen(Schirm.Width div 2, stringtocolor(farbe));
           end;
       end;
 end;
@@ -1350,7 +1351,7 @@ begin
           end else
           begin
             ImgIntensitaet.Canvas.LineTo((ImgIntensitaet.Width div 2),0);
-         //   Strich_Zeichnen(Schirm.Width-3,clwhite);
+            Strich_Zeichnen(Schirm.Width div 2, stringtocolor(farbe));
           end;
       end;
 end;
@@ -1376,10 +1377,10 @@ begin
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
 
     // 0.Maximum zeichnen
-    Strich_Zeichnen((Schirm.Width div 2 +2),stringtocolor(farbe));
+    Strich_Zeichnen((Schirm.Width div 2),stringtocolor(farbe));
 
     ymax:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,0.0000000000001);
-                                                                       // weil Funktion nicht fuer x = 0 definiert ist
+                                                                                   // weil Funktion nicht fuer x = 0 definiert ist
     for posx := (-ImgIntensitaet.Width div 2) to (ImgIntensitaet.Width div 2) do   //  --> allerdings bei kleinem Zoom fehlerhaft!!
       begin
         if posx<>0 then
@@ -1504,17 +1505,17 @@ var Beschriftung : real;
 begin
   with ImgLineal.Canvas do
     begin
-      moveto(x,1);
-      lineto(x,Round(ImgLineal.Height/3*2));
-      //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
-      Beschriftung:=n*faktor{/(TBZoom.position/100)};
+      moveto(x-1,1);
+      lineto(x-1,Round(ImgLineal.Height/3*2));
+      Beschriftung:=n*faktor;
       textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
     end;
 end;
 
+
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
-  Exponent, I,x,n,Strichabstand : Integer;
+  Exponent, I,x,x1,n,n1,Strichabstand : Integer;
   faktor:Real;
   Zwischenspeicher:TLinealFaktorErgebnis;
 begin
@@ -1532,7 +1533,7 @@ begin
           //Striche von Mitte->Rechts
           for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
             begin
-              x:=x+1;
+              Inc(x);
               if x = Strichabstand then
                 begin
                   Inc(n);
@@ -1540,9 +1541,11 @@ begin
                   x:=0;
                 end;
             end;
+
           //Striche von Mitte->Links
           x:=Strichabstand;
           n:=-1;
+          x1:=strichabstand div 5;
           for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
             begin
               x:=x-1;
@@ -1571,23 +1574,24 @@ end;
 
 function TFrmProjektionsflaeche.Linealfaktor(faktor:Real;x:Integer):TLinealFaktorErgebnis;
 var
-  Ergebnis:TLinealFaktorErgebnis;
+  Zwischenspeicher,Ergebnis:TLinealFaktorErgebnis;
   xneu:integer;
 begin
-  if (x>75) and (x<125) then
+  if (x>50) and (x<150) then
         begin
           xneu:=x;
-          faktor:=1;
         end else
         begin
-          if (x>=125) then
+          if (x>=150) then
             begin
-              xneu:=round(x*0.5);
-              faktor:=0.5;
+              Zwischenspeicher:=Linealfaktor(0.5*faktor,x div 2);
+              xneu:=Zwischenspeicher.strichabstand;
+              faktor:=Zwischenspeicher.faktor;
             end else
             begin
-              xneu:=x*2;
-              faktor:=2;
+              Zwischenspeicher:=Linealfaktor(2*faktor,x*2);
+              xneu:=Zwischenspeicher.strichabstand;
+              faktor:=Zwischenspeicher.faktor;
             end;
         end;
     ergebnis.strichabstand:=xneu;
