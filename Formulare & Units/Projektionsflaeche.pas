@@ -1499,45 +1499,50 @@ begin
       moveto(x,1);
       lineto(x,Round(ImgLineal.Height/3*2));
       //Beschriftung:=K/GDynZoom/(TBZoom.position/100);
-      Beschriftung:=n/(TBZoom.position/100);
+      Beschriftung:=n{/(TBZoom.position/100)};
       textout(penpos.X-2,penpos.Y,FloatToStr(RoundTo(Beschriftung,-4)));
     end;
 end;
 
 procedure TFrmProjektionsflaeche.Linealskala; //Skala des Lineals
 var
-  Exponent, I,J,K,Strichabstand : Integer;
+  Exponent, I,x,n,Strichabstand : Integer;
 begin
   if GLineal=true then
     begin
-      Strichabstand:=100;
-      J:=0;
-      K:=0;
+      ImgLineal.Picture:=Nil;
+      Strichabstand:=TBZoom.Position;
+      x:=0;
+      n:=0;
       with ImgLineal.Canvas do
         begin
           //Striche von Mitte->Rechts
           for I := Round(ImgLineal.Width/2) to (ImgLineal.Width-11) do
             begin
-              J:=J+1;
-              if J = Strichabstand then begin
-                                       K:=K+1;
-                                       Lineal_Strich(I,K);
-                                       J:=0;
-                                     end;
+              x:=x+1;
+              if x = Strichabstand then
+                begin
+                  Inc(n);
+                  Lineal_Strich(I,n);
+                  x:=0;
+                end;
             end;
           //Striche von Mitte->Links
-          J:=Strichabstand;
-          K:=-1;
+          x:=Strichabstand;
+          n:=-1;
           for I := Round(ImgLineal.Width/2)+Strichabstand downto 1 do
             begin
-              J:=J-1;
-              if J = 0 then begin
-                              K:=K+1;
-                              Lineal_Strich(I,K);
-                              J:=Strichabstand;
-                            end;
+              x:=x-1;
+              if x = 0 then
+                begin
+                  Inc(n);
+                  Lineal_Strich(I,n);
+                  x:=Strichabstand;
+                end;
             end;
         end;
+
+
       Exponent:=1;
         if GDynZoom>0 then Exponent:=GZoom;
       //Einheit-Label
