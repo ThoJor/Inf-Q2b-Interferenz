@@ -554,15 +554,17 @@ begin
   LblHilfeEinstellungen2.Caption:= 'Wellenlänge, Frequenz oder Farbe (zum Auswählen der Farbe auf diese klicken)';
 
   //TBZoom Hilfe
-  with LblZoom do
-    begin
-      visible:=true;
-      top:= TBZoom.Top;
-      Caption:='Verschieben, um die Vergrößerung in Prozent zu ändern -->';
-      Transparent:=false;
-      Color:=clWhite;
-      Left:=TBZoom.left-LblZoom.Width;
-    end;
+  if GStartet=true then begin
+                          with LblZoom do
+                            begin
+                              visible:=true;
+                              top:= TBZoom.Top;
+                              Caption:='Verschieben, um die Vergrößerung in Prozent zu ändern -->';
+                              Transparent:=false;
+                              Color:=clWhite;
+                              Left:=TBZoom.left-LblZoom.Width;
+                            end;
+                        end;
 
   //experimento v5
   EdtEingabe.ShowHint:=true;
@@ -1457,7 +1459,7 @@ begin
     farbe := '$00' + Ufarbtabelle.Farbe(GWellenlaenge*(Power(10,(9))));
 
     // 0.Maximum zeichnen
-    Strich_Zeichnen(Schirm.Width div 2,stringtocolor(farbe));
+    Strich_Zeichnen((Schirm.Width div 2 +2),stringtocolor(farbe));
 
     ymax:=Intensitaet_Gitter(a,b,e,n,GWellenlaenge,0.0000000000001);
                                                                        // weil Funktion nicht fuer x = 0 definiert ist
