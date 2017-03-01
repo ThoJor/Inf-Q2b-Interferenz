@@ -1571,23 +1571,27 @@ end;
 
 function TFrmProjektionsflaeche.Linealfaktor(faktor:Real;x:Integer):TLinealFaktorErgebnis;
 var
-  Ergebnis:TLinealFaktorErgebnis;
+  Zwischenspeicher,Ergebnis:TLinealFaktorErgebnis;
   xneu:integer;
 begin
-  if (x>75) and (x<125) then
+  if (x>50) and (x<150) then
         begin
           xneu:=x;
-          faktor:=1;
         end else
         begin
-          if (x>=125) then
+          if (x>=150) then
             begin
-              xneu:=round(x*0.5);
-              faktor:=0.5;
+              Zwischenspeicher:=Linealfaktor(0.5*faktor,x div 2);
+              xneu:=Zwischenspeicher.strichabstand;
+              faktor:=Zwischenspeicher.faktor;
             end else
             begin
-              xneu:=x*2;
-              faktor:=2;
+              Zwischenspeicher:=Linealfaktor(2*faktor,x*2);
+              xneu:=Zwischenspeicher.strichabstand;
+              faktor:=Zwischenspeicher.faktor;
+
+              //xneu:=x*2;
+              //faktor:=2;
             end;
         end;
     ergebnis.strichabstand:=xneu;
