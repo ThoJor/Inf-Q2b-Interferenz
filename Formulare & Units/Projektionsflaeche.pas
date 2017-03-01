@@ -620,6 +620,7 @@ begin
   TMouseTrackbar(TBZoom).OnMouseUp:= OnMouseUp;
   //to be aufgeräumt
   GStartet:=false;
+  BtnReset.Click;
 end;
 
 procedure TFrmProjektionsflaeche.Startbutton;
