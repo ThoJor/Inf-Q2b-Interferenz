@@ -71,7 +71,12 @@ begin
   FrmGraphischeOptionen.Scaled:=false;
 
   TabOrder;
+  //Fenstergroeße
+  FrmGraphischeOptionen.Width:= 500;
+  FrmGraphischeOptionen.Height:= (50 * Konstantenbox.KAnzahlCheckboxen) + 50;
 
+  //Fensterposition
+  Position:= poScreenCenter;
   FrmGraphischeOptionen.BorderStyle:=bsNone;
 
   BtnBeenden.font.size:=Konstantenbox.Schrift;
@@ -91,14 +96,6 @@ begin
   ChBBgWhite.Caption:= 'Weiß';
   ChBBgVerlauf.Caption:= 'Verlauf';
   CBReal.Caption:= 'Realistische Ansicht';  //Einmal hin, alles drin
-
-
-  //Fenstergroeße
-  FrmGraphischeOptionen.Width:= 500;
-  FrmGraphischeOptionen.Height:= (50 * Konstantenbox.KAnzahlCheckboxen) + 50;
-
-  //Fensterposition
-  Position:= poScreenCenter;
 
   //Position CheckBox
   CBLineal.Top:= 15;
