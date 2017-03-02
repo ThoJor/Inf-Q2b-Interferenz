@@ -1,4 +1,0 @@
-﻿1. "Interferenzo" (im Folgenden Software genannt) wird Ihnen ohne jede Gewähr auf Richtigkeit und Vollständigkeit zur Verfügung gestellt.
-2. Die Software ist, soweit keine andere Vereinbarung vorliegt, für Sie kostenlos und die Nutzung unverbindlich.
-3. Alle Inhalte und die resultierenden Daten unterliegen dem Copyright und dürfen – ohne weitergehende Vereinbarung – nicht an Dritte weitergegeben oder bildlich, inhaltlich bzw. drucktechnisch verwendet werden. Vor allem die Verwendung von Abbildungen aus der Software innerhalb eigener Internetseiten, Publikationen oder Applikationen bedarf der schriftlichen Genehmigung durch die Entwickler.
-4. Die Nutzung erfolgt auf eigene Gefahr. Das Entwicklerteam ist weder für mittelbare noch unmittelbare Schäden verantwortlich, die durch die Verwendung entstehen.
