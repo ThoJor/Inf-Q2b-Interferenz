@@ -63,9 +63,8 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <DCC_BplOutput>D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Package\</DCC_BplOutput>
-        <DCC_DcuOutput>D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Package\Units</DCC_DcuOutput>
-        <DCC_DcpOutput>D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Package\</DCC_DcpOutput>
+        <DCC_BplOutput>.\$(Platform)\$(Config)</DCC_BplOutput>
+        <DCC_DcpOutput>.\$(Platform)\$(Config)</DCC_DcpOutput>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
