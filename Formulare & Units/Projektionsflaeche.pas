@@ -483,8 +483,6 @@ end;
 
 procedure TFrmProjektionsflaeche.BtnBeendenClick(Sender: TObject);
 begin
-  FrmProjektionsflaeche.close;
-  Reset;
 
   //Zoomleiste zurücksetzen
   TBZoom.Visible:=false;
@@ -492,6 +490,10 @@ begin
 
   ImgLineal.Picture:=NIL;
   Linealskala;
+  BtnReset.click;
+  FrmProjektionsflaeche.close;
+  Reset;
+  GSTartet:=false;
 end;
 
 procedure TFrmProjektionsflaeche.BtnOptionenClick(Sender: TObject);
