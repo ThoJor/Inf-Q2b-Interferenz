@@ -34,13 +34,13 @@ requires
   vcl;
 
 contains
-  graphische_Optionen in '..\graphische_Optionen.pas' {FrmGraphischeOptionen},
-  Konstantenbox in '..\Konstantenbox.pas',
-  Projektionsflaeche in '..\Projektionsflaeche.pas' {FrmProjektionsflaeche},
-  UFarbtabelle in '..\UFarbtabelle.pas',
-  UHaupt in '..\UHaupt.pas' {FrmHaupt},
-  UInfo in '..\UInfo.pas' {FormInfo},
-  UToolbox in '..\UToolbox.pas',
-  UVersuchsuebersicht in '..\UVersuchsuebersicht.pas' {FormVersuchsuebersicht};
+  graphische_Optionen in '..\Units etc\graphische_Optionen.pas' {FrmGraphischeOptionen},
+  Konstantenbox in '..\Units etc\Konstantenbox.pas',
+  Projektionsflaeche in '..\Units etc\Projektionsflaeche.pas' {FrmProjektionsflaeche},
+  UFarbtabelle in '..\Units etc\UFarbtabelle.pas',
+  UHaupt in '..\Units etc\UHaupt.pas' {FrmHaupt},
+  UInfo in '..\Units etc\UInfo.pas' {FormInfo},
+  UToolbox in '..\Units etc\UToolbox.pas',
+  UVersuchsuebersicht in '..\Units etc\UVersuchsuebersicht.pas' {FormVersuchsuebersicht};
 
 end.

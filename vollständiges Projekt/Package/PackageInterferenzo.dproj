@@ -63,9 +63,8 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <DCC_BplOutput>D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Package\</DCC_BplOutput>
-        <DCC_DcuOutput>D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Package\Units</DCC_DcuOutput>
-        <DCC_DcpOutput>D:\GitHub Repository\Inf-Q2b-Interferenz\vollständiges Projekt\Package\</DCC_DcpOutput>
+        <DCC_BplOutput>.\$(Platform)\$(Config)</DCC_BplOutput>
+        <DCC_DcpOutput>.\$(Platform)\$(Config)</DCC_DcpOutput>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
@@ -83,45 +82,45 @@
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="vclimg.dcp"/>
         <DCCReference Include="vcl.dcp"/>
-        <DCCReference Include="..\graphische_Optionen.pas">
+        <DCCReference Include="..\Units etc\graphische_Optionen.pas">
             <Form>FrmGraphischeOptionen</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\Konstantenbox.pas"/>
-        <DCCReference Include="..\Projektionsflaeche.pas">
+        <DCCReference Include="..\Units etc\Konstantenbox.pas"/>
+        <DCCReference Include="..\Units etc\Projektionsflaeche.pas">
             <Form>FrmProjektionsflaeche</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\UFarbtabelle.pas"/>
-        <DCCReference Include="..\UHaupt.pas">
+        <DCCReference Include="..\Units etc\UFarbtabelle.pas"/>
+        <DCCReference Include="..\Units etc\UHaupt.pas">
             <Form>FrmHaupt</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\UInfo.pas">
+        <DCCReference Include="..\Units etc\UInfo.pas">
             <Form>FormInfo</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\UToolbox.pas"/>
-        <DCCReference Include="..\UVersuchsuebersicht.pas">
+        <DCCReference Include="..\Units etc\UToolbox.pas"/>
+        <DCCReference Include="..\Units etc\UVersuchsuebersicht.pas">
             <Form>FormVersuchsuebersicht</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <RcItem Include="..\Win32\Debug\Interferenzo_Logo.ico">
+        <RcItem Include="..\andere Dateien\Interferenzo_Logo.ico">
             <ResourceType>ICON</ResourceType>
             <ResourceId>Icon_1</ResourceId>
         </RcItem>
-        <RcItem Include="..\Win32\Debug\Interferenzo_Logo.png">
+        <RcItem Include="..\andere Dateien\Interferenzo_Logo.png">
             <ResourceType>RCDATA</ResourceType>
             <ResourceId>PngImage_1</ResourceId>
         </RcItem>
-        <None Include="..\Win32\Debug\Kontaktinformationen.txt"/>
-        <None Include="..\Win32\Debug\Nutzungsbedingungen.txt"/>
-        <RcItem Include="..\Win32\Debug\TYoung.png">
+        <None Include="..\andere Dateien\Kontaktinformationen.txt"/>
+        <None Include="..\andere Dateien\Nutzungsbedingungen.txt"/>
+        <RcItem Include="..\andere Dateien\TYoung.png">
             <ResourceType>RCDATA</ResourceType>
             <ResourceId>PngImage_2</ResourceId>
         </RcItem>
-        <None Include="..\Win32\Debug\Versuch.txt"/>
-        <None Include="..\Win32\Debug\Wellen.txt"/>
+        <None Include="..\andere Dateien\Versuch.txt"/>
+        <None Include="..\andere Dateien\Wellen.txt"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -148,7 +147,7 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment>
-                <DeployFile LocalName="PackageInterferenzo.bpl" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\15.0\Bpl\PackageInterferenzo.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>PackageInterferenzo.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -160,7 +159,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\15.0\Bpl\PackageInterferenzo.bpl" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="PackageInterferenzo.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>PackageInterferenzo.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
