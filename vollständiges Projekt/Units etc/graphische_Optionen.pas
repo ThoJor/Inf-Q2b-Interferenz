@@ -33,6 +33,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure CBRealClick(Sender: TObject);
     procedure TabOrder;
+    procedure CBLinealClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -44,6 +45,7 @@ var
 
   GBackground: Integer;  //1=Weiß, 2=Schwarz, 3=Verlauf
   GReal : Boolean; //Geh Real, einmal hin alles drin diggah!
+  GCBLineal : Boolean;
 
 
 implementation
@@ -66,19 +68,26 @@ end;
 
 procedure TFrmGraphischeOptionen.FormCreate(Sender: TObject);
 begin
-  TabOrder;
+  FrmGraphischeOptionen.Scaled:=false;
 
+  TabOrder;
+  //Fenstergroeße
+  FrmGraphischeOptionen.Width:= 500;
+  FrmGraphischeOptionen.Height:= (50 * Konstantenbox.KAnzahlCheckboxen) + 50;
+
+  //Fensterposition
+  Position:= poScreenCenter;
   FrmGraphischeOptionen.BorderStyle:=bsNone;
 
   BtnBeenden.font.size:=Konstantenbox.Schrift;
   BtnBeenden.Font.Name:=Konstantenbox.Schriftart;
   BtnBeenden.Font.Color:=Konstantenbox.Schriftfarbe;
 
-  BtnBeenden.Top:=FrmGraphischeOptionen.Height div 6*5 - 5;
-  BtnBeenden.Left:=FrmGraphischeOptionen.Width div 5*4;
+  BtnBeenden.Top:=FrmGraphischeOptionen.Height div 6*5 - 10;
+  BtnBeenden.Left:=FrmGraphischeOptionen.Width div 5*4 - 5;
   BtnBeenden.Caption:='Anwenden';
   BtnBeenden.Height:=Konstantenbox.KLabelHoehe*2;
-  BtnBeenden.Width:=95;
+  BtnBeenden.Width:=FrmGraphischeOptionen.Width div 5;
 
   //Namensgebung
   FrmGraphischeOptionen.Caption:= 'Interferenzo - Optionen';
@@ -87,14 +96,6 @@ begin
   ChBBgWhite.Caption:= 'Weiß';
   ChBBgVerlauf.Caption:= 'Verlauf';
   CBReal.Caption:= 'Realistische Ansicht';  //Einmal hin, alles drin
-
-
-  //Fenstergroeße
-  FrmGraphischeOptionen.Width:= 500;
-  FrmGraphischeOptionen.Height:= (50 * Konstantenbox.KAnzahlCheckboxen) + 50;
-
-  //Fensterposition
-  Position:= poScreenCenter;
 
   //Position CheckBox
   CBLineal.Top:= 15;
@@ -141,12 +142,13 @@ begin
 
   //Lineal per default an und deaktiviert
   CBLineal.Checked:= true;
-  CBLineal.Enabled:= false;
+  CBLineal.Enabled:= true;
 
   //Default Hintergrundeinstellungen - weiß ist Hintergrundfarbe
   ChBBgWhite.Checked := true;
   GBackground := 1;
   GReal:=false;
+  GCBLineal:=true;
 end;
 
 procedure TFrmGraphischeOptionen.BtnBeendenClick(Sender: TObject);
@@ -159,6 +161,11 @@ begin
   if ChBBgBlack.Checked=true then ChBBgBlack.Checked:=false;
   if ChBBgVerlauf.Checked=true then ChBBgVerlauf.Checked:=false;
   if ChBBgWhite.Checked=true then ChBBgWhite.Checked:=false;
+end;
+
+procedure TFrmGraphischeOptionen.CBLinealClick(Sender: TObject);
+begin
+  if GCBLineal=true then GCBLineal:=false else GCBLineal:=true;
 end;
 
 procedure TFrmGraphischeOptionen.CBRealClick(Sender: TObject);

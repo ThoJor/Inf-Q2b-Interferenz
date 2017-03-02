@@ -39,21 +39,21 @@ function Intensitaet_Einzelspalt(b,e,lambda,x:real):real;     //b = Spaltbreite 
 begin
   if x<>0 then
     result:=Power(((sin(pi*b*sin(arctan(x/e))/lambda))/(pi*b*sin(arctan(x/e))/lambda)),(2)) else
-    result:=0;
+    result:=1;
 end;
 
 function Intensitaet_Doppelspalt(a,b,e,lambda,x:real):real;     //a = Spaltabstand    b = Spaltbreite   e = Abstand Blende Schrim
 begin
   if x<>0 then
     result:=Power(((sin(pi*(b/lambda)*sin(arctan(x/e))))/(pi*(b/lambda)*sin(arctan(x/e)))),(2))*Power(cos(pi*(a/lambda)*sin(arctan(x/e))),(2)) else
-    result:=0;
+    result:=1;
 end;
 
 function Intensitaet_Gitter(a,b,e,n,lambda,x:real):real;        //a = Spaltabstand = Gitterkonstante    b = Spaltbreite   e = Abstand Blende Schrim
 begin
   if x<>0 then
     result:=Power((((sin(pi*(b/lambda)*sin(arctan(x/e))))/(pi*(b/lambda)*sin(arctan(x/e))))*((sin(n*pi*(a/lambda)*sin(arctan(x/e))))/sin((pi*(a/lambda)*sin(arctan(x/e)))))),(2)) else
-    result:=0;
+    result:=1;
 end;
 
 function RundeAufStelle(zahl: real; stellen: integer): real;
